@@ -12,6 +12,7 @@ The Halpin-Tsai method is an empirical approach to homogenize two isotropic mate
 ## Mori-Tanaka
 The Mori-Tanaka scheme goes back to Mori and Tanaka (xxxx) and is a mean-field homogenization scheme based on Eshelby's solution (xxxx). The implementation so far only allows spheroidal inclusions, which in fact is an ellispoid with identical minor axes or ellipsoid of revolution, respectively. Our algorithm allows to homogenize materials with different types of fibers, each possibily having an individual fiber distrubtion. Being a tensorial homogenization scheme, the fiber orientation tensor is directly included in the calculation and the result is an effective stiffness tensor. The authors would like to emphasize that for multi-inclusion problems or non-isotropic inclusions, the effective stiffness tensor may violate thermodynamic requirements, such as a symmetric stiffness tensor. Further readings of this attribute are given in ___ (xxxx) and ___ (xxxx). It is in the remit of the user to keep this in mind and act accordingly.
 
+***
 Further topic related methods of the package:
 - Closures to calculate orientation tensors of forth order from an orientation tensor of second order are implemented by a dependence on the package fiberoripy
 - Determining fiber orientation tensors from micrographs is possible by the implemented method of ellipses
