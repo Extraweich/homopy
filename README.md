@@ -14,5 +14,5 @@ The Mori-Tanaka scheme goes back to Mori and Tanaka (xxxx) and is a mean-field h
 
 ***
 Further topic related methods of the package:
-- Closures to calculate orientation tensors of forth order from an orientation tensor of second order are implemented by a dependence on the package fiberoripy
-- Determining fiber orientation tensors from micrographs is possible by the implemented method of ellipses
+- Closures to calculate orientation tensors of forth order from an orientation tensor of second order are implemented by a dependence on the package [fiberoripy](https://github.com/nilsmeyerkit/fiberoripy)
+- Determining fiber orientation tensors from micrographs is possible by the implemented method of ellipses (yet to come)
