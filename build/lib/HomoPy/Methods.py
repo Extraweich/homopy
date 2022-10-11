@@ -14,14 +14,14 @@ Tested:
 import numpy as np
 import matplotlib.pyplot as plt
 import warnings
-from HomoPy.Tensor import Tensor
+from homopy.tensor import Tensor
 
 sin = np.sin
 cos = np.cos
 tanh = np.tanh
 
 
-class Mori_Tanaka(Tensor):
+class MoriTanaka(Tensor):
     """
     Mori Tanaka class to calculate the homogenized stiffness for fiber reinforced
     polymers with possibly different types of inclusions. The class inherits from
@@ -89,8 +89,8 @@ class Mori_Tanaka(Tensor):
                 pol = Cf_alpha - self.Cm
                 self.pol_alpha.append(pol)
                 S = self.get_eshelby(a_ratio[i])
-                A_inv = self.eye + self.tensorProduct(
-                    S, self.tensorProduct(Cm_inv, pol)
+                A_inv = self.eye + self.tensor_product(
+                    S, self.tensor_product(Cm_inv, pol)
                 )
                 A = np.linalg.inv(A_inv)
                 self.A_f_alpha.append(A)
@@ -117,7 +117,7 @@ class Mori_Tanaka(Tensor):
         """
         nu = self.matrix.nu
         a = a_ratio
-        a2 = a**2
+        a2 = a ** 2
         g = a / (a2 - 1) ** (3 / 2) * (a * (a2 - 1) ** (1 / 2) - np.arccosh(a))
         S = np.zeros((3, 3, 3, 3))
         S[0, 0, 0, 0] = (
@@ -187,11 +187,11 @@ class Mori_Tanaka(Tensor):
         if not type(self.fiber) == list:
             Cm_inv = np.linalg.inv(self.Cm)
             pol = self.Cf - self.Cm
-            A_inv = self.eye + self.tensorProduct(
-                self.eshelby66, self.tensorProduct(Cm_inv, pol)
+            A_inv = self.eye + self.tensor_product(
+                self.eshelby66, self.tensor_product(Cm_inv, pol)
             )
             # A = np.linalg.inv(A_inv)
-            C_eff = self.Cm + self.v_frac * self.tensorProduct(
+            C_eff = self.Cm + self.v_frac * self.tensor_product(
                 pol, np.linalg.inv(self.v_frac * self.eye + (1 - self.v_frac) * A_inv)
             )
         else:
@@ -200,11 +200,11 @@ class Mori_Tanaka(Tensor):
             # calculating the averages
             for i in range(self.nr_constituents):
                 A_ave += self.c_alpha[i] * self.A_f_alpha[i]
-                pol_A_ave += self.c_alpha[i] * self.tensorProduct(
+                pol_A_ave += self.c_alpha[i] * self.tensor_product(
                     self.pol_alpha[i], self.A_f_alpha[i]
                 )
 
-            C_eff = self.Cm + self.tensorProduct(
+            C_eff = self.Cm + self.tensor_product(
                 self.c_f * pol_A_ave,
                 np.linalg.inv(self.c_f * A_ave + (1 - self.c_f) * self.eye),
             )
@@ -267,10 +267,10 @@ class Mori_Tanaka(Tensor):
         return self.tensor2mandel(C_eff_ave)
 
 
-class Tsai_Hill:
+class TsaiHill:
     def __init__(self, E_f, E_m, G_f, G_m, nu_f, nu_m, l_f, r_f, vol_f, package="hex"):
         """
-        Class to perform the Tsai_Hill homogenization.
+        Class to perform the TsaiHill homogenization.
 
         Parameters
         ----------
@@ -328,7 +328,7 @@ class Tsai_Hill:
         else:
             p = 1 / 2 * np.log(np.pi / self.vol_f)
 
-        beta = np.sqrt(2 * np.pi * self.G_m / (self.E_f * (np.pi * self.r_f**2) * p))
+        beta = np.sqrt(2 * np.pi * self.G_m / (self.E_f * (np.pi * self.r_f ** 2) * p))
         nu1 = (self.E_f / self.E_m - 1) / (self.E_f / self.E_m + 2)
         nu2 = (self.G_f / self.G_m - 1) / (self.G_f / self.G_m + 1)
 
@@ -398,7 +398,7 @@ class Tsai_Hill:
 
 if __name__ == "__main__":
     #%% Testing
-    TH_Carb = Tsai_Hill(
+    th_carb = TsaiHill(
         242 * 1e9,
         1.18 * 1e9,
         105 * 1e9,
@@ -409,7 +409,7 @@ if __name__ == "__main__":
         7.2 / 2 * 1e-6,
         0.25,
     )
-    TH_Glass = Tsai_Hill(
+    th_glass = TsaiHill(
         80 * 1e9,
         1.18 * 1e9,
         33 * 1e9,
@@ -420,13 +420,13 @@ if __name__ == "__main__":
         16 / 2 * 1e-6,
         0.25,
     )
-    E_Glass = TH_Glass.get_E(0) * 1e-9
-    E_Carb = TH_Carb.get_E(0) * 1e-9
+    E_Glass = th_glass.get_E(0) * 1e-9
+    E_Carb = th_carb.get_E(0) * 1e-9
 
     #%% Polar plot
     angles = np.arange(0, 2 * np.pi, 0.001)
-    Es_Glass = TH_Glass.get_E(angles)
-    Es_Carb = TH_Carb.get_E(angles)
+    Es_Glass = th_glass.get_E(angles)
+    Es_Carb = th_carb.get_E(angles)
 
     fig, ax = plt.subplots(subplot_kw={"projection": "polar"})
     ax.plot(angles, Es_Glass, label="HT Glass")
@@ -446,13 +446,13 @@ if __name__ == "__main__":
     angle_frac = int(angle / 360 * len(Es_Carb))
 
     # orientations = {0:0.7,20:0.2,45:0.1}
-    Es_Carb2 = Tsai_Hill.turn_by_angle(Es_Carb, angle)
-    Es_Carb3 = Tsai_Hill.turn_by_angle(Es_Carb, 2 * angle)
-    Es_Carb4 = Tsai_Hill.turn_by_angle(Es_Carb, 3 * angle)
+    Es_Carb2 = TsaiHill.turn_by_angle(Es_Carb, angle)
+    Es_Carb3 = TsaiHill.turn_by_angle(Es_Carb, 2 * angle)
+    Es_Carb4 = TsaiHill.turn_by_angle(Es_Carb, 3 * angle)
 
     angles = np.arange(0, 2 * np.pi, 0.001)
-    Es_Glass = TH_Glass.get_E(angles)
-    Es_Carb = TH_Carb.get_E(angles)
+    Es_Glass = th_glass.get_E(angles)
+    Es_Carb = th_carb.get_E(angles)
 
     #%%
     fig, ax = plt.subplots(subplot_kw={"projection": "polar"})
@@ -485,7 +485,7 @@ if __name__ == "__main__":
     Es = frac * Es_Carb.copy()
     ax.plot(angles, Es_Carb, label="Carbon {}°".format(0), linewidth=0.5, alpha=0.5)
     for degree in degrees:
-        E_new = Tsai_Hill.turn_by_angle(Es_Carb, degree)
+        E_new = TsaiHill.turn_by_angle(Es_Carb, degree)
         Es += frac * E_new
         ax.plot(
             angles,

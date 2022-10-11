@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
-from Stiffness import *
-from Methods import *
+from stiffness import *
+from methods import *
 from fiberpy import *
 from fiberoripy import *
 
@@ -12,17 +12,17 @@ if __name__ == "__main__":
     Glass_fiber = Isotropy(80e9, 0.22)
     Polyamid6 = Isotropy(1.18e9, 0.35)
 
-    MT = Mori_Tanaka(Polyamid6, Carbon_fiber, 0.25, 347)
-    MT2 = Mori_Tanaka(Polyamid6, Glass_fiber, 0.25, 225)
+    MT = MoriTanaka(Polyamid6, Carbon_fiber, 0.25, 347)
+    MT2 = MoriTanaka(Polyamid6, Glass_fiber, 0.25, 225)
     C_eff = MT.get_effective_stiffness()
     C2_eff = MT2.get_effective_stiffness()
     S_eff = np.linalg.inv(C_eff)
     S2_eff = np.linalg.inv(C2_eff)
 
-    from Stiffness_Plot import plot_E_body, polar_plot_E_body, polar_plot
-    from Tsai_Hill import *
+    from stiffness_plot import plot_E_body, polar_plot_E_body, polar_plot
+    from TsaiHill import *
 
-    TH_Carb = Tsai_Hill(
+    TH_Carb = TsaiHill(
         242 * 1e9,
         1.18 * 1e9,
         105 * 1e9,
@@ -92,9 +92,7 @@ if __name__ == "__main__":
     polar_plot([pC + ("MT UD",), p2 + ("MT planar iso",), p3 + ("PA6",)])
 
     #%% Hybrid
-    MTH = Mori_Tanaka(
-        Polyamid6, [Glass_fiber, Carbon_fiber], [0.125, 0.125], [225, 347]
-    )
+    MTH = MoriTanaka(Polyamid6, [Glass_fiber, Carbon_fiber], [0.125, 0.125], [225, 347])
     C_eff_H = MTH.get_effective_stiffness()
     S_eff_H = np.linalg.inv(C_eff_H)
 

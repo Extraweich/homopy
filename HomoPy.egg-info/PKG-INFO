@@ -1,8 +1,8 @@
 Metadata-Version: 2.1
-Name: HomoPy
-Version: 0.2
+Name: homopy
+Version: 0.2.1
 Summary: Your solution for stiffness problems
-Home-page: https://github.com/Extraweich/HomoPy
+Home-page: https://github.com/Extraweich/homopy
 Author: Nicolas Christ
 Author-email: nicolas.christ@kit.edu
 Classifier: Programming Language :: Python :: 3

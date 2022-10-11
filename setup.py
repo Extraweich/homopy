@@ -5,19 +5,20 @@ with open("README.md", "r") as fh:
 
 
 setuptools.setup(
-     name='HomoPy',  
-     version='0.2',
-     author="Nicolas Christ",
-     author_email="nicolas.christ@kit.edu",
-     description="Your solution for stiffness problems",
-     long_description=long_description,
-     long_description_content_type="text/markdown",
-     url="https://github.com/Extraweich/HomoPy",
-     packages=["HomoPy"],
-     install_requires=["numpy","matplotlib","scipy"],
-     classifiers=[
-         "Programming Language :: Python :: 3",
-         "License :: OSI Approved :: MIT License",
-         "Operating System :: OS Independent",
-     ],
- )
+    name="homopy",
+    version="0.2.1",
+    author="Nicolas Christ",
+    author_email="nicolas.christ@kit.edu",
+    description="Your solution for stiffness problems",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
+    url="https://github.com/Extraweich/homopy",
+    packages=["homopy"],
+    install_requires=["numpy", "matplotlib", "scipy"],
+    classifiers=[
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+    ],
+)
+

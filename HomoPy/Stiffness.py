@@ -1,5 +1,5 @@
 import numpy as np
-from HomoPy.Tensor import Tensor
+from homopy.tensor import Tensor
 
 
 class Elasticity(Tensor):
@@ -26,7 +26,7 @@ class Elasticity(Tensor):
         self.stiffness66 = np.zeros((6, 6))
 
 
-class Transverse_Isotropy(Elasticity):
+class TransverseIsotropy(Elasticity):
     """
     Transverse Isotropy class to express transverse-isotropic elasitc stiffness tensors.
     The class inherits from the Elasticity class.
@@ -112,7 +112,7 @@ class Transverse_Isotropy(Elasticity):
         self.stiffness3333 = self.mandel2tensor(self.stiffness66)
 
 
-class Isotropy(Transverse_Isotropy):
+class Isotropy(TransverseIsotropy):
     """
     Isotropy class to express isotropic elasitc stiffness tensors.
     The class inherits from the Transverse Isotropy class.

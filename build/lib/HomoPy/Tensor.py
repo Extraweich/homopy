@@ -80,7 +80,7 @@ class Tensor:
         """
         return np.einsum("ij,kl->ijkl", bi, bj)
 
-    def tensorProduct(self, tensorA, tensorB):
+    def tensor_product(self, tensorA, tensorB):
         """
         Return the mapping of one tensor of 2nd order to another in the
         normalized Voigt notation.
