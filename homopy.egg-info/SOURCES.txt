@@ -1,0 +1,15 @@
+LICENCE
+README.md
+setup.py
+homopy/__init__.py
+homopy/elasticity.py
+homopy/methods.py
+homopy/mori_tanaka.py
+homopy/stiffness.py
+homopy/stiffness_plot.py
+homopy/tensor.py
+homopy.egg-info/PKG-INFO
+homopy.egg-info/SOURCES.txt
+homopy.egg-info/dependency_links.txt
+homopy.egg-info/requires.txt
+homopy.egg-info/top_level.txt

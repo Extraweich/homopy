@@ -1,5 +1,5 @@
 import numpy as np
-from homopy.tensor import Tensor
+from .tensor import Tensor
 
 
 class Elasticity(Tensor):

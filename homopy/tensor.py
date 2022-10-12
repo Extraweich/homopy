@@ -80,27 +80,76 @@ class Tensor:
         """
         return np.einsum("ij,kl->ijkl", bi, bj)
 
-    def tensor_product(self, tensorA, tensorB):
+    def tensor_product(self, tensor_a, tensor_b):
         """
-        Return the mapping of one tensor of 2nd order to another in the
+        Return the mapping of one tensor of 4th order to another in the
         normalized Voigt notation.
 
         Parameters:
-            - tensorA : ndarray of shape(6, 6)
+            - tensor_a : ndarray of shape(6, 6)
                 Tensor #1.
-            - tensorB : ndarray of shape(6, 6)
+            - tensor_b : ndarray of shape(6, 6)
                 Tensor #2
 
         Returns:
             - ... : ndarray of shape(6,6)
                 Resulting mapping.
         """
-        return np.einsum("ij,jk->ik", tensorA, tensorB)
+        return np.einsum("ij,jk->ik", tensor_a, tensor_b)
+
+    def matrix2voigt(self, matrix):
+        """
+        Return the Voigt notation of a tensor of 2nd order
+        calculated from the regular tensor notation.
+
+        Parameters:
+            - matrix : ndarray of shape(3, 3)
+                Tensor in regular tensor notation.
+
+        Returns:
+            - ... : ndarray of shape(6, 1)
+                Tensor in Voigt notation.
+        """
+        return np.array(
+            [
+                matrix[0, 0],
+                matrix[1, 1],
+                matrix[2, 2],
+                matrix[1, 2],
+                matrix[0, 2],
+                matrix[0, 1],
+            ]
+        )
+
+    def matrix2mandel(self, matrix):
+        """
+        Return the normalized Voigt notation of a tensor of 2nd order
+        calculated from the regular tensor notation.
+
+        Parameters:
+            - matrix : ndarray of shape(3, 3)
+                Tensor in regular tensor notation.
+
+        Returns:
+            - ... : ndarray of shape(6, 1)
+                Tensor in normalized Voigt notation.
+        """
+        b = np.sqrt(2)
+        return np.array(
+            [
+                matrix[0, 0],
+                matrix[1, 1],
+                matrix[2, 2],
+                b * matrix[1, 2],
+                b * matrix[0, 2],
+                b * matrix[0, 1],
+            ]
+        )
 
     def tensor2mandel(self, tensor):
         """
-        Return the normalized Voigt notation of a tensor calculated from
-        the regular tensor notation.
+        Return the normalized Voigt (Mandel) notation of a tensor of 4th
+        order calculated fromthe regular tensor notation.
 
         Parameters:
             - tensor : ndarray of shape(3, 3, 3, 3)
@@ -168,7 +217,7 @@ class Tensor:
     def mandel2tensor(self, mandel):
         """
         Return the regular tensor notation of a tensor calculated from
-        the normalized Voigt notation.
+        the normalized Voigt (Mandel) notation.
 
         Parameters:
             - mandel : ndarray of shape(6, 6)

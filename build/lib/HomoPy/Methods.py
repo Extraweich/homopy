@@ -117,7 +117,7 @@ class MoriTanaka(Tensor):
         """
         nu = self.matrix.nu
         a = a_ratio
-        a2 = a ** 2
+        a2 = a**2
         g = a / (a2 - 1) ** (3 / 2) * (a * (a2 - 1) ** (1 / 2) - np.arccosh(a))
         S = np.zeros((3, 3, 3, 3))
         S[0, 0, 0, 0] = (
@@ -328,7 +328,7 @@ class TsaiHill:
         else:
             p = 1 / 2 * np.log(np.pi / self.vol_f)
 
-        beta = np.sqrt(2 * np.pi * self.G_m / (self.E_f * (np.pi * self.r_f ** 2) * p))
+        beta = np.sqrt(2 * np.pi * self.G_m / (self.E_f * (np.pi * self.r_f**2) * p))
         nu1 = (self.E_f / self.E_m - 1) / (self.E_f / self.E_m + 2)
         nu2 = (self.G_f / self.G_m - 1) / (self.G_f / self.G_m + 1)
 
