@@ -2,9 +2,9 @@
 """
 Created on Thu Apr 28 16:24:54 2022
 
-@author: chri
+@author: nicolas.christ@kit.edu
 
-3D and Polar plot of Young's modulus body based on Böhlke, Brüggemann (2001)
+3D and Polar plot of Young's modulus body based on Böhlke, Brüggemann (2001).
 """
 
 import numpy as np

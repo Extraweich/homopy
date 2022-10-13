@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Apr 27 21:09:24 2022
+
+@author: nicolas.christ@kit.edu
+
+Tensor class for basic arithmetic operations.
+"""
+
 import numpy as np
 
 

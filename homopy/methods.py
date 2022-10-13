@@ -4,11 +4,12 @@ Created on Wed Apr 27 21:09:24 2022
 
 @author: nicolas.christ@kit.edu
 
-Mori-Tanaka Homogenization after Hohe (2020) and Seelig (2016).
+Mori-Tanaka Homogenization after Seelig (2016). Multi-inclusion implementation after Brylka (2017).
 Eshelby Tensor is taken from Tandon, Weng (1984) but can also be found in Seelig (2016).
+Halpin-Tsai homogenization after Fu, Lauke, Mai (2019, p. 143 ff.).
 
 Tested:
-    - Young's modulus for "almost"sphere (a = 1) in correspondance to Isotropic implementation (Übung MMM)
+    - Young's modulus for "almost"sphere (a = 1) in correspondance to Isotropic implementation.
 """
 
 import numpy as np
@@ -267,10 +268,10 @@ class MoriTanaka(Tensor):
         return self.tensor2mandel(C_eff_ave)
 
 
-class TsaiHill:
+class HalpinTsai:
     def __init__(self, E_f, E_m, G_f, G_m, nu_f, nu_m, l_f, r_f, vol_f, package="hex"):
         """
-        Class to perform the TsaiHill homogenization.
+        Class to perform the Halpin-Tsai homogenization.
 
         Parameters
         ----------
@@ -398,7 +399,7 @@ class TsaiHill:
 
 if __name__ == "__main__":
     #%% Testing
-    th_carb = TsaiHill(
+    th_carb = HalpinTsai(
         242 * 1e9,
         1.18 * 1e9,
         105 * 1e9,
@@ -409,7 +410,7 @@ if __name__ == "__main__":
         7.2 / 2 * 1e-6,
         0.25,
     )
-    th_glass = TsaiHill(
+    th_glass = HalpinTsai(
         80 * 1e9,
         1.18 * 1e9,
         33 * 1e9,
@@ -446,9 +447,9 @@ if __name__ == "__main__":
     angle_frac = int(angle / 360 * len(Es_Carb))
 
     # orientations = {0:0.7,20:0.2,45:0.1}
-    Es_Carb2 = TsaiHill.turn_by_angle(Es_Carb, angle)
-    Es_Carb3 = TsaiHill.turn_by_angle(Es_Carb, 2 * angle)
-    Es_Carb4 = TsaiHill.turn_by_angle(Es_Carb, 3 * angle)
+    Es_Carb2 = HalpinTsai.turn_by_angle(Es_Carb, angle)
+    Es_Carb3 = HalpinTsai.turn_by_angle(Es_Carb, 2 * angle)
+    Es_Carb4 = HalpinTsai.turn_by_angle(Es_Carb, 3 * angle)
 
     angles = np.arange(0, 2 * np.pi, 0.001)
     Es_Glass = th_glass.get_E(angles)
@@ -485,7 +486,7 @@ if __name__ == "__main__":
     Es = frac * Es_Carb.copy()
     ax.plot(angles, Es_Carb, label="Carbon {}°".format(0), linewidth=0.5, alpha=0.5)
     for degree in degrees:
-        E_new = TsaiHill.turn_by_angle(Es_Carb, degree)
+        E_new = HalpinTsai.turn_by_angle(Es_Carb, degree)
         Es += frac * E_new
         ax.plot(
             angles,

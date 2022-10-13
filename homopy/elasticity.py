@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Apr 27 21:09:24 2022
+
+@author: nicolas.christ@kit.edu
+
+Module that contains the linear elastic stiffness classes of Isotropy and Transverse Isotropy.
+"""
+
 import numpy as np
 from .tensor import Tensor
 
