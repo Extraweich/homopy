@@ -191,7 +191,7 @@ class ElasticPlot(Tensor):
             vec = self.dir_vec(theta, phi)
             E_temp = self.get_E(vec, S)
             E[i] = E_temp
-            rad[i] = i / n * 2 * np.pi
+            rad[i] = theta
 
         if plot == True:
             import matplotlib.pyplot as plt
@@ -234,62 +234,61 @@ class ElasticPlot(Tensor):
         ax.legend()
         plt.show()
 
+    def polar_plot_laminate(self, laminate_stiffness, o):
+        """
+        Polar plot stiffness body of laminate. This method should be used
+        for laminate results for the Halpin-Tsai homogenization.
 
-if __name__ == "__main__":
+        Parameters:
+        -----------
+            - laminate_stiffness : ndarray of shape(3, 3)
+                Planar stiffness matrix in Voigt or normalized Voigt
+                notation.
+            - o : int
+                Number of discretization steps for first angle.
+        """
+        n = int(o)
+        E = np.zeros(n + 1)
+        rad = np.zeros(n + 1)
 
-    # Example in Voigt Notation
-    E = 3
-    nu = 0.35
-    K = E / (3 * (1 - 2 * nu))
-    G = E / (2 * (1 + nu))
-    diag = K + 4 / 3 * G
-    offdiag = K - 2 / 3 * G
-    stiffness1 = np.array(
-        [
-            [diag, offdiag, offdiag, 0, 0, 0],
-            [offdiag, diag, offdiag, 0, 0, 0],
-            [offdiag, offdiag, diag, 0, 0, 0],
-            [0, 0, 0, G, 0, 0],
-            [0, 0, 0, 0, G, 0],
-            [0, 0, 0, 0, 0, G],
-        ]
-    )
-    compliance1 = np.linalg.inv(stiffness1)
+        A = laminate_stiffness
+        E11 = (A[0, 0] * A[1, 1] - A[0, 1] ** 2) / A[1, 1]
+        E22 = (A[1, 1] * A[2, 2] - A[1, 2] ** 2) / A[0, 0]
+        G12 = A[2, 2]
+        nu12 = A[0, 1] / A[1, 1]
 
-    E = 6
-    nu = 0.35
-    K = E / (3 * (1 - 2 * nu))
-    G = E / (2 * (1 + nu))
-    diag = K + 4 / 3 * G
-    offdiag = K - 2 / 3 * G
-    stiffness2 = np.array(
-        [
-            [diag, offdiag, offdiag, 0, 0, 0],
-            [offdiag, diag, offdiag, 0, 0, 0],
-            [offdiag, offdiag, diag, 0, 0, 0],
-            [0, 0, 0, G, 0, 0],
-            [0, 0, 0, 0, G, 0],
-            [0, 0, 0, 0, 0, G],
-        ]
-    )
-    compliance2 = np.linalg.inv(stiffness2)
+        for i in range(0, n + 1, 1):
+            theta = i / n * 2 * np.pi
+            E_temp = self.get_E(E11, E22, G12, nu12, theta)
+            E[i] = E_temp
+            rad[i] = theta
 
-    plotter = ElasticPlot(USEVOIGT=True)
+        import matplotlib.pyplot as plt
 
-    # Plot stiffness1 3D
-    plotter.plot_E_body(
-        compliance1,
-        100,
-        100,
-    )
+        fig, ax = plt.subplots(subplot_kw={"projection": "polar"})
+        ax.plot(rad, E)
+        ax.grid(True)
 
-    # Polar plot stiffness1 directly
-    plotter.polar_plot_E_body(compliance1, 100, 0)
+        ax.set_title("Young's modulus over angle", va="bottom")
+        plt.show()
 
-    # Polar plot multiple stiffness
-    p1 = plotter.polar_plot_E_body(compliance1, 100, 0, plot=False)
-    p2 = plotter.polar_plot_E_body(compliance2, 100, 0, plot=False)
+    def get_E(self, E11, E22, G12, nu12, theta):
+        """
+        Return Young's modulus of lamina as a function of angle omega.
 
-    plotter.polar_plot(
-        [p1 + ("Stiffness1",), p2 + ("Stiffness2",)]
-    )  # here the commas in paranthesis are important
+        Parameters
+        ----------
+        omega : float
+            Angle of orientation in radians.
+
+        Returns
+        -------
+        E : float
+            Young's modulus in angle direction
+        """
+        E = 1 / (
+            cos(theta) ** 4 / E11
+            + sin(theta) ** 4 / E22
+            + 1 / 4 * (1 / G12 - 2 * nu12 / E11) * sin(2 * theta) ** 2
+        )
+        return E

@@ -6,7 +6,9 @@ Created on Wed Apr 27 21:09:24 2022
 
 Mori-Tanaka Homogenization after Seelig (2016). Multi-inclusion implementation after Brylka (2017).
 Eshelby Tensor is taken from Tandon, Weng (1984) but can also be found in Seelig (2016).
-Halpin-Tsai homogenization after Fu, Lauke, Mai (2019, p. 143 ff.).
+Halpin-Tsai homogenization after Fu, Lauke, Mai (2019, p. 143 ff.). Also, the effective planar stiffness 
+matrix for the Halpin-Tsai homogenization is based on the laminate analogy approach after Fu, Lauke, Mai
+(2019, p. 155 ff.).
 
 Tested:
     - Young's modulus for "almost"sphere (a = 1) in correspondance to Isotropic implementation.
@@ -310,7 +312,7 @@ class HalpinTsai:
 
     def get_effective_parameters(self):
         """
-        Calculates the effective parameters for given constituent parameters.
+        Calculates the effective parameters of a single lamina for given constituent parameters.
 
         Raises
         ------
@@ -341,60 +343,127 @@ class HalpinTsai:
         self.nu12 = self.nu_f * self.vol_f + self.nu_m * (1 - self.vol_f)
         self.nu21 = self.nu12 * self.E22 / self.E11
 
-    def get_E(self, omega):
+    def get_stiffness(self):
         """
-        Return Young's modulus as a function of angle omega
-
-        Parameters
-        ----------
-        omega : float
-            Angle of orientation in radians.
+        Return the planar stiffness based on the effective parameters of a single lamina.
 
         Returns
         -------
-        E : float
-            Young's modulus in angle direction
+        C : ndarray of shape(3,3)
+            Planar stiffness of lamina.
         """
-        E = 1 / (
-            cos(omega) ** 4 / self.E11
-            + sin(omega) ** 4 / self.E22
-            + 1 / 4 * (1 / self.G12 - 2 * self.nu12 / self.E11) * sin(2 * omega) ** 2
+        Q11 = self.E11 / (1 - self.nu12 * self.nu21)
+        Q12 = self.nu21 * Q11
+        Q16 = 0
+        Q22 = self.E22 / (1 - self.nu12 * self.nu21)
+        Q26 = 0
+        Q66 = self.G12
+        C = np.array([[Q11, Q12, Q16], [Q12, Q22, Q26], [Q16, Q26, Q66]])
+        return C
+
+
+class Laminate:
+    def __init__(self, lamina_stiffnesses, angles, vol_fracs=None):
+        """
+        Class to average over n laminas from Halpin-Tsai homogenization.
+
+        Parameters
+        ----------
+        lamina_stiffnesses : array of shape (n,)
+            Individual stiffness of n laminas.
+        angles : array of shape (n,)
+            Individual angle of ith lamina in radians.
+        vol_fracs : array of shape (n,)
+            Volume fraction of ith lamina (must sum to 1). If None is given,
+            each lamina is averaged equally.
+        """
+        self.lamina_stiffnesses = lamina_stiffnesses
+        self.angles = angles
+        if not vol_fracs is None:
+            assert (
+                len(lamina_stiffnesses) == len(angles) == len(vol_fracs)
+            ), "Dimensions of lamina_stiffnesses, angles and vol_fracs do not match!"
+            self.vol_fracs = vol_fracs
+        else:
+            self.vol_fracs = (
+                1 / len(lamina_stiffnesses) * np.ones(len(lamina_stiffnesses))
+            )
+
+    def get_effective_stiffness(self):
+        """
+        Return effective stiffness of laminate.
+
+        Returns
+        -------
+        C_eff : ndarray of shape(3,3)
+            Effective stiffness of laminate.
+        """
+        C_eff_temp = np.zeros(6)
+        for i in range(len(self.lamina_stiffnesses)):
+            # rotate by angle
+            Q_temp = self.rotate_stiffness(self.lamina_stiffnesses[i], self.angles[i])
+            C_eff_temp += self.vol_fracs[i] * Q_temp
+        C_eff = np.array(
+            [
+                [C_eff_temp[0], C_eff_temp[2], C_eff_temp[4]],
+                [C_eff_temp[2], C_eff_temp[1], C_eff_temp[5]],
+                [C_eff_temp[4], C_eff_temp[5], C_eff_temp[3]],
+            ]
         )
-        return E
+        return C_eff
 
-    def get_accumulated_E(self, orientations):
+    def rotate_stiffness(self, lamina_stiffness, angle):
         """
-        Return accumulated Young's modulus
+        Return planarly rotated stiffness matrix.
 
         Parameters
         ----------
-        orientations : dict of type float as in {angle, vol_frac}
-            Volume fractions of discrete angles.
+        lamina_stiffness : ndarray of shape(3, 3)
+            Stiffness matrix of lamina.
+        angle : float
+            Planar angle to rotate the stiffness matrix about.
 
         Returns
         -------
-        E_acc : float
-            Effective Young's modulus.
+        rot_stiffness : ndarray of shape(3, 3)
+            Rotated stiffness matrix.
         """
-        frac_acc = 0
-        E_acc = 0
-        for angle, frac in orientations:
-            frac_acc = frac
-            E = self.get_E(angle)
-            E_acc += E * frac
-
-        if frac_acc != 1:
-            warnings.warn("The accumulated volume fraction is not equal to 1")
-        return E_acc
-
-    @staticmethod
-    def turn_by_angle(Es, angle):
-        l = len(Es)
-        angle_frac = int(angle / 360 * l)
-        Es_copy = Es.copy()
-        Es_copy[0:angle_frac] = Es[-angle_frac:].copy()
-        Es_copy[angle_frac:] = Es[:-angle_frac].copy()
-        return Es_copy
+        m = cos(angle)
+        n = sin(angle)
+        rot_mat = np.array(
+            [
+                [m**4, n**4, 2 * m**2 * n**2, 4 * m**2 * n**2],
+                [n**4, m**4, 2 * m**2 * n**2, 4 * m**2 * n**2],
+                [
+                    m**2 * n**2,
+                    m**2 * n**2,
+                    m**4 + n**4,
+                    -4 * m**2 * n**2,
+                ],
+                [
+                    m**2 * n**2,
+                    m**2 * n**2,
+                    -2 * m**2 * n**2,
+                    (m**2 - n**2) ** 2,
+                ],
+                [
+                    m**3 * n,
+                    -m * n**3,
+                    m * n**3 - m**3 * n,
+                    2 * (m * n**3 - m**3 * n),
+                ],
+                [
+                    m * n**3,
+                    -(m**3) * n,
+                    m**3 * n - m * n**3,
+                    2 * (m**3 * n - m * n**3),
+                ],
+            ]
+        )
+        Q = lamina_stiffness
+        flat_stiffness = np.array([Q[0, 0], Q[1, 1], Q[1, 0], Q[2, 2]])
+        rot_stiffness = np.einsum("ij,j->i", rot_mat, flat_stiffness)
+        return rot_stiffness
 
 
 if __name__ == "__main__":
