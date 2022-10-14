@@ -1,7 +1,7 @@
 # HomoPy
 *Your solution for stiffness problems*
 
-HomoPy is a Python package to perform caluclations of effective stiffness properties in homogenized materials, with an emphasize on fiber reinforced polymers.
+HomoPy is a Python package to perform calculations of effective stiffness properties in homogenized materials, with an emphasize on fiber reinforced polymers. Furthermore, the package offers visualisation tools for elastic stiffness tensors, so called Young's modulus' bodies. These allow a comparison of angle dependent stiffnesses of different materials.
 Currently, HomoPy offers two types of homogenization procedures:
 - Halpin-Tsai with a Shear-Lag modification
 - Mori-Tanaka
