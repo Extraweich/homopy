@@ -9,6 +9,7 @@ Created on Thu Apr 28 16:24:54 2022
 
 import numpy as np
 from .tensor import Tensor
+from .methods import Laminate
 
 sin = np.sin
 cos = np.cos
@@ -253,13 +254,13 @@ class ElasticPlot(Tensor):
 
         A = laminate_stiffness
         E11 = (A[0, 0] * A[1, 1] - A[0, 1] ** 2) / A[1, 1]
-        E22 = (A[1, 1] * A[2, 2] - A[1, 2] ** 2) / A[0, 0]
+        E22 = (A[0, 0] * A[1, 1] - A[0, 1] ** 2) / A[0, 0]
         G12 = A[2, 2]
         nu12 = A[0, 1] / A[1, 1]
 
         for i in range(0, n + 1, 1):
             theta = i / n * 2 * np.pi
-            E_temp = self.get_E(E11, E22, G12, nu12, theta)
+            E_temp = self.get_E_lamina(E11, E22, G12, nu12, A, theta)
             E[i] = E_temp
             rad[i] = theta
 
@@ -272,7 +273,7 @@ class ElasticPlot(Tensor):
         ax.set_title("Young's modulus over angle", va="bottom")
         plt.show()
 
-    def get_E(self, E11, E22, G12, nu12, theta):
+    def get_E_lamina(self, E11, E22, G12, nu12, A, theta):
         """
         Return Young's modulus of lamina as a function of angle omega.
 
@@ -291,4 +292,9 @@ class ElasticPlot(Tensor):
             + sin(theta) ** 4 / E22
             + 1 / 4 * (1 / G12 - 2 * nu12 / E11) * sin(2 * theta) ** 2
         )
+
+        A_rotated = Laminate.rotate_stiffness(A, theta)
+
+        E = (A_rotated[0] * A_rotated[1] - A_rotated[2] ** 2) / A_rotated[1]
+
         return E

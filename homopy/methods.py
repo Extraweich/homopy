@@ -412,7 +412,8 @@ class Laminate:
         )
         return C_eff
 
-    def rotate_stiffness(self, lamina_stiffness, angle):
+    @staticmethod
+    def rotate_stiffness(lamina_stiffness, angle):
         """
         Return planarly rotated stiffness matrix.
 
