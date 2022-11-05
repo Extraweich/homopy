@@ -235,7 +235,7 @@ class ElasticPlot(Tensor):
         ax.legend()
         plt.show()
 
-    def polar_plot_laminate(self, laminate_stiffness, o, limit=None):
+    def polar_plot_laminate(self, laminate_stiffness, o, limit=None, plot=True):
         """
         Polar plot stiffness body of laminate. This method should be used
         for laminate results for the Halpin-Tsai homogenization.
@@ -249,6 +249,15 @@ class ElasticPlot(Tensor):
                 Number of discretization steps for first angle.
             - limit : float
                 Limit of radial axis in polar plot.
+            - plot : boolean
+                Determines whether the plot will be displayed. If False,
+                the metadata of the plot will be returned instead.
+
+        Returns:
+            - rad : ndarray of shape(n+1,)
+                Angular positions for polar plot.
+            - E : ndarray of shape(n+1,)
+                Sitffness at corresponding angle.
         """
         n = int(o)
         E = np.zeros(n + 1)
@@ -262,16 +271,19 @@ class ElasticPlot(Tensor):
             E[i] = E_temp
             rad[i] = theta
 
-        import matplotlib.pyplot as plt
+        if plot == True:
+            import matplotlib.pyplot as plt
 
-        fig, ax = plt.subplots(subplot_kw={"projection": "polar"})
-        ax.plot(rad, E)
-        if limit is not None:
-            ax.set_ylim([0, limit])
-        ax.grid(True)
+            fig, ax = plt.subplots(subplot_kw={"projection": "polar"})
+            ax.plot(rad, E)
+            if limit is not None:
+                ax.set_ylim([0, limit])
+            ax.grid(True)
 
-        ax.set_title("Young's modulus over angle", va="bottom")
-        plt.show()
+            ax.set_title("Young's modulus over angle", va="bottom")
+            plt.show()
+        else:
+            return rad, E
 
     def get_E_laminate(self, C, theta):
         """
