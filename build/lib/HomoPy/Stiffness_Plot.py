@@ -235,7 +235,7 @@ class ElasticPlot(Tensor):
         ax.legend()
         plt.show()
 
-    def polar_plot_laminate(self, laminate_stiffness, o):
+    def polar_plot_laminate(self, laminate_stiffness, o, limit=None):
         """
         Polar plot stiffness body of laminate. This method should be used
         for laminate results for the Halpin-Tsai homogenization.
@@ -247,20 +247,18 @@ class ElasticPlot(Tensor):
                 notation.
             - o : int
                 Number of discretization steps for first angle.
+            - limit : float
+                Limit of radial axis in polar plot.
         """
         n = int(o)
         E = np.zeros(n + 1)
         rad = np.zeros(n + 1)
 
-        A = laminate_stiffness
-        E11 = (A[0, 0] * A[1, 1] - A[0, 1] ** 2) / A[1, 1]
-        E22 = (A[0, 0] * A[1, 1] - A[0, 1] ** 2) / A[0, 0]
-        G12 = A[2, 2]
-        nu12 = A[0, 1] / A[1, 1]
+        C = laminate_stiffness
 
         for i in range(0, n + 1, 1):
             theta = i / n * 2 * np.pi
-            E_temp = self.get_E_lamina(E11, E22, G12, nu12, A, theta)
+            E_temp = self.get_E_laminate(C, theta)
             E[i] = E_temp
             rad[i] = theta
 
@@ -268,12 +266,14 @@ class ElasticPlot(Tensor):
 
         fig, ax = plt.subplots(subplot_kw={"projection": "polar"})
         ax.plot(rad, E)
+        if limit is not None:
+            ax.set_ylim([0, limit])
         ax.grid(True)
 
         ax.set_title("Young's modulus over angle", va="bottom")
         plt.show()
 
-    def get_E_lamina(self, E11, E22, G12, nu12, A, theta):
+    def get_E_laminate(self, C, theta):
         """
         Return Young's modulus of lamina as a function of angle omega.
 
@@ -287,14 +287,19 @@ class ElasticPlot(Tensor):
         E : float
             Young's modulus in angle direction
         """
-        E = 1 / (
-            cos(theta) ** 4 / E11
-            + sin(theta) ** 4 / E22
-            + 1 / 4 * (1 / G12 - 2 * nu12 / E11) * sin(2 * theta) ** 2
-        )
+        C_inv = np.linalg.inv(C)
 
-        A_rotated = Laminate.rotate_stiffness(A, theta)
+        phi = np.pi / 2
+        vec = self.dir_vec(theta, phi)
 
-        E = (A_rotated[0] * A_rotated[1] - A_rotated[2] ** 2) / A_rotated[1]
+        didi = self.diade(vec, vec)
+        didi_flat = self.matrix_reduction(didi)
+        if self.USEVOIGT == False:
+            b = 1 / np.sqrt(2)
+        else:
+            b = 1
+        didi_reduced = np.array([didi_flat[0], didi_flat[1], b * didi_flat[5]])
+
+        E = np.einsum("i,ij,j->", didi_reduced, C_inv, didi_reduced) ** (-1)
 
         return E

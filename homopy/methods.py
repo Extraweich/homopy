@@ -462,7 +462,7 @@ class Laminate:
             ]
         )
         Q = lamina_stiffness
-        flat_stiffness = np.array([Q[0, 0], Q[1, 1], Q[1, 0], Q[2, 2]])
+        flat_stiffness = np.array([Q[0, 0], Q[1, 1], Q[0, 1], Q[2, 2]])
         rot_stiffness = np.einsum("ij,j->i", rot_mat, flat_stiffness)
         return rot_stiffness
 
