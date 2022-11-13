@@ -144,7 +144,7 @@ class ElasticPlot(Tensor):
             x,
             y,
             z,
-            cmap=cm.viridis,
+            color="c",
         )
 
         if not bound[0] == 0:
