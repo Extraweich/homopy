@@ -90,7 +90,7 @@ class ElasticPlot(Tensor):
         """
         return np.array([cos(phi) * sin(theta), sin(phi) * sin(theta), cos(theta)])
 
-    def plot_E_body(self, S, o, p, bound=[0, 0, 0]):
+    def plot_E_body(self, S, o, p, bound=[0, 0, 0], rcount=200, ccount=200):
         """
         Plot stiffness body.
 
@@ -105,6 +105,10 @@ class ElasticPlot(Tensor):
             - bound : array of shape(3,), default=[0,0,0]
                 Boundaries for the 3 axis for the visualization.
                 If [0,0,0], boundaries are set automatically.
+            - rcount, ccount : int
+                Maximum number of samples used in each direction.
+                If the input data is larger, it will be downsampled
+                (by slicing) to these numbers of points. Defaults to 200.
 
         Returns:
             - None
@@ -141,10 +145,7 @@ class ElasticPlot(Tensor):
         ax.set_zlabel("E33")
 
         ax.plot_surface(
-            x,
-            y,
-            z,
-            cmap=cm.viridis,
+            x, y, z, cmap=cm.viridis, antialiased=True, rcount=rcount, ccount=ccount
         )
 
         if not bound[0] == 0:
