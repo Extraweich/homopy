@@ -270,6 +270,9 @@ class MoriTanaka(Tensor):
         return self.tensor2mandel(C_eff_ave)
 
     def is_symmetric(self):
+        """
+        Print the symmetry status of the effective stiffness.
+        """
         stiffness = self.get_effective_stiffness()
         # transform to Mandel notation
         stiffness[3:6, 0:3] *= np.sqrt(2)
