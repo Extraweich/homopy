@@ -74,21 +74,21 @@ class ElasticPlot(Tensor):
         didi = self.matrix_reduction(self.diade(di, di))
         return self.get_reciprocal_E(didi, S) ** (-1)
 
-    def dir_vec(self, theta, phi):
+    def dir_vec(self, phi, theta):
         """
         Return directional vector based on angular parametrization.
 
         Parameters:
-            - theta : float
-                First angle.
             - phi : float
-                Second angle.
+                First angle in [0, 2*pi].
+            - theta : float
+                Second angle in [0, pi].
 
         Returns:
             - ... : ndarray of shape(3,)
                 Directional vector.
         """
-        return np.array([cos(theta) * sin(phi), sin(theta) * sin(phi), cos(phi)])
+        return np.array([cos(phi) * sin(theta), sin(phi) * sin(theta), cos(theta)])
 
     def plot_E_body(self, S, o, p, bound=[0, 0, 0]):
         """
@@ -116,9 +116,9 @@ class ElasticPlot(Tensor):
         E_z = np.zeros((n + 1, m + 1))
         for i in range(0, n + 1, 1):
             for j in range(0, m + 1, 1):
-                theta = i / n * 2 * np.pi
-                phi = j / m * np.pi
-                vec = self.dir_vec(theta, phi)
+                phi = i / n * 2 * np.pi
+                theta = j / m * np.pi
+                vec = self.dir_vec(phi, theta)
                 E = self.get_E(vec, S)
                 E_x[i, j] = E * vec[0]
                 E_y[i, j] = E * vec[1]
@@ -186,13 +186,13 @@ class ElasticPlot(Tensor):
         E = np.zeros(n + 1)
         rad = np.zeros(n + 1)
 
-        phi = np.pi / 2 + angle  # changing angle does not work yet
+        theta = np.pi / 2 + angle  # changing angle does not work yet
         for i in range(0, n + 1, 1):
-            theta = i / n * 2 * np.pi
-            vec = self.dir_vec(theta, phi)
+            phi = i / n * 2 * np.pi
+            vec = self.dir_vec(phi, theta)
             E_temp = self.get_E(vec, S)
             E[i] = E_temp
-            rad[i] = theta
+            rad[i] = phi
 
         if plot == True:
             import matplotlib.pyplot as plt
@@ -267,10 +267,10 @@ class ElasticPlot(Tensor):
         C = laminate_stiffness
 
         for i in range(0, n + 1, 1):
-            theta = i / n * 2 * np.pi
-            E_temp = self.get_E_laminate(C, theta)
+            phi = i / n * 2 * np.pi
+            E_temp = self.get_E_laminate(C, phi)
             E[i] = E_temp
-            rad[i] = theta
+            rad[i] = phi
 
         if plot == True:
             import matplotlib.pyplot as plt
@@ -286,7 +286,7 @@ class ElasticPlot(Tensor):
         else:
             return rad, E
 
-    def get_E_laminate(self, C, theta):
+    def get_E_laminate(self, C, phi):
         """
         Return Young's modulus of lamina as a function of angle omega.
 
@@ -302,8 +302,8 @@ class ElasticPlot(Tensor):
         """
         C_inv = np.linalg.inv(C)
 
-        phi = np.pi / 2
-        vec = self.dir_vec(theta, phi)
+        theta = np.pi / 2
+        vec = self.dir_vec(phi, theta)
 
         didi = self.diade(vec, vec)
         didi_flat = self.matrix_reduction(didi)
