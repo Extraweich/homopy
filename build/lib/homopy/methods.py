@@ -269,6 +269,43 @@ class MoriTanaka(Tensor):
         )
         return self.tensor2mandel(C_eff_ave)
 
+    def is_symmetric(self):
+        stiffness = self.get_effective_stiffness()
+        # transform to Mandel notation
+        stiffness[3:6, 0:3] *= np.sqrt(2)
+        stiffness[0:3, 3:6] *= np.sqrt(2)
+        stiffness[3:6, 3:6] *= 2
+        stiffness = self.mandel2tensor(stiffness)
+        left_minor = np.einsum("ijkl->jikl", stiffness)
+        right_minor = np.einsum("ijkl->ijlk", stiffness)
+        major = np.einsum("ijkl->klij", stiffness)
+        if np.linalg.norm(stiffness - left_minor) < 1e-3:
+            print("Left minor symmetry: passed")
+        else:
+            print("Left minor symmetry: failed")
+            print(
+                "The residuum was: res = {}".format(
+                    np.linalg.norm(stiffness - left_minor)
+                )
+            )
+        if np.linalg.norm(stiffness - right_minor) < 1e-3:
+            print("Right minor symmetry: passed")
+        else:
+            print("Right minor symmetry: failed")
+            print(
+                "The residuum was: res = {}".format(
+                    np.linalg.norm(stiffness - right_minor)
+                )
+            )
+        if np.linalg.norm(stiffness - major) < 1e-3:
+            print("Major symmetry: passed")
+        else:
+            print("Major symmetry: failed")
+            print(
+                "The residuum was: res = {}".format(np.linalg.norm(stiffness - major))
+            )
+        print("\n")
+
 
 class HalpinTsai:
     def __init__(self, E_f, E_m, G_f, G_m, nu_f, nu_m, l_f, r_f, vol_f, package="hex"):

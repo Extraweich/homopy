@@ -212,7 +212,8 @@ class ElasticPlot(Tensor):
     def polar_plot(self, data):
         """
         Polar plot of multiple Stiffness bodies in one plot. For this
-        use the data generated from polar_plot_E_body with plot=False.
+        use the data generated from polar_plot_E_body or polar_plot_laminate
+        with plot=False.
 
         Parameters:
             - data: list
