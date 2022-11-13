@@ -23,6 +23,6 @@ Further topic related methods of the package:
 [3] S.-Y. Fu, G. Xu, Y.-W. Mai, *On the elastic modulus of hybrid particle/short-fiber/polymer composites*, Composites Part B: Engineering 33 (4) (2002) 291–299. doi:10.1016/S1359-8368(02)00013-6. \
 [4] S.-Y. Fu, B. Lauke, Y.-W. Mai, *Science and engineering of short fibre-reinforced polymer composites*, Woodhead Publishing (2019). \
 [5] T. Mori, K. Tanaka, *Average stress in matrix and average elastic energy of materials with misfitting inclusions*, Acta Metallurgica 21 (5) (1973), 571-574. \
-[6] J.-D. Eshelby, *The determination of the elastic field of an ellipsoidal inclusion, and related problems*, Proceedings of the Royal Society of London A 241 (1957), 376–396.
+[6] J.-D. Eshelby, *The determination of the elastic field of an ellipsoidal inclusion, and related problems*, Proceedings of the Royal Society of London A 241 (1957), 376–396. \
 [7] Y. P. Qiu, G. J. Weng, *On the application of mori-tanaka’s theory involving transversely isotropic spheroidal inclusions*, International Journal of Engineering Science 28 (11) (1990) 1121-1137. doi:10.1016/00207225(90)90112-V. \
 [8] G. J. Weng, *The theoretical connection between mori-tanaka’s theory and the hashin-shtrikman-walpole bounds*, International Journal of Engineering Science 28 (11) (1990) 1111–1120. doi:10.1016/00207225(90)90111-U
