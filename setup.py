@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="homopy",
-    version="0.2.1",
+    version="1.0",
     author="Nicolas Christ",
     author_email="nicolas.christ@kit.edu",
     description="Your solution for stiffness problems",
@@ -21,4 +21,3 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
 )
-
