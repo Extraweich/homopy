@@ -60,6 +60,7 @@ class MoriTanaka(Tensor):
         Returns:
             - None
         """
+
         super().__init__()
         self.matrix = matrix
         self.fiber = fiber
@@ -116,11 +117,11 @@ class MoriTanaka(Tensor):
         Returns:
             - S : ndarray of shape(6, 6) or (3, 3, 3, 3)
                 Eshelby inclusion tensor.
-
         """
+
         nu = self.matrix.nu
         a = a_ratio
-        a2 = a**2
+        a2 = a ** 2
         g = a / (a2 - 1) ** (3 / 2) * (a * (a2 - 1) ** (1 / 2) - np.arccosh(a))
         S = np.zeros((3, 3, 3, 3))
         S[0, 0, 0, 0] = (
@@ -187,6 +188,7 @@ class MoriTanaka(Tensor):
             - C_eff : ndarray of shape (6, 6)
                 Homogenized stiffness tensor in the normalized Voigt notation.
         """
+
         if not type(self.fiber) == list:
             Cm_inv = np.linalg.inv(self.Cm)
             pol = self.Cf - self.Cm
@@ -230,6 +232,7 @@ class MoriTanaka(Tensor):
             - ... : ndarray of shape (6, 6)
                 Averaged stiffness tensor in the normalized Voigt notation.
         """
+
         if C_eff.shape == (6, 6):
             C_eff = self.mandel2tensor(C_eff)
 
@@ -273,6 +276,7 @@ class MoriTanaka(Tensor):
         """
         Print the symmetry status of the effective stiffness.
         """
+
         stiffness = self.get_effective_stiffness()
         # transform to Mandel notation
         stiffness[3:6, 0:3] *= np.sqrt(2)
@@ -311,6 +315,11 @@ class MoriTanaka(Tensor):
 
 
 class HalpinTsai:
+    """
+    Halpin Tsai class to calculate the homogenized stiffness for fiber reinforced
+    polymers as laminas. This is then used as input for the Laminate class.
+    """
+
     def __init__(self, E_f, E_m, G_f, G_m, nu_f, nu_m, l_f, r_f, vol_f, package="hex"):
         """
         Class to perform the Halpin-Tsai homogenization.
@@ -338,6 +347,7 @@ class HalpinTsai:
         package : String (default: hex), other options: square
             Package structure of fibers in composite.
         """
+
         self.E_f = E_f
         self.E_m = E_m
         self.G_f = G_f
@@ -363,6 +373,7 @@ class HalpinTsai:
         -------
         None.
         """
+
         if self.package != "hex" and self.package != "square":
             raise ValueError('Package must be either "hex" or "square"!')
 
@@ -371,7 +382,7 @@ class HalpinTsai:
         else:
             p = 1 / 2 * np.log(np.pi / self.vol_f)
 
-        beta = np.sqrt(2 * np.pi * self.G_m / (self.E_f * (np.pi * self.r_f**2) * p))
+        beta = np.sqrt(2 * np.pi * self.G_m / (self.E_f * (np.pi * self.r_f ** 2) * p))
         nu1 = (self.E_f / self.E_m - 1) / (self.E_f / self.E_m + 2)
         nu2 = (self.G_f / self.G_m - 1) / (self.G_f / self.G_m + 1)
 
@@ -392,6 +403,7 @@ class HalpinTsai:
         C : ndarray of shape(3,3)
             Planar stiffness of lamina.
         """
+
         Q11 = self.E11 / (1 - self.nu12 * self.nu21)
         Q12 = self.nu21 * Q11
         Q16 = 0
@@ -403,6 +415,11 @@ class HalpinTsai:
 
 
 class Laminate:
+    """
+    Laminate class to build an effective laminate from the Halpin Tsai
+    results.
+    """
+
     def __init__(self, lamina_stiffnesses, angles, vol_fracs=None):
         """
         Class to average over n laminas from Halpin-Tsai homogenization.
@@ -473,31 +490,31 @@ class Laminate:
         n = sin(angle)
         rot_mat = np.array(
             [
-                [m**4, n**4, 2 * m**2 * n**2, 4 * m**2 * n**2],
-                [n**4, m**4, 2 * m**2 * n**2, 4 * m**2 * n**2],
+                [m ** 4, n ** 4, 2 * m ** 2 * n ** 2, 4 * m ** 2 * n ** 2],
+                [n ** 4, m ** 4, 2 * m ** 2 * n ** 2, 4 * m ** 2 * n ** 2],
                 [
-                    m**2 * n**2,
-                    m**2 * n**2,
-                    m**4 + n**4,
-                    -4 * m**2 * n**2,
+                    m ** 2 * n ** 2,
+                    m ** 2 * n ** 2,
+                    m ** 4 + n ** 4,
+                    -4 * m ** 2 * n ** 2,
                 ],
                 [
-                    m**2 * n**2,
-                    m**2 * n**2,
-                    -2 * m**2 * n**2,
-                    (m**2 - n**2) ** 2,
+                    m ** 2 * n ** 2,
+                    m ** 2 * n ** 2,
+                    -2 * m ** 2 * n ** 2,
+                    (m ** 2 - n ** 2) ** 2,
                 ],
                 [
-                    m**3 * n,
-                    -m * n**3,
-                    m * n**3 - m**3 * n,
-                    2 * (m * n**3 - m**3 * n),
+                    m ** 3 * n,
+                    -m * n ** 3,
+                    m * n ** 3 - m ** 3 * n,
+                    2 * (m * n ** 3 - m ** 3 * n),
                 ],
                 [
-                    m * n**3,
-                    -(m**3) * n,
-                    m**3 * n - m * n**3,
-                    2 * (m**3 * n - m * n**3),
+                    m * n ** 3,
+                    -(m ** 3) * n,
+                    m ** 3 * n - m * n ** 3,
+                    2 * (m ** 3 * n - m * n ** 3),
                 ],
             ]
         )
@@ -505,107 +522,3 @@ class Laminate:
         flat_stiffness = np.array([Q[0, 0], Q[1, 1], Q[0, 1], Q[2, 2]])
         rot_stiffness = np.einsum("ij,j->i", rot_mat, flat_stiffness)
         return rot_stiffness
-
-
-if __name__ == "__main__":
-    #%% Testing
-    th_carb = HalpinTsai(
-        242 * 1e9,
-        1.18 * 1e9,
-        105 * 1e9,
-        0.4 * 1e9,
-        0.1,
-        0.35,
-        2.5 * 1e-3,
-        7.2 / 2 * 1e-6,
-        0.25,
-    )
-    th_glass = HalpinTsai(
-        80 * 1e9,
-        1.18 * 1e9,
-        33 * 1e9,
-        0.4 * 1e9,
-        0.22,
-        0.35,
-        3.6 * 1e-3,
-        16 / 2 * 1e-6,
-        0.25,
-    )
-    E_Glass = th_glass.get_E(0) * 1e-9
-    E_Carb = th_carb.get_E(0) * 1e-9
-
-    #%% Polar plot
-    angles = np.arange(0, 2 * np.pi, 0.001)
-    Es_Glass = th_glass.get_E(angles)
-    Es_Carb = th_carb.get_E(angles)
-
-    fig, ax = plt.subplots(subplot_kw={"projection": "polar"})
-    ax.plot(angles, Es_Glass, label="HT Glass")
-    ax.plot(angles, Es_Carb, label="HT Carbon")
-    ax.plot(angles, 0.5 * (Es_Carb + Es_Glass), label="HT Hybrid")
-    ax.legend()
-    # ax.set_rmax(2)
-    # ax.set_rticks([0.5*1e10, 1*1e10, 1.5*1e10, 2*1e10])  # Less radial ticks
-    # ax.set_rlabel_position(-22.5)  # Move radial labels away from plotted line
-    ax.grid(True)
-
-    ax.set_title("Young's modulus of fiber reinforced PA6", va="bottom")
-    plt.show()
-
-    #%% With orientations
-    angle = 45
-    angle_frac = int(angle / 360 * len(Es_Carb))
-
-    # orientations = {0:0.7,20:0.2,45:0.1}
-    Es_Carb2 = HalpinTsai.turn_by_angle(Es_Carb, angle)
-    Es_Carb3 = HalpinTsai.turn_by_angle(Es_Carb, 2 * angle)
-    Es_Carb4 = HalpinTsai.turn_by_angle(Es_Carb, 3 * angle)
-
-    angles = np.arange(0, 2 * np.pi, 0.001)
-    Es_Glass = th_glass.get_E(angles)
-    Es_Carb = th_carb.get_E(angles)
-
-    #%%
-    fig, ax = plt.subplots(subplot_kw={"projection": "polar"})
-    ax.plot(angles, Es_Carb, label="Carbon {}°".format(angle * 1))
-    ax.plot(angles, Es_Carb2, label="Carbon {}°".format(angle * 2))
-    ax.plot(angles, Es_Carb3, label="Carbon {}°".format(angle * 3))
-    ax.plot(angles, Es_Carb4, label="Carbon {}°".format(angle * 4))
-    ax.plot(
-        angles,
-        (0.25 * Es_Carb + 0.25 * Es_Carb2 + 0.25 * Es_Carb3 + 0.25 * Es_Carb4),
-        linewidth=3,
-        label="Carbon Homogenized",
-    )
-    ax.legend()
-    # ax.set_rmax(2)
-    # ax.set_rticks([0.5*1e10, 1*1e10, 1.5*1e10, 2*1e10])  # Less radial ticks
-    # ax.set_rlabel_position(-22.5)  # Move radial labels away from plotted line
-    ax.grid(True)
-
-    ax.set_title("Young's modulus of fiber reinforced PA6", va="bottom")
-    plt.show()
-
-    #%% Isotropic plot
-    n = 31
-    angles = np.arange(0, 2 * np.pi, 0.001)
-    degrees = np.linspace(180.0 / (n + 1), 180 - 180.0 / (n + 1), n)
-    Es = np.zeros(len(Es_Carb))
-    fig, ax = plt.subplots(subplot_kw={"projection": "polar"})
-    frac = 1.0 / (len(degrees) + 1)
-    Es = frac * Es_Carb.copy()
-    ax.plot(angles, Es_Carb, label="Carbon {}°".format(0), linewidth=0.5, alpha=0.5)
-    for degree in degrees:
-        E_new = HalpinTsai.turn_by_angle(Es_Carb, degree)
-        Es += frac * E_new
-        ax.plot(
-            angles,
-            E_new,
-            label="Carbon {}°".format(angle * 1),
-            linewidth=0.5,
-            alpha=0.5,
-        )
-    ax.plot(angles, Es, label="Carbon Homogenized", linewidth=3, color="#20b2aa")
-    ax.grid(True)
-    ax.set_title("Young's modulus of fiber reinforced PA6", va="bottom")
-    plt.show()

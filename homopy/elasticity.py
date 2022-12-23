@@ -86,7 +86,7 @@ class TransverseIsotropy(Elasticity):
 
     def get_stiffness(self):
         """
-        Calculate the stiffness parameters for both notation.
+        Calculate the stiffness parameters for both notations.
 
         Parameters:
             - None

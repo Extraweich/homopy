@@ -16,7 +16,23 @@ cos = np.cos
 
 
 class ElasticPlot(Tensor):
+    """
+    Plot class to visualize tensorial results.
+    """
+
     def __init__(self, USEVOIGT=False):
+        """
+        Initialize the object.
+
+        Parameters:
+            - USEVOIGT : boolean
+                Flag which determines the usage of Voigt (USEVOIGT=True),
+                or Normalized Voigt / Mandel (USEVOIGT=False).
+
+        Return:
+            - None
+        """
+
         self.USEVOIGT = USEVOIGT
         super().__init__()
 
@@ -33,6 +49,7 @@ class ElasticPlot(Tensor):
             - ... : ndarray of shape(6,19
                 Tensor in Voigt or normalized Voigt notation.
         """
+
         if self.USEVOIGT:
             return self.matrix2voigt(matrix)
         else:
@@ -54,6 +71,7 @@ class ElasticPlot(Tensor):
             - ... : float
                 Scalar compliance value in direction of di.
         """
+
         return np.einsum("i,ij,j->", didi, S, didi)
 
     def get_E(self, di, S):
@@ -71,6 +89,7 @@ class ElasticPlot(Tensor):
             - ... : float
                 Scalar stiffness value in direction of didi.
         """
+
         didi = self.matrix_reduction(self.diade(di, di))
         return self.get_reciprocal_E(didi, S) ** (-1)
 
@@ -88,6 +107,7 @@ class ElasticPlot(Tensor):
             - ... : ndarray of shape(3,)
                 Directional vector.
         """
+
         return np.array([cos(phi) * sin(theta), sin(phi) * sin(theta), cos(theta)])
 
     def plot_E_body(self, S, o, p, bound=[0, 0, 0], rcount=200, ccount=200):
@@ -113,6 +133,7 @@ class ElasticPlot(Tensor):
         Returns:
             - None
         """
+
         n = int(o)
         m = int(p)
         E_x = np.zeros((n + 1, m + 1))
@@ -183,6 +204,7 @@ class ElasticPlot(Tensor):
             - E : ndarray of shape(n+1,)
                 Sitffness at corresponding angle.
         """
+
         n = int(o)
         E = np.zeros(n + 1)
         rad = np.zeros(n + 1)
@@ -224,6 +246,7 @@ class ElasticPlot(Tensor):
         Returns:
             - None
         """
+
         import matplotlib.pyplot as plt
 
         fig, ax = plt.subplots(subplot_kw={"projection": "polar"})
@@ -261,6 +284,7 @@ class ElasticPlot(Tensor):
             - E : ndarray of shape(n+1,)
                 Sitffness at corresponding angle.
         """
+
         n = int(o)
         E = np.zeros(n + 1)
         rad = np.zeros(n + 1)
@@ -293,7 +317,9 @@ class ElasticPlot(Tensor):
 
         Parameters
         ----------
-        omega : float
+        C : ndarray of shape (3, 3)
+            Stiffness of laminate in default (orthonormal) coordinate system.
+        phi : float
             Angle of orientation in radians.
 
         Returns
@@ -301,6 +327,7 @@ class ElasticPlot(Tensor):
         E : float
             Young's modulus in angle direction
         """
+
         C_inv = np.linalg.inv(C)
 
         theta = np.pi / 2

@@ -17,6 +17,7 @@
         <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/sphinx_highlight.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -40,6 +41,15 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="source/statement_of_need.html">Statement of need</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="source/example_notebooks.html">Examples</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="source/tensor.html">tensor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source/elasticity.html">elasticity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source/methods.html">methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source/stiffness_plot.html">stiffness_plot</a></li>
 </ul>
 
         </div>
@@ -66,21 +76,76 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="welcome-to-homopy-s-documentation">
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="welcome-to-homopy-s-documentation">
 <h1>Welcome to HomoPy’s documentation!<a class="headerlink" href="#welcome-to-homopy-s-documentation" title="Permalink to this heading"></a></h1>
+<p><em>Your solution for stiffness problems!</em></p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="source/statement_of_need.html">Statement of need</a></li>
 </ul>
 </div>
 </section>
-<section id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this heading"></a></h1>
-<ul class="simple">
-<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
-<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
-<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+<section id="examples">
+<h1>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="source/example_notebooks.html">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="source/examples/MT_HT_plot.html">General example</a></li>
 </ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="code">
+<h1>Code<a class="headerlink" href="#code" title="Permalink to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="source/tensor.html">tensor</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="source/tensor.html#homopy.tensor.Tensor"><code class="docutils literal notranslate"><span class="pre">Tensor</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="source/elasticity.html">elasticity</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="source/elasticity.html#homopy.elasticity.Elasticity"><code class="docutils literal notranslate"><span class="pre">Elasticity</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/elasticity.html#homopy.elasticity.TransverseIsotropy"><code class="docutils literal notranslate"><span class="pre">TransverseIsotropy</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/elasticity.html#homopy.elasticity.Isotropy"><code class="docutils literal notranslate"><span class="pre">Isotropy</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="source/methods.html">methods</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="source/methods.html#homopy.methods.MoriTanaka"><code class="docutils literal notranslate"><span class="pre">MoriTanaka</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/methods.html#homopy.methods.HalpinTsai"><code class="docutils literal notranslate"><span class="pre">HalpinTsai</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/methods.html#homopy.methods.Laminate"><code class="docutils literal notranslate"><span class="pre">Laminate</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="source/stiffness_plot.html">stiffness_plot</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="source/stiffness_plot.html#homopy.stiffness_plot.ElasticPlot"><code class="docutils literal notranslate"><span class="pre">ElasticPlot</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
 </section>
 <section id="installing">
 <h1>Installing<a class="headerlink" href="#installing" title="Permalink to this heading"></a></h1>

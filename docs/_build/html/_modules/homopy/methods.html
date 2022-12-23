@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>homopy.methods &mdash; HomoPy  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> HomoPy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../source/statement_of_need.html">Statement of need</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../source/example_notebooks.html">Examples</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../source/tensor.html">tensor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../source/elasticity.html">elasticity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../source/methods.html">methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../source/stiffness_plot.html">stiffness_plot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">HomoPy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">homopy.methods</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for homopy.methods</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Created on Wed Apr 27 21:09:24 2022</span>
+
+<span class="sd">@author: nicolas.christ@kit.edu</span>
+
+<span class="sd">Mori-Tanaka Homogenization after Seelig (2016). Multi-inclusion implementation after Brylka (2017).</span>
+<span class="sd">Eshelby Tensor is taken from Tandon, Weng (1984) but can also be found in Seelig (2016).</span>
+<span class="sd">Halpin-Tsai homogenization after Fu, Lauke, Mai (2019, p. 143 ff.). Also, the effective planar stiffness </span>
+<span class="sd">matrix for the Halpin-Tsai homogenization is based on the laminate analogy approach after Fu, Lauke, Mai</span>
+<span class="sd">(2019, p. 155 ff.).</span>
+
+<span class="sd">Tested:</span>
+<span class="sd">    - Young&#39;s modulus for &quot;almost&quot;sphere (a = 1) in correspondance to Isotropic implementation.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">homopy.tensor</span> <span class="kn">import</span> <span class="n">Tensor</span>
+
+<span class="n">sin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span>
+<span class="n">cos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span>
+<span class="n">tanh</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tanh</span>
+
+
+<div class="viewcode-block" id="MoriTanaka"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.MoriTanaka">[docs]</a><span class="k">class</span> <span class="nc">MoriTanaka</span><span class="p">(</span><span class="n">Tensor</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Mori Tanaka class to calculate the homogenized stiffness for fiber reinforced</span>
+<span class="sd">    polymers with possibly different types of inclusions. The class inherits from</span>
+<span class="sd">    the Tensor class.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="MoriTanaka.__init__"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.MoriTanaka.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">matrix</span><span class="p">,</span> <span class="n">fiber</span><span class="p">,</span> <span class="n">v_frac</span><span class="p">,</span> <span class="n">a_ratio</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the object and call super class initialization.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            - matrix : class object of the Elasticity class (or any child class)</span>
+<span class="sd">                Polymer matrix material.</span>
+<span class="sd">            - fiber : class object of the Elasticity class (or any child class)</span>
+<span class="sd">                      or list of objects of the Elasticity class</span>
+<span class="sd">                Fiber material.</span>
+<span class="sd">            - v_frac : float</span>
+<span class="sd">                Volume fraction of the fiber material within the matrix</span>
+<span class="sd">                material.</span>
+<span class="sd">            - a_ratio : float</span>
+<span class="sd">                Aspect ratio of the fiber material.</span>
+
+<span class="sd">        Object variables:</span>
+<span class="sd">            - matrix : class object of the Elasticity class (or any child class)</span>
+<span class="sd">                Polymer matrix material.</span>
+<span class="sd">            - fiber : class object of the Elasticity class (or any child class)</span>
+<span class="sd">                Fiber material.</span>
+<span class="sd">            - Cm : ndarray of shape(6, 6)</span>
+<span class="sd">                Stiffness of matrix material in normalized Voigt notation.</span>
+<span class="sd">            - eye : ndarray of shape(6, 6)</span>
+<span class="sd">                Identity tensor in normalized Voigt notation.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            - None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">matrix</span> <span class="o">=</span> <span class="n">matrix</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fiber</span> <span class="o">=</span> <span class="n">fiber</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Cm</span> <span class="o">=</span> <span class="n">matrix</span><span class="o">.</span><span class="n">stiffness66</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eye</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+
+        <span class="c1"># when the fiber parameter is a list, differnt types of inclusions are considered</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">type</span><span class="p">(</span><span class="n">fiber</span><span class="p">)</span> <span class="o">==</span> <span class="nb">list</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fiber</span> <span class="o">=</span> <span class="n">fiber</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Cf</span> <span class="o">=</span> <span class="n">fiber</span><span class="o">.</span><span class="n">stiffness66</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">v_frac</span> <span class="o">=</span> <span class="n">v_frac</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">a_ratio</span> <span class="o">=</span> <span class="n">a_ratio</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">eshelby66</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_eshelby</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">a_ratio</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="p">(</span>
+                <span class="nb">len</span><span class="p">(</span><span class="n">fiber</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">v_frac</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">a_ratio</span><span class="p">)</span>
+            <span class="p">),</span> <span class="s2">&quot;Dimensions of stiffnesses, v_fracs and a_ratios do not match!&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">nr_constituents</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">fiber</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">A_f_alpha</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pol_alpha</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">c_alpha</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="nb">list</span><span class="p">()</span>
+            <span class="p">)</span>  <span class="c1"># vol_frac of phase alpha in reference to total inclusion vol_frac</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">c_f</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">v_frac</span><span class="p">)</span>
+
+            <span class="n">Cm_inv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Cm</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nr_constituents</span><span class="p">):</span>
+                <span class="n">Cf_alpha</span> <span class="o">=</span> <span class="n">fiber</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">stiffness66</span>
+                <span class="n">pol</span> <span class="o">=</span> <span class="n">Cf_alpha</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cm</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">pol_alpha</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pol</span><span class="p">)</span>
+                <span class="n">S</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_eshelby</span><span class="p">(</span><span class="n">a_ratio</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                <span class="n">A_inv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eye</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">tensor_product</span><span class="p">(</span>
+                    <span class="n">S</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tensor_product</span><span class="p">(</span><span class="n">Cm_inv</span><span class="p">,</span> <span class="n">pol</span><span class="p">)</span>
+                <span class="p">)</span>
+                <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A_inv</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">A_f_alpha</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">c_alpha</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v_frac</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">c_f</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MoriTanaka.get_eshelby"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.MoriTanaka.get_eshelby">[docs]</a>    <span class="k">def</span> <span class="nf">get_eshelby</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a_ratio</span><span class="p">,</span> <span class="n">return_dim</span><span class="o">=</span><span class="s2">&quot;66&quot;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s2">&quot;ellipsoid&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the Eshelby tensor according to the fiber type.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            - a_ratio : float</span>
+<span class="sd">                Aspect ratio of fiber.</span>
+<span class="sd">            - return_dim : string, default=&#39;66&#39;</span>
+<span class="sd">                Flag to determine whether the tensor should be returned in</span>
+<span class="sd">                normalized Voigt or regular tensor notation (options: &#39;66&#39;, &#39;3333&#39;)</span>
+<span class="sd">            - shape : string, default=&#39;ellipsoid&#39;</span>
+<span class="sd">                Flag to determine which assumptions are taken into consideration</span>
+<span class="sd">                for the geometry of the fiber. So far not in use...</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            - S : ndarray of shape(6, 6) or (3, 3, 3, 3)</span>
+<span class="sd">                Eshelby inclusion tensor.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">nu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">matrix</span><span class="o">.</span><span class="n">nu</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">a_ratio</span>
+        <span class="n">a2</span> <span class="o">=</span> <span class="n">a</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="n">a</span> <span class="o">/</span> <span class="p">(</span><span class="n">a2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="mi">3</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="p">(</span><span class="n">a2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">arccosh</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+        <span class="n">S</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+        <span class="n">S</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="mi">1</span>
+            <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">nu</span><span class="p">))</span>
+            <span class="o">*</span> <span class="p">(</span>
+                <span class="mi">1</span>
+                <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">nu</span>
+                <span class="o">+</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">a2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">a2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="o">-</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">nu</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">a2</span> <span class="o">/</span> <span class="p">(</span><span class="n">a2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="n">g</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">S</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="mi">3</span> <span class="o">/</span> <span class="p">(</span><span class="mi">8</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">nu</span><span class="p">))</span> <span class="o">*</span> <span class="n">a2</span> <span class="o">/</span> <span class="p">(</span><span class="n">a2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="o">+</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">nu</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">nu</span> <span class="o">-</span> <span class="mi">9</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="p">(</span><span class="n">a2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)))</span> <span class="o">*</span> <span class="n">g</span>
+        <span class="p">)</span>
+        <span class="n">S</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">S</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">S</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="mi">1</span>
+            <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">nu</span><span class="p">))</span>
+            <span class="o">*</span> <span class="p">(</span><span class="n">a2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">a2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">nu</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="p">(</span><span class="n">a2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)))</span> <span class="o">*</span> <span class="n">g</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">S</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">S</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+        <span class="n">S</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="o">-</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">nu</span><span class="p">))</span> <span class="o">*</span> <span class="n">a2</span> <span class="o">/</span> <span class="p">(</span><span class="n">a2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="o">+</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">nu</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">a2</span> <span class="o">/</span> <span class="p">(</span><span class="n">a2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">nu</span><span class="p">))</span> <span class="o">*</span> <span class="n">g</span>
+        <span class="p">)</span>
+        <span class="n">S</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">S</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">S</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="o">-</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">nu</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">nu</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">a2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+            <span class="o">+</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">nu</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">nu</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">a2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)))</span> <span class="o">*</span> <span class="n">g</span>
+        <span class="p">)</span>
+        <span class="n">S</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">S</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">S</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="mi">1</span>
+            <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">nu</span><span class="p">))</span>
+            <span class="o">*</span> <span class="p">(</span><span class="n">a2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">a2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">nu</span> <span class="o">-</span> <span class="mi">3</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="p">(</span><span class="n">a2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)))</span> <span class="o">*</span> <span class="n">g</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">S</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">S</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+        <span class="n">S</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="mi">1</span>
+            <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">nu</span><span class="p">))</span>
+            <span class="o">*</span> <span class="p">(</span>
+                <span class="mi">1</span>
+                <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">nu</span>
+                <span class="o">-</span> <span class="p">(</span><span class="n">a2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">a2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="o">-</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">nu</span> <span class="o">-</span> <span class="mi">3</span> <span class="o">*</span> <span class="p">(</span><span class="n">a2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">a2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="n">g</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">S</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">S</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">return_dim</span> <span class="o">==</span> <span class="s2">&quot;66&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tensor2mandel</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">return_dim</span> <span class="o">==</span> <span class="s2">&quot;3333&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">S</span></div>
+
+<div class="viewcode-block" id="MoriTanaka.get_effective_stiffness"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.MoriTanaka.get_effective_stiffness">[docs]</a>    <span class="k">def</span> <span class="nf">get_effective_stiffness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the effective stiffness of a inhomogeneous material.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            - None</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            - C_eff : ndarray of shape (6, 6)</span>
+<span class="sd">                Homogenized stiffness tensor in the normalized Voigt notation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fiber</span><span class="p">)</span> <span class="o">==</span> <span class="nb">list</span><span class="p">:</span>
+            <span class="n">Cm_inv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Cm</span><span class="p">)</span>
+            <span class="n">pol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cf</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cm</span>
+            <span class="n">A_inv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eye</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">tensor_product</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">eshelby66</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tensor_product</span><span class="p">(</span><span class="n">Cm_inv</span><span class="p">,</span> <span class="n">pol</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="c1"># A = np.linalg.inv(A_inv)</span>
+            <span class="n">C_eff</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cm</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">v_frac</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">tensor_product</span><span class="p">(</span>
+                <span class="n">pol</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v_frac</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">eye</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">v_frac</span><span class="p">)</span> <span class="o">*</span> <span class="n">A_inv</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">pol_A_ave</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+            <span class="n">A_ave</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+            <span class="c1"># calculating the averages</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nr_constituents</span><span class="p">):</span>
+                <span class="n">A_ave</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">c_alpha</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">A_f_alpha</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="n">pol_A_ave</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">c_alpha</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">tensor_product</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">pol_alpha</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">A_f_alpha</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="p">)</span>
+
+            <span class="n">C_eff</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cm</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">tensor_product</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">c_f</span> <span class="o">*</span> <span class="n">pol_A_ave</span><span class="p">,</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">c_f</span> <span class="o">*</span> <span class="n">A_ave</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">c_f</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">eye</span><span class="p">),</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">C_eff</span></div>
+
+<div class="viewcode-block" id="MoriTanaka.get_average_stiffness"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.MoriTanaka.get_average_stiffness">[docs]</a>    <span class="k">def</span> <span class="nf">get_average_stiffness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">C_eff</span><span class="p">,</span> <span class="n">N2</span><span class="p">,</span> <span class="n">N4</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the averaged effective stiffness based on orientation tensors.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            - C_eff : ndarray of shape(6, 6) or (3, 3, 3, 3)</span>
+<span class="sd">                Effective stiffness in normalized Voigt or regular tensor notation.</span>
+<span class="sd">            - N2 : ndarray of shape(3, 3)</span>
+<span class="sd">                Orientation tensor of 2nd order.</span>
+<span class="sd">            - N4 : ndarray of shape(3, 3, 3, 3)</span>
+<span class="sd">                Orientation tensor of 4th order.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            - ... : ndarray of shape (6, 6)</span>
+<span class="sd">                Averaged stiffness tensor in the normalized Voigt notation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">C_eff</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">):</span>
+            <span class="n">C_eff</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mandel2tensor</span><span class="p">(</span><span class="n">C_eff</span><span class="p">)</span>
+
+        <span class="n">b1</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">C_eff</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+            <span class="o">+</span> <span class="n">C_eff</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">C_eff</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="o">-</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">C_eff</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="n">b2</span> <span class="o">=</span> <span class="n">C_eff</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">C_eff</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+        <span class="n">b3</span> <span class="o">=</span> <span class="n">C_eff</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">C_eff</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">C_eff</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="n">b4</span> <span class="o">=</span> <span class="n">C_eff</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+        <span class="n">b5</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">C_eff</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">C_eff</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+
+        <span class="n">eye2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+        <span class="n">C_eff_ave</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">b1</span> <span class="o">*</span> <span class="n">N4</span>
+            <span class="o">+</span> <span class="n">b2</span>
+            <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ij,kl-&gt;ijkl&quot;</span><span class="p">,</span> <span class="n">N2</span><span class="p">,</span> <span class="n">eye2</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ij,kl-&gt;ijkl&quot;</span><span class="p">,</span> <span class="n">eye2</span><span class="p">,</span> <span class="n">N2</span><span class="p">))</span>
+            <span class="o">+</span> <span class="n">b3</span>
+            <span class="o">*</span> <span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ik,lj-&gt;ijkl&quot;</span><span class="p">,</span> <span class="n">N2</span><span class="p">,</span> <span class="n">eye2</span><span class="p">)</span>
+                <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ik,lj-&gt;ijlk&quot;</span><span class="p">,</span> <span class="n">N2</span><span class="p">,</span> <span class="n">eye2</span><span class="p">)</span>
+                <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ik,lj-&gt;klij&quot;</span><span class="p">,</span> <span class="n">eye2</span><span class="p">,</span> <span class="n">N2</span><span class="p">)</span>
+                <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ik,lj-&gt;ijlk&quot;</span><span class="p">,</span> <span class="n">eye2</span><span class="p">,</span> <span class="n">N2</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="o">+</span> <span class="n">b4</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ij,kl-&gt;ijkl&quot;</span><span class="p">,</span> <span class="n">eye2</span><span class="p">,</span> <span class="n">eye2</span><span class="p">))</span>
+            <span class="o">+</span> <span class="mi">2</span>
+            <span class="o">*</span> <span class="n">b5</span>
+            <span class="o">*</span> <span class="mi">1</span>
+            <span class="o">/</span> <span class="mi">2</span>
+            <span class="o">*</span> <span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ik,lj-&gt;ijkl&quot;</span><span class="p">,</span> <span class="n">eye2</span><span class="p">,</span> <span class="n">eye2</span><span class="p">)</span>
+                <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ik,lj-&gt;ijlk&quot;</span><span class="p">,</span> <span class="n">eye2</span><span class="p">,</span> <span class="n">eye2</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tensor2mandel</span><span class="p">(</span><span class="n">C_eff_ave</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MoriTanaka.is_symmetric"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.MoriTanaka.is_symmetric">[docs]</a>    <span class="k">def</span> <span class="nf">is_symmetric</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Print the symmetry status of the effective stiffness.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">stiffness</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_effective_stiffness</span><span class="p">()</span>
+        <span class="c1"># transform to Mandel notation</span>
+        <span class="n">stiffness</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">*=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">stiffness</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span> <span class="o">*=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">stiffness</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span> <span class="o">*=</span> <span class="mi">2</span>
+        <span class="n">stiffness</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mandel2tensor</span><span class="p">(</span><span class="n">stiffness</span><span class="p">)</span>
+        <span class="n">left_minor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ijkl-&gt;jikl&quot;</span><span class="p">,</span> <span class="n">stiffness</span><span class="p">)</span>
+        <span class="n">right_minor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ijkl-&gt;ijlk&quot;</span><span class="p">,</span> <span class="n">stiffness</span><span class="p">)</span>
+        <span class="n">major</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ijkl-&gt;klij&quot;</span><span class="p">,</span> <span class="n">stiffness</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">stiffness</span> <span class="o">-</span> <span class="n">left_minor</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1e-3</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Left minor symmetry: passed&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Left minor symmetry: failed&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s2">&quot;The residuum was: res = </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">stiffness</span> <span class="o">-</span> <span class="n">left_minor</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">stiffness</span> <span class="o">-</span> <span class="n">right_minor</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1e-3</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Right minor symmetry: passed&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Right minor symmetry: failed&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s2">&quot;The residuum was: res = </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">stiffness</span> <span class="o">-</span> <span class="n">right_minor</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">stiffness</span> <span class="o">-</span> <span class="n">major</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1e-3</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Major symmetry: passed&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Major symmetry: failed&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s2">&quot;The residuum was: res = </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">stiffness</span> <span class="o">-</span> <span class="n">major</span><span class="p">))</span>
+            <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="HalpinTsai"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.HalpinTsai">[docs]</a><span class="k">class</span> <span class="nc">HalpinTsai</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Halpin Tsai class to calculate the homogenized stiffness for fiber reinforced</span>
+<span class="sd">    polymers as laminas. This is then used as input for the Laminate class.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="HalpinTsai.__init__"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.HalpinTsai.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">E_f</span><span class="p">,</span> <span class="n">E_m</span><span class="p">,</span> <span class="n">G_f</span><span class="p">,</span> <span class="n">G_m</span><span class="p">,</span> <span class="n">nu_f</span><span class="p">,</span> <span class="n">nu_m</span><span class="p">,</span> <span class="n">l_f</span><span class="p">,</span> <span class="n">r_f</span><span class="p">,</span> <span class="n">vol_f</span><span class="p">,</span> <span class="n">package</span><span class="o">=</span><span class="s2">&quot;hex&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Class to perform the Halpin-Tsai homogenization.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        E_f : Float</span>
+<span class="sd">            Young&#39;s modulus of fiber.</span>
+<span class="sd">        E_m : Float</span>
+<span class="sd">            Young&#39;s modulus of matrix.</span>
+<span class="sd">        G_f : Float</span>
+<span class="sd">            Shear modulus of fiber.</span>
+<span class="sd">        G_m : Float</span>
+<span class="sd">            Shear modulus of matrix.</span>
+<span class="sd">        nu_f : Float</span>
+<span class="sd">            Poisson ratio of fiber.</span>
+<span class="sd">        nu_m : Float</span>
+<span class="sd">            Poisson ratio of matrix.</span>
+<span class="sd">        l_f : Float</span>
+<span class="sd">            Average length of fiber.</span>
+<span class="sd">        r_f : Float</span>
+<span class="sd">            Average radius of fiber.</span>
+<span class="sd">        vol_f : Float</span>
+<span class="sd">            Poisson ratio of matrix.</span>
+<span class="sd">        package : String (default: hex), other options: square</span>
+<span class="sd">            Package structure of fibers in composite.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">E_f</span> <span class="o">=</span> <span class="n">E_f</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">E_m</span> <span class="o">=</span> <span class="n">E_m</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">G_f</span> <span class="o">=</span> <span class="n">G_f</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">G_m</span> <span class="o">=</span> <span class="n">G_m</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nu_f</span> <span class="o">=</span> <span class="n">nu_f</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nu_m</span> <span class="o">=</span> <span class="n">nu_m</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">l_f</span> <span class="o">=</span> <span class="n">l_f</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">r_f</span> <span class="o">=</span> <span class="n">r_f</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vol_f</span> <span class="o">=</span> <span class="n">vol_f</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">package</span> <span class="o">=</span> <span class="n">package</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_effective_parameters</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="HalpinTsai.get_effective_parameters"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.HalpinTsai.get_effective_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">get_effective_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates the effective parameters of a single lamina for given constituent parameters.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            Package can only be &quot;hex&quot; or &quot;square&quot;.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">package</span> <span class="o">!=</span> <span class="s2">&quot;hex&quot;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">package</span> <span class="o">!=</span> <span class="s2">&quot;square&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Package must be either &quot;hex&quot; or &quot;square&quot;!&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">package</span> <span class="o">==</span> <span class="s2">&quot;hex&quot;</span><span class="p">:</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">vol_f</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">vol_f</span><span class="p">)</span>
+
+        <span class="n">beta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">G_m</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">E_f</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">r_f</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">p</span><span class="p">))</span>
+        <span class="n">nu1</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">E_f</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">E_m</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">E_f</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">E_m</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">nu2</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">G_f</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">G_m</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">G_f</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">G_m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">E11</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">E_f</span> <span class="o">*</span> <span class="p">(</span>
+            <span class="mi">1</span> <span class="o">-</span> <span class="n">tanh</span><span class="p">(</span><span class="n">beta</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">l_f</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">beta</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">l_f</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">vol_f</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">E_m</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">vol_f</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">E22</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">E_m</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">nu1</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">vol_f</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">nu1</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">vol_f</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">G12</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">G_m</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">nu2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">vol_f</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">nu2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">vol_f</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nu12</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu_f</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">vol_f</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu_m</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">vol_f</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nu21</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu12</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">E22</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">E11</span></div>
+
+<div class="viewcode-block" id="HalpinTsai.get_stiffness"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.HalpinTsai.get_stiffness">[docs]</a>    <span class="k">def</span> <span class="nf">get_stiffness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the planar stiffness based on the effective parameters of a single lamina.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        C : ndarray of shape(3,3)</span>
+<span class="sd">            Planar stiffness of lamina.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">Q11</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">E11</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu12</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu21</span><span class="p">)</span>
+        <span class="n">Q12</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu21</span> <span class="o">*</span> <span class="n">Q11</span>
+        <span class="n">Q16</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">Q22</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">E22</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu12</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu21</span><span class="p">)</span>
+        <span class="n">Q26</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">Q66</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">G12</span>
+        <span class="n">C</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">Q11</span><span class="p">,</span> <span class="n">Q12</span><span class="p">,</span> <span class="n">Q16</span><span class="p">],</span> <span class="p">[</span><span class="n">Q12</span><span class="p">,</span> <span class="n">Q22</span><span class="p">,</span> <span class="n">Q26</span><span class="p">],</span> <span class="p">[</span><span class="n">Q16</span><span class="p">,</span> <span class="n">Q26</span><span class="p">,</span> <span class="n">Q66</span><span class="p">]])</span>
+        <span class="k">return</span> <span class="n">C</span></div></div>
+
+
+<div class="viewcode-block" id="Laminate"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.Laminate">[docs]</a><span class="k">class</span> <span class="nc">Laminate</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Laminate class to build an effective laminate from the Halpin Tsai</span>
+<span class="sd">    results.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Laminate.__init__"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.Laminate.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lamina_stiffnesses</span><span class="p">,</span> <span class="n">angles</span><span class="p">,</span> <span class="n">vol_fracs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Class to average over n laminas from Halpin-Tsai homogenization.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        lamina_stiffnesses : array of shape (n,)</span>
+<span class="sd">            Individual stiffness of n laminas.</span>
+<span class="sd">        angles : array of shape (n,)</span>
+<span class="sd">            Individual angle of ith lamina in radians.</span>
+<span class="sd">        vol_fracs : array of shape (n,)</span>
+<span class="sd">            Volume fraction of ith lamina (must sum to 1). If None is given,</span>
+<span class="sd">            each lamina is averaged equally.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lamina_stiffnesses</span> <span class="o">=</span> <span class="n">lamina_stiffnesses</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">angles</span> <span class="o">=</span> <span class="n">angles</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">vol_fracs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="p">(</span>
+                <span class="nb">len</span><span class="p">(</span><span class="n">lamina_stiffnesses</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">angles</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">vol_fracs</span><span class="p">)</span>
+            <span class="p">),</span> <span class="s2">&quot;Dimensions of lamina_stiffnesses, angles and vol_fracs do not match!&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">vol_fracs</span> <span class="o">=</span> <span class="n">vol_fracs</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">vol_fracs</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="mi">1</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">lamina_stiffnesses</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">lamina_stiffnesses</span><span class="p">))</span>
+            <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Laminate.get_effective_stiffness"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.Laminate.get_effective_stiffness">[docs]</a>    <span class="k">def</span> <span class="nf">get_effective_stiffness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return effective stiffness of laminate.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        C_eff : ndarray of shape(3,3)</span>
+<span class="sd">            Effective stiffness of laminate.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">C_eff_temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lamina_stiffnesses</span><span class="p">)):</span>
+            <span class="c1"># rotate by angle</span>
+            <span class="n">Q_temp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rotate_stiffness</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lamina_stiffnesses</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">angles</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">C_eff_temp</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vol_fracs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">Q_temp</span>
+        <span class="n">C_eff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="p">[</span><span class="n">C_eff_temp</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">C_eff_temp</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">C_eff_temp</span><span class="p">[</span><span class="mi">4</span><span class="p">]],</span>
+                <span class="p">[</span><span class="n">C_eff_temp</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">C_eff_temp</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">C_eff_temp</span><span class="p">[</span><span class="mi">5</span><span class="p">]],</span>
+                <span class="p">[</span><span class="n">C_eff_temp</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">C_eff_temp</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">C_eff_temp</span><span class="p">[</span><span class="mi">3</span><span class="p">]],</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">C_eff</span></div>
+
+<div class="viewcode-block" id="Laminate.rotate_stiffness"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.Laminate.rotate_stiffness">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">rotate_stiffness</span><span class="p">(</span><span class="n">lamina_stiffness</span><span class="p">,</span> <span class="n">angle</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return planarly rotated stiffness matrix.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        lamina_stiffness : ndarray of shape(3, 3)</span>
+<span class="sd">            Stiffness matrix of lamina.</span>
+<span class="sd">        angle : float</span>
+<span class="sd">            Planar angle to rotate the stiffness matrix about.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        rot_stiffness : ndarray of shape(3, 3)</span>
+<span class="sd">            Rotated stiffness matrix.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">cos</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
+        <span class="n">rot_mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="p">[</span><span class="n">m</span> <span class="o">**</span> <span class="mi">4</span><span class="p">,</span> <span class="n">n</span> <span class="o">**</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">m</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">n</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">m</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">n</span> <span class="o">**</span> <span class="mi">2</span><span class="p">],</span>
+                <span class="p">[</span><span class="n">n</span> <span class="o">**</span> <span class="mi">4</span><span class="p">,</span> <span class="n">m</span> <span class="o">**</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">m</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">n</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">m</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">n</span> <span class="o">**</span> <span class="mi">2</span><span class="p">],</span>
+                <span class="p">[</span>
+                    <span class="n">m</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">n</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span>
+                    <span class="n">m</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">n</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span>
+                    <span class="n">m</span> <span class="o">**</span> <span class="mi">4</span> <span class="o">+</span> <span class="n">n</span> <span class="o">**</span> <span class="mi">4</span><span class="p">,</span>
+                    <span class="o">-</span><span class="mi">4</span> <span class="o">*</span> <span class="n">m</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">n</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span>
+                <span class="p">],</span>
+                <span class="p">[</span>
+                    <span class="n">m</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">n</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span>
+                    <span class="n">m</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">n</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span>
+                    <span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">m</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">n</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span>
+                    <span class="p">(</span><span class="n">m</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">n</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span>
+                <span class="p">],</span>
+                <span class="p">[</span>
+                    <span class="n">m</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">n</span><span class="p">,</span>
+                    <span class="o">-</span><span class="n">m</span> <span class="o">*</span> <span class="n">n</span> <span class="o">**</span> <span class="mi">3</span><span class="p">,</span>
+                    <span class="n">m</span> <span class="o">*</span> <span class="n">n</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">-</span> <span class="n">m</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">n</span><span class="p">,</span>
+                    <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">m</span> <span class="o">*</span> <span class="n">n</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">-</span> <span class="n">m</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">n</span><span class="p">),</span>
+                <span class="p">],</span>
+                <span class="p">[</span>
+                    <span class="n">m</span> <span class="o">*</span> <span class="n">n</span> <span class="o">**</span> <span class="mi">3</span><span class="p">,</span>
+                    <span class="o">-</span><span class="p">(</span><span class="n">m</span> <span class="o">**</span> <span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="n">n</span><span class="p">,</span>
+                    <span class="n">m</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">n</span> <span class="o">-</span> <span class="n">m</span> <span class="o">*</span> <span class="n">n</span> <span class="o">**</span> <span class="mi">3</span><span class="p">,</span>
+                    <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">m</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">n</span> <span class="o">-</span> <span class="n">m</span> <span class="o">*</span> <span class="n">n</span> <span class="o">**</span> <span class="mi">3</span><span class="p">),</span>
+                <span class="p">],</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+        <span class="n">Q</span> <span class="o">=</span> <span class="n">lamina_stiffness</span>
+        <span class="n">flat_stiffness</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">Q</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">Q</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">Q</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">Q</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
+        <span class="n">rot_stiffness</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ij,j-&gt;i&quot;</span><span class="p">,</span> <span class="n">rot_mat</span><span class="p">,</span> <span class="n">flat_stiffness</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">rot_stiffness</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Nicolas Christ.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

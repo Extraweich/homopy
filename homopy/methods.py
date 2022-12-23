@@ -60,6 +60,7 @@ class MoriTanaka(Tensor):
         Returns:
             - None
         """
+
         super().__init__()
         self.matrix = matrix
         self.fiber = fiber
@@ -116,11 +117,11 @@ class MoriTanaka(Tensor):
         Returns:
             - S : ndarray of shape(6, 6) or (3, 3, 3, 3)
                 Eshelby inclusion tensor.
-
         """
+
         nu = self.matrix.nu
         a = a_ratio
-        a2 = a**2
+        a2 = a ** 2
         g = a / (a2 - 1) ** (3 / 2) * (a * (a2 - 1) ** (1 / 2) - np.arccosh(a))
         S = np.zeros((3, 3, 3, 3))
         S[0, 0, 0, 0] = (
@@ -187,6 +188,7 @@ class MoriTanaka(Tensor):
             - C_eff : ndarray of shape (6, 6)
                 Homogenized stiffness tensor in the normalized Voigt notation.
         """
+
         if not type(self.fiber) == list:
             Cm_inv = np.linalg.inv(self.Cm)
             pol = self.Cf - self.Cm
@@ -230,6 +232,7 @@ class MoriTanaka(Tensor):
             - ... : ndarray of shape (6, 6)
                 Averaged stiffness tensor in the normalized Voigt notation.
         """
+
         if C_eff.shape == (6, 6):
             C_eff = self.mandel2tensor(C_eff)
 
@@ -273,6 +276,7 @@ class MoriTanaka(Tensor):
         """
         Print the symmetry status of the effective stiffness.
         """
+
         stiffness = self.get_effective_stiffness()
         # transform to Mandel notation
         stiffness[3:6, 0:3] *= np.sqrt(2)
@@ -311,6 +315,11 @@ class MoriTanaka(Tensor):
 
 
 class HalpinTsai:
+    """
+    Halpin Tsai class to calculate the homogenized stiffness for fiber reinforced
+    polymers as laminas. This is then used as input for the Laminate class.
+    """
+
     def __init__(self, E_f, E_m, G_f, G_m, nu_f, nu_m, l_f, r_f, vol_f, package="hex"):
         """
         Class to perform the Halpin-Tsai homogenization.
@@ -338,6 +347,7 @@ class HalpinTsai:
         package : String (default: hex), other options: square
             Package structure of fibers in composite.
         """
+
         self.E_f = E_f
         self.E_m = E_m
         self.G_f = G_f
@@ -363,6 +373,7 @@ class HalpinTsai:
         -------
         None.
         """
+
         if self.package != "hex" and self.package != "square":
             raise ValueError('Package must be either "hex" or "square"!')
 
@@ -371,7 +382,7 @@ class HalpinTsai:
         else:
             p = 1 / 2 * np.log(np.pi / self.vol_f)
 
-        beta = np.sqrt(2 * np.pi * self.G_m / (self.E_f * (np.pi * self.r_f**2) * p))
+        beta = np.sqrt(2 * np.pi * self.G_m / (self.E_f * (np.pi * self.r_f ** 2) * p))
         nu1 = (self.E_f / self.E_m - 1) / (self.E_f / self.E_m + 2)
         nu2 = (self.G_f / self.G_m - 1) / (self.G_f / self.G_m + 1)
 
@@ -392,6 +403,7 @@ class HalpinTsai:
         C : ndarray of shape(3,3)
             Planar stiffness of lamina.
         """
+
         Q11 = self.E11 / (1 - self.nu12 * self.nu21)
         Q12 = self.nu21 * Q11
         Q16 = 0
@@ -403,6 +415,11 @@ class HalpinTsai:
 
 
 class Laminate:
+    """
+    Laminate class to build an effective laminate from the Halpin Tsai
+    results.
+    """
+
     def __init__(self, lamina_stiffnesses, angles, vol_fracs=None):
         """
         Class to average over n laminas from Halpin-Tsai homogenization.
@@ -473,31 +490,31 @@ class Laminate:
         n = sin(angle)
         rot_mat = np.array(
             [
-                [m**4, n**4, 2 * m**2 * n**2, 4 * m**2 * n**2],
-                [n**4, m**4, 2 * m**2 * n**2, 4 * m**2 * n**2],
+                [m ** 4, n ** 4, 2 * m ** 2 * n ** 2, 4 * m ** 2 * n ** 2],
+                [n ** 4, m ** 4, 2 * m ** 2 * n ** 2, 4 * m ** 2 * n ** 2],
                 [
-                    m**2 * n**2,
-                    m**2 * n**2,
-                    m**4 + n**4,
-                    -4 * m**2 * n**2,
+                    m ** 2 * n ** 2,
+                    m ** 2 * n ** 2,
+                    m ** 4 + n ** 4,
+                    -4 * m ** 2 * n ** 2,
                 ],
                 [
-                    m**2 * n**2,
-                    m**2 * n**2,
-                    -2 * m**2 * n**2,
-                    (m**2 - n**2) ** 2,
+                    m ** 2 * n ** 2,
+                    m ** 2 * n ** 2,
+                    -2 * m ** 2 * n ** 2,
+                    (m ** 2 - n ** 2) ** 2,
                 ],
                 [
-                    m**3 * n,
-                    -m * n**3,
-                    m * n**3 - m**3 * n,
-                    2 * (m * n**3 - m**3 * n),
+                    m ** 3 * n,
+                    -m * n ** 3,
+                    m * n ** 3 - m ** 3 * n,
+                    2 * (m * n ** 3 - m ** 3 * n),
                 ],
                 [
-                    m * n**3,
-                    -(m**3) * n,
-                    m**3 * n - m * n**3,
-                    2 * (m**3 * n - m * n**3),
+                    m * n ** 3,
+                    -(m ** 3) * n,
+                    m ** 3 * n - m * n ** 3,
+                    2 * (m ** 3 * n - m * n ** 3),
                 ],
             ]
         )

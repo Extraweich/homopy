@@ -5,22 +5,35 @@
 
 Welcome to HomoPy's documentation!
 ==================================
+*Your solution for stiffness problems!*
 
 .. toctree::
    :maxdepth: 2
-   
+
    /source/statement_of_need
 
-Indices and tables
-==================
+Examples
+========
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+.. toctree::
+   :maxdepth: 2
+
+   /source/example_notebooks
+
+Code
+====
+
+.. toctree::
+   :maxdepth: 2
+
+   /source/tensor
+   /source/elasticity
+   /source/methods
+   /source/stiffness_plot
 
 Installing
 ==========
 
 Install HomoPy by running::
 
-    pip install homopy
+   pip install homopy

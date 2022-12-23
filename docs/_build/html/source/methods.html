@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>methods &mdash; HomoPy  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="stiffness_plot" href="stiffness_plot.html" />
+    <link rel="prev" title="elasticity" href="elasticity.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> HomoPy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="statement_of_need.html">Statement of need</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="example_notebooks.html">Examples</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="tensor.html">tensor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="elasticity.html">elasticity</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">methods</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#homopy.methods.MoriTanaka"><code class="docutils literal notranslate"><span class="pre">MoriTanaka</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#homopy.methods.MoriTanaka.__init__"><code class="docutils literal notranslate"><span class="pre">MoriTanaka.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#homopy.methods.MoriTanaka.get_eshelby"><code class="docutils literal notranslate"><span class="pre">MoriTanaka.get_eshelby()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#homopy.methods.MoriTanaka.get_effective_stiffness"><code class="docutils literal notranslate"><span class="pre">MoriTanaka.get_effective_stiffness()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#homopy.methods.MoriTanaka.get_average_stiffness"><code class="docutils literal notranslate"><span class="pre">MoriTanaka.get_average_stiffness()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#homopy.methods.MoriTanaka.is_symmetric"><code class="docutils literal notranslate"><span class="pre">MoriTanaka.is_symmetric()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#homopy.methods.HalpinTsai"><code class="docutils literal notranslate"><span class="pre">HalpinTsai</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#homopy.methods.HalpinTsai.__init__"><code class="docutils literal notranslate"><span class="pre">HalpinTsai.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#homopy.methods.HalpinTsai.get_effective_parameters"><code class="docutils literal notranslate"><span class="pre">HalpinTsai.get_effective_parameters()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#homopy.methods.HalpinTsai.get_stiffness"><code class="docutils literal notranslate"><span class="pre">HalpinTsai.get_stiffness()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#homopy.methods.Laminate"><code class="docutils literal notranslate"><span class="pre">Laminate</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#homopy.methods.Laminate.__init__"><code class="docutils literal notranslate"><span class="pre">Laminate.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#homopy.methods.Laminate.get_effective_stiffness"><code class="docutils literal notranslate"><span class="pre">Laminate.get_effective_stiffness()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#homopy.methods.Laminate.rotate_stiffness"><code class="docutils literal notranslate"><span class="pre">Laminate.rotate_stiffness()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="stiffness_plot.html">stiffness_plot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">HomoPy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">methods</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/source/methods.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="module-homopy.methods">
+<span id="methods"></span><h1>methods<a class="headerlink" href="#module-homopy.methods" title="Permalink to this heading"></a></h1>
+<p>Created on Wed Apr 27 21:09:24 2022</p>
+<p>&#64;author: <a class="reference external" href="mailto:nicolas&#46;christ&#37;&#52;&#48;kit&#46;edu">nicolas<span>&#46;</span>christ<span>&#64;</span>kit<span>&#46;</span>edu</a></p>
+<p>Mori-Tanaka Homogenization after Seelig (2016). Multi-inclusion implementation after Brylka (2017).
+Eshelby Tensor is taken from Tandon, Weng (1984) but can also be found in Seelig (2016).
+Halpin-Tsai homogenization after Fu, Lauke, Mai (2019, p. 143 ff.). Also, the effective planar stiffness 
+matrix for the Halpin-Tsai homogenization is based on the laminate analogy approach after Fu, Lauke, Mai
+(2019, p. 155 ff.).</p>
+<dl class="simple">
+<dt>Tested:</dt><dd><ul class="simple">
+<li><p>Young’s modulus for “almost”sphere (a = 1) in correspondance to Isotropic implementation.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="homopy.methods.MoriTanaka">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">homopy.methods.</span></span><span class="sig-name descname"><span class="pre">MoriTanaka</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fiber</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_frac</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a_ratio</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/methods.html#MoriTanaka"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.methods.MoriTanaka" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="tensor.html#homopy.tensor.Tensor" title="homopy.tensor.Tensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></p>
+<p>Mori Tanaka class to calculate the homogenized stiffness for fiber reinforced
+polymers with possibly different types of inclusions. The class inherits from
+the Tensor class.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="homopy.methods.MoriTanaka.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fiber</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_frac</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a_ratio</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/methods.html#MoriTanaka.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.methods.MoriTanaka.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>Initialize the object and call super class initialization.</p>
+<dl>
+<dt>Parameters:</dt><dd><ul>
+<li><dl class="simple">
+<dt>matrix<span class="classifier">class object of the Elasticity class (or any child class)</span></dt><dd><p>Polymer matrix material.</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>fiber<span class="classifier">class object of the Elasticity class (or any child class)</span></dt><dd><blockquote>
+<div><p>or list of objects of the Elasticity class</p>
+</div></blockquote>
+<p>Fiber material.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>v_frac<span class="classifier">float</span></dt><dd><p>Volume fraction of the fiber material within the matrix
+material.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>a_ratio<span class="classifier">float</span></dt><dd><p>Aspect ratio of the fiber material.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt>Object variables:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>matrix<span class="classifier">class object of the Elasticity class (or any child class)</span></dt><dd><p>Polymer matrix material.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>fiber<span class="classifier">class object of the Elasticity class (or any child class)</span></dt><dd><p>Fiber material.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Cm<span class="classifier">ndarray of shape(6, 6)</span></dt><dd><p>Stiffness of matrix material in normalized Voigt notation.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>eye<span class="classifier">ndarray of shape(6, 6)</span></dt><dd><p>Identity tensor in normalized Voigt notation.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt>Returns:</dt><dd><ul class="simple">
+<li><p>None</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="homopy.methods.MoriTanaka.get_eshelby">
+<span class="sig-name descname"><span class="pre">get_eshelby</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a_ratio</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'66'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ellipsoid'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/methods.html#MoriTanaka.get_eshelby"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.methods.MoriTanaka.get_eshelby" title="Permalink to this definition"></a></dt>
+<dd><p>Return the Eshelby tensor according to the fiber type.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>a_ratio<span class="classifier">float</span></dt><dd><p>Aspect ratio of fiber.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>return_dim<span class="classifier">string, default=’66’</span></dt><dd><p>Flag to determine whether the tensor should be returned in
+normalized Voigt or regular tensor notation (options: ‘66’, ‘3333’)</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>shape<span class="classifier">string, default=’ellipsoid’</span></dt><dd><p>Flag to determine which assumptions are taken into consideration
+for the geometry of the fiber. So far not in use…</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt>Returns:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>S<span class="classifier">ndarray of shape(6, 6) or (3, 3, 3, 3)</span></dt><dd><p>Eshelby inclusion tensor.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="homopy.methods.MoriTanaka.get_effective_stiffness">
+<span class="sig-name descname"><span class="pre">get_effective_stiffness</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/methods.html#MoriTanaka.get_effective_stiffness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.methods.MoriTanaka.get_effective_stiffness" title="Permalink to this definition"></a></dt>
+<dd><p>Return the effective stiffness of a inhomogeneous material.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><p>None</p></li>
+</ul>
+</dd>
+<dt>Returns:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>C_eff<span class="classifier">ndarray of shape (6, 6)</span></dt><dd><p>Homogenized stiffness tensor in the normalized Voigt notation.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="homopy.methods.MoriTanaka.get_average_stiffness">
+<span class="sig-name descname"><span class="pre">get_average_stiffness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">C_eff</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N4</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/methods.html#MoriTanaka.get_average_stiffness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.methods.MoriTanaka.get_average_stiffness" title="Permalink to this definition"></a></dt>
+<dd><p>Return the averaged effective stiffness based on orientation tensors.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>C_eff<span class="classifier">ndarray of shape(6, 6) or (3, 3, 3, 3)</span></dt><dd><p>Effective stiffness in normalized Voigt or regular tensor notation.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>N2<span class="classifier">ndarray of shape(3, 3)</span></dt><dd><p>Orientation tensor of 2nd order.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>N4<span class="classifier">ndarray of shape(3, 3, 3, 3)</span></dt><dd><p>Orientation tensor of 4th order.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt>Returns:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>…<span class="classifier">ndarray of shape (6, 6)</span></dt><dd><p>Averaged stiffness tensor in the normalized Voigt notation.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="homopy.methods.MoriTanaka.is_symmetric">
+<span class="sig-name descname"><span class="pre">is_symmetric</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/methods.html#MoriTanaka.is_symmetric"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.methods.MoriTanaka.is_symmetric" title="Permalink to this definition"></a></dt>
+<dd><p>Print the symmetry status of the effective stiffness.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="homopy.methods.HalpinTsai">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">homopy.methods.</span></span><span class="sig-name descname"><span class="pre">HalpinTsai</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">E_f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">E_m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G_f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G_m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nu_f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nu_m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l_f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r_f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vol_f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">package</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'hex'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/methods.html#HalpinTsai"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.methods.HalpinTsai" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Halpin Tsai class to calculate the homogenized stiffness for fiber reinforced
+polymers as laminas. This is then used as input for the Laminate class.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="homopy.methods.HalpinTsai.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">E_f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">E_m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G_f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G_m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nu_f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nu_m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l_f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r_f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vol_f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">package</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'hex'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/methods.html#HalpinTsai.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.methods.HalpinTsai.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>Class to perform the Halpin-Tsai homogenization.</p>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>E_f<span class="classifier">Float</span></dt><dd><p>Young’s modulus of fiber.</p>
+</dd>
+<dt>E_m<span class="classifier">Float</span></dt><dd><p>Young’s modulus of matrix.</p>
+</dd>
+<dt>G_f<span class="classifier">Float</span></dt><dd><p>Shear modulus of fiber.</p>
+</dd>
+<dt>G_m<span class="classifier">Float</span></dt><dd><p>Shear modulus of matrix.</p>
+</dd>
+<dt>nu_f<span class="classifier">Float</span></dt><dd><p>Poisson ratio of fiber.</p>
+</dd>
+<dt>nu_m<span class="classifier">Float</span></dt><dd><p>Poisson ratio of matrix.</p>
+</dd>
+<dt>l_f<span class="classifier">Float</span></dt><dd><p>Average length of fiber.</p>
+</dd>
+<dt>r_f<span class="classifier">Float</span></dt><dd><p>Average radius of fiber.</p>
+</dd>
+<dt>vol_f<span class="classifier">Float</span></dt><dd><p>Poisson ratio of matrix.</p>
+</dd>
+<dt>package<span class="classifier">String (default: hex), other options: square</span></dt><dd><p>Package structure of fibers in composite.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="homopy.methods.HalpinTsai.get_effective_parameters">
+<span class="sig-name descname"><span class="pre">get_effective_parameters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/methods.html#HalpinTsai.get_effective_parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.methods.HalpinTsai.get_effective_parameters" title="Permalink to this definition"></a></dt>
+<dd><p>Calculates the effective parameters of a single lamina for given constituent parameters.</p>
+<section id="raises">
+<h2>Raises<a class="headerlink" href="#raises" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>ValueError</dt><dd><p>Package can only be “hex” or “square”.</p>
+</dd>
+</dl>
+</section>
+<section id="returns">
+<h2>Returns<a class="headerlink" href="#returns" title="Permalink to this heading"></a></h2>
+<p>None.</p>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="homopy.methods.HalpinTsai.get_stiffness">
+<span class="sig-name descname"><span class="pre">get_stiffness</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/methods.html#HalpinTsai.get_stiffness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.methods.HalpinTsai.get_stiffness" title="Permalink to this definition"></a></dt>
+<dd><p>Return the planar stiffness based on the effective parameters of a single lamina.</p>
+<section id="id1">
+<h2>Returns<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>C<span class="classifier">ndarray of shape(3,3)</span></dt><dd><p>Planar stiffness of lamina.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="homopy.methods.Laminate">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">homopy.methods.</span></span><span class="sig-name descname"><span class="pre">Laminate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lamina_stiffnesses</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angles</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vol_fracs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/methods.html#Laminate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.methods.Laminate" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Laminate class to build an effective laminate from the Halpin Tsai
+results.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="homopy.methods.Laminate.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lamina_stiffnesses</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angles</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vol_fracs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/methods.html#Laminate.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.methods.Laminate.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>Class to average over n laminas from Halpin-Tsai homogenization.</p>
+<section id="id2">
+<h2>Parameters<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>lamina_stiffnesses<span class="classifier">array of shape (n,)</span></dt><dd><p>Individual stiffness of n laminas.</p>
+</dd>
+<dt>angles<span class="classifier">array of shape (n,)</span></dt><dd><p>Individual angle of ith lamina in radians.</p>
+</dd>
+<dt>vol_fracs<span class="classifier">array of shape (n,)</span></dt><dd><p>Volume fraction of ith lamina (must sum to 1). If None is given,
+each lamina is averaged equally.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="homopy.methods.Laminate.get_effective_stiffness">
+<span class="sig-name descname"><span class="pre">get_effective_stiffness</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/methods.html#Laminate.get_effective_stiffness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.methods.Laminate.get_effective_stiffness" title="Permalink to this definition"></a></dt>
+<dd><p>Return effective stiffness of laminate.</p>
+<section id="id3">
+<h2>Returns<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>C_eff<span class="classifier">ndarray of shape(3,3)</span></dt><dd><p>Effective stiffness of laminate.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="homopy.methods.Laminate.rotate_stiffness">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rotate_stiffness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lamina_stiffness</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/methods.html#Laminate.rotate_stiffness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.methods.Laminate.rotate_stiffness" title="Permalink to this definition"></a></dt>
+<dd><p>Return planarly rotated stiffness matrix.</p>
+<section id="id4">
+<h2>Parameters<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>lamina_stiffness<span class="classifier">ndarray of shape(3, 3)</span></dt><dd><p>Stiffness matrix of lamina.</p>
+</dd>
+<dt>angle<span class="classifier">float</span></dt><dd><p>Planar angle to rotate the stiffness matrix about.</p>
+</dd>
+</dl>
+</section>
+<section id="id5">
+<h2>Returns<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>rot_stiffness<span class="classifier">ndarray of shape(3, 3)</span></dt><dd><p>Rotated stiffness matrix.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="elasticity.html" class="btn btn-neutral float-left" title="elasticity" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="stiffness_plot.html" class="btn btn-neutral float-right" title="stiffness_plot" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Nicolas Christ.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
