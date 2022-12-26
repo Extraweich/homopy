@@ -41,13 +41,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../source/statement_of_need.html">Statement of need</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../source/example_notebooks.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../source/example_notebooks.html">Jupyter Notebooks</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../source/tensor.html">tensor</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../source/elasticity.html">elasticity</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../source/methods.html">methods</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../source/stiffness_plot.html">stiffness_plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../source/code.html">Modules</a></li>
 </ul>
 
         </div>
@@ -97,6 +94,9 @@
 <div class="viewcode-block" id="Elasticity.__init__"><a class="viewcode-back" href="../../source/elasticity.html#homopy.elasticity.Elasticity.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize the object and call super class initialization.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            - None</span>
 
 <span class="sd">        Object variables:</span>
 <span class="sd">            - stiffness3333 : ndarray of shape(3, 3, 3, 3)</span>
@@ -159,9 +159,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">nu12</span> <span class="o">=</span> <span class="n">nu12</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">nu21</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">E2</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">E1</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu12</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">nu23</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">E2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">G23</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">get_stiffness</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_get_stiffness</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="TransverseIsotropy.get_stiffness"><a class="viewcode-back" href="../../source/elasticity.html#homopy.elasticity.TransverseIsotropy.get_stiffness">[docs]</a>    <span class="k">def</span> <span class="nf">get_stiffness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_get_stiffness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate the stiffness parameters for both notations.</span>
 
@@ -195,7 +195,7 @@
                 <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">G12</span><span class="p">],</span>
             <span class="p">]</span>
         <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">stiffness3333</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mandel2tensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stiffness66</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stiffness3333</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mandel2tensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stiffness66</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Isotropy"><a class="viewcode-back" href="../../source/elasticity.html#homopy.elasticity.Isotropy">[docs]</a><span class="k">class</span> <span class="nc">Isotropy</span><span class="p">(</span><span class="n">TransverseIsotropy</span><span class="p">):</span>
@@ -229,11 +229,11 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">E</span> <span class="o">=</span> <span class="n">E</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">nu</span> <span class="o">=</span> <span class="n">nu</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">lam</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_lambda</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">mu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_mu</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lam</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_lambda</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_mu</span><span class="p">()</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">E</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">E</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mu</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mu</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Isotropy.get_lambda"><a class="viewcode-back" href="../../source/elasticity.html#homopy.elasticity.Isotropy.get_lambda">[docs]</a>    <span class="k">def</span> <span class="nf">get_lambda</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_get_lambda</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the first Lamé constant from other material parameters.</span>
 
@@ -244,9 +244,9 @@
 <span class="sd">            - ... : float</span>
 <span class="sd">                First Lamé constant.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">E</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">E</span>
 
-<div class="viewcode-block" id="Isotropy.get_mu"><a class="viewcode-back" href="../../source/elasticity.html#homopy.elasticity.Isotropy.get_mu">[docs]</a>    <span class="k">def</span> <span class="nf">get_mu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_get_mu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the second Lamé constant from other material parameters.</span>
 
@@ -257,7 +257,7 @@
 <span class="sd">            - ... : float</span>
 <span class="sd">                Second Lamé constant.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">E</span></div></div>
+        <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">E</span></div>
 </pre></div>
 
            </div>

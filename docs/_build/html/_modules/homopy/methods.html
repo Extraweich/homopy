@@ -41,13 +41,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../source/statement_of_need.html">Statement of need</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../source/example_notebooks.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../source/example_notebooks.html">Jupyter Notebooks</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../source/tensor.html">tensor</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../source/elasticity.html">elasticity</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../source/methods.html">methods</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../source/stiffness_plot.html">stiffness_plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../source/code.html">Modules</a></li>
 </ul>
 
         </div>
@@ -81,14 +78,17 @@
 
 <span class="sd">@author: nicolas.christ@kit.edu</span>
 
-<span class="sd">Mori-Tanaka Homogenization after Seelig (2016). Multi-inclusion implementation after Brylka (2017).</span>
-<span class="sd">Eshelby Tensor is taken from Tandon, Weng (1984) but can also be found in Seelig (2016).</span>
-<span class="sd">Halpin-Tsai homogenization after Fu, Lauke, Mai (2019, p. 143 ff.). Also, the effective planar stiffness </span>
-<span class="sd">matrix for the Halpin-Tsai homogenization is based on the laminate analogy approach after Fu, Lauke, Mai</span>
-<span class="sd">(2019, p. 155 ff.).</span>
+<span class="sd">Mori-Tanaka Homogenization after Gross and Seelig (cf. [1]_). Multi-inclusion implementation after Brylka (cf. [2]_).</span>
+<span class="sd">Eshelby Tensor is taken from Tandon and Weng (cf. [3]_) but can also be found in Groos and Seelig.</span>
+<span class="sd">Halpin-Tsai homogenization after Fu, Lauke, and Mai (cf. [4]_, pp. 143 ff.). Also, the effective planar stiffness </span>
+<span class="sd">matrix for the Halpin-Tsai homogenization is based on the laminate analogy approach after Fu, Lauke and Mai</span>
+<span class="sd">(pp. 155 ff.).</span>
 
-<span class="sd">Tested:</span>
-<span class="sd">    - Young&#39;s modulus for &quot;almost&quot;sphere (a = 1) in correspondance to Isotropic implementation.</span>
+<span class="sd">.. [1] Gross, D. and Seelig, T. (2016), *Bruchmechanik*, Springer Berlin Heidelberg</span>
+<span class="sd">.. [2] Brylka, B. (2017), *Charakterisierung und Modellierung der Steifigkeit von langfaserverstärktem Polypropylen*, KIT Scientific Publishing</span>
+<span class="sd">.. [3] Tandon, G. P. and Weng, G. J. (1984), &#39;The effect of aspect ratio of inclusions on the elastic properties of unidirectionally aligned composites&#39;, *Polymer Composites*, pp. 327-333, Available at: https://doi.org/10.1002/pc.750050413</span>
+<span class="sd">.. [4] Fu, S.-Y., Lauke, B. and Mai, Y. W. (2019), *Science and engineering of short fibre-reinforced polymer composites*, Woodhead Publishing</span>
+
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -115,8 +115,7 @@
 <span class="sd">        Parameters:</span>
 <span class="sd">            - matrix : class object of the Elasticity class (or any child class)</span>
 <span class="sd">                Polymer matrix material.</span>
-<span class="sd">            - fiber : class object of the Elasticity class (or any child class)</span>
-<span class="sd">                      or list of objects of the Elasticity class</span>
+<span class="sd">            - fiber : class object of the Elasticity class (or any child class) or list of objects of the Elasticity class</span>
 <span class="sd">                Fiber material.</span>
 <span class="sd">            - v_frac : float</span>
 <span class="sd">                Volume fraction of the fiber material within the matrix</span>
@@ -169,7 +168,7 @@
                 <span class="n">Cf_alpha</span> <span class="o">=</span> <span class="n">fiber</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">stiffness66</span>
                 <span class="n">pol</span> <span class="o">=</span> <span class="n">Cf_alpha</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cm</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">pol_alpha</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pol</span><span class="p">)</span>
-                <span class="n">S</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_eshelby</span><span class="p">(</span><span class="n">a_ratio</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                <span class="n">S</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_eshelby</span><span class="p">(</span><span class="n">a_ratio</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
                 <span class="n">A_inv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eye</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">tensor_product</span><span class="p">(</span>
                     <span class="n">S</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tensor_product</span><span class="p">(</span><span class="n">Cm_inv</span><span class="p">,</span> <span class="n">pol</span><span class="p">)</span>
                 <span class="p">)</span>
@@ -177,7 +176,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">A_f_alpha</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">c_alpha</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v_frac</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">c_f</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="MoriTanaka.get_eshelby"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.MoriTanaka.get_eshelby">[docs]</a>    <span class="k">def</span> <span class="nf">get_eshelby</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a_ratio</span><span class="p">,</span> <span class="n">return_dim</span><span class="o">=</span><span class="s2">&quot;66&quot;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s2">&quot;ellipsoid&quot;</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_get_eshelby</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a_ratio</span><span class="p">,</span> <span class="n">return_dim</span><span class="o">=</span><span class="s2">&quot;66&quot;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s2">&quot;ellipsoid&quot;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the Eshelby tensor according to the fiber type.</span>
 
@@ -252,7 +251,7 @@
         <span class="k">if</span> <span class="n">return_dim</span> <span class="o">==</span> <span class="s2">&quot;66&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tensor2mandel</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">return_dim</span> <span class="o">==</span> <span class="s2">&quot;3333&quot;</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">S</span></div>
+            <span class="k">return</span> <span class="n">S</span>
 
 <div class="viewcode-block" id="MoriTanaka.get_effective_stiffness"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.MoriTanaka.get_effective_stiffness">[docs]</a>    <span class="k">def</span> <span class="nf">get_effective_stiffness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -401,28 +400,30 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Class to perform the Halpin-Tsai homogenization.</span>
 
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        E_f : Float</span>
-<span class="sd">            Young&#39;s modulus of fiber.</span>
-<span class="sd">        E_m : Float</span>
-<span class="sd">            Young&#39;s modulus of matrix.</span>
-<span class="sd">        G_f : Float</span>
-<span class="sd">            Shear modulus of fiber.</span>
-<span class="sd">        G_m : Float</span>
-<span class="sd">            Shear modulus of matrix.</span>
-<span class="sd">        nu_f : Float</span>
-<span class="sd">            Poisson ratio of fiber.</span>
-<span class="sd">        nu_m : Float</span>
-<span class="sd">            Poisson ratio of matrix.</span>
-<span class="sd">        l_f : Float</span>
-<span class="sd">            Average length of fiber.</span>
-<span class="sd">        r_f : Float</span>
-<span class="sd">            Average radius of fiber.</span>
-<span class="sd">        vol_f : Float</span>
-<span class="sd">            Poisson ratio of matrix.</span>
-<span class="sd">        package : String (default: hex), other options: square</span>
-<span class="sd">            Package structure of fibers in composite.</span>
+<span class="sd">        Parameters:</span>
+<span class="sd">            - E_f : float</span>
+<span class="sd">                Young&#39;s modulus of fiber.</span>
+<span class="sd">            - E_m : float</span>
+<span class="sd">                Young&#39;s modulus of matrix.</span>
+<span class="sd">            - G_f : float</span>
+<span class="sd">                Shear modulus of fiber.</span>
+<span class="sd">            - G_m : float</span>
+<span class="sd">                Shear modulus of matrix.</span>
+<span class="sd">            - nu_f : float</span>
+<span class="sd">                Poisson ratio of fiber.</span>
+<span class="sd">            - nu_m : float</span>
+<span class="sd">                Poisson ratio of matrix.</span>
+<span class="sd">            - l_f : float</span>
+<span class="sd">                Average length of fiber.</span>
+<span class="sd">            - r_f : float</span>
+<span class="sd">                Average radius of fiber.</span>
+<span class="sd">            - vol_f : float</span>
+<span class="sd">                Poisson ratio of matrix.</span>
+<span class="sd">            - package : string (default: hex), other options: square</span>
+<span class="sd">                Package structure of fibers in composite.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            - None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">E_f</span> <span class="o">=</span> <span class="n">E_f</span>
@@ -435,20 +436,21 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">r_f</span> <span class="o">=</span> <span class="n">r_f</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">vol_f</span> <span class="o">=</span> <span class="n">vol_f</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">package</span> <span class="o">=</span> <span class="n">package</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">get_effective_parameters</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_get_effective_parameters</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="HalpinTsai.get_effective_parameters"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.HalpinTsai.get_effective_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">get_effective_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_get_effective_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculates the effective parameters of a single lamina for given constituent parameters.</span>
 
-<span class="sd">        Raises</span>
-<span class="sd">        ------</span>
-<span class="sd">        ValueError</span>
-<span class="sd">            Package can only be &quot;hex&quot; or &quot;square&quot;.</span>
+<span class="sd">        Parameters:</span>
+<span class="sd">            - None</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        None.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            - None</span>
+<span class="sd">        </span>
+<span class="sd">        Raises:</span>
+<span class="sd">            - ValueError</span>
+<span class="sd">                Package can only be &quot;hex&quot; or &quot;square&quot;.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">package</span> <span class="o">!=</span> <span class="s2">&quot;hex&quot;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">package</span> <span class="o">!=</span> <span class="s2">&quot;square&quot;</span><span class="p">:</span>
@@ -469,16 +471,18 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">E22</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">E_m</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">nu1</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">vol_f</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">nu1</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">vol_f</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">G12</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">G_m</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">nu2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">vol_f</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">nu2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">vol_f</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">nu12</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu_f</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">vol_f</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu_m</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">vol_f</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">nu21</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu12</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">E22</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">E11</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nu21</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu12</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">E22</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">E11</span>
 
 <div class="viewcode-block" id="HalpinTsai.get_stiffness"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.HalpinTsai.get_stiffness">[docs]</a>    <span class="k">def</span> <span class="nf">get_stiffness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the planar stiffness based on the effective parameters of a single lamina.</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        C : ndarray of shape(3,3)</span>
-<span class="sd">            Planar stiffness of lamina.</span>
+<span class="sd">        Parameters:</span>
+<span class="sd">            - None</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            - C : ndarray of shape(3,3)</span>
+<span class="sd">                Planar stiffness of lamina.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">Q11</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">E11</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu12</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu21</span><span class="p">)</span>
@@ -493,23 +497,24 @@
 
 <div class="viewcode-block" id="Laminate"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.Laminate">[docs]</a><span class="k">class</span> <span class="nc">Laminate</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Laminate class to build an effective laminate from the Halpin Tsai</span>
-<span class="sd">    results.</span>
+<span class="sd">    Class to average over n laminas from Halpin-Tsai homogenization.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="Laminate.__init__"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.Laminate.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lamina_stiffnesses</span><span class="p">,</span> <span class="n">angles</span><span class="p">,</span> <span class="n">vol_fracs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Class to average over n laminas from Halpin-Tsai homogenization.</span>
+<span class="sd">        Initialize the object.</span>
 
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        lamina_stiffnesses : array of shape (n,)</span>
-<span class="sd">            Individual stiffness of n laminas.</span>
-<span class="sd">        angles : array of shape (n,)</span>
-<span class="sd">            Individual angle of ith lamina in radians.</span>
-<span class="sd">        vol_fracs : array of shape (n,)</span>
-<span class="sd">            Volume fraction of ith lamina (must sum to 1). If None is given,</span>
-<span class="sd">            each lamina is averaged equally.</span>
+<span class="sd">        Parameters:</span>
+<span class="sd">            - lamina_stiffnesses : array of shape (n,)</span>
+<span class="sd">                Individual stiffness of n laminas.</span>
+<span class="sd">            - angles : array of shape (n,)</span>
+<span class="sd">                Individual angle of ith lamina in radians.</span>
+<span class="sd">            - vol_fracs : array of shape (n,)</span>
+<span class="sd">                Volume fraction of ith lamina (must sum to 1). If None is given,</span>
+<span class="sd">                each lamina is averaged equally.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            - None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lamina_stiffnesses</span> <span class="o">=</span> <span class="n">lamina_stiffnesses</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">angles</span> <span class="o">=</span> <span class="n">angles</span>
@@ -527,10 +532,12 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return effective stiffness of laminate.</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        C_eff : ndarray of shape(3,3)</span>
-<span class="sd">            Effective stiffness of laminate.</span>
+<span class="sd">        Parameters:</span>
+<span class="sd">            - None</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            - C_eff : ndarray of shape(3,3)</span>
+<span class="sd">                Effective stiffness of laminate.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">C_eff_temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lamina_stiffnesses</span><span class="p">)):</span>
@@ -551,17 +558,15 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return planarly rotated stiffness matrix.</span>
 
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        lamina_stiffness : ndarray of shape(3, 3)</span>
-<span class="sd">            Stiffness matrix of lamina.</span>
-<span class="sd">        angle : float</span>
-<span class="sd">            Planar angle to rotate the stiffness matrix about.</span>
+<span class="sd">        Parameters:</span>
+<span class="sd">            - lamina_stiffness : ndarray of shape(3, 3)</span>
+<span class="sd">                Stiffness matrix of lamina.</span>
+<span class="sd">            - angle : float</span>
+<span class="sd">                Planar angle to rotate the stiffness matrix about.</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        rot_stiffness : ndarray of shape(3, 3)</span>
-<span class="sd">            Rotated stiffness matrix.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            - rot_stiffness : ndarray of shape(3, 3)</span>
+<span class="sd">                Rotated stiffness matrix.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">m</span> <span class="o">=</span> <span class="n">cos</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
         <span class="n">n</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>

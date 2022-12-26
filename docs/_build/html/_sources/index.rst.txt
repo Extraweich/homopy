@@ -26,10 +26,7 @@ Code
 .. toctree::
    :maxdepth: 2
 
-   /source/tensor
-   /source/elasticity
-   /source/methods
-   /source/stiffness_plot
+   /source/code
 
 Installing
 ==========

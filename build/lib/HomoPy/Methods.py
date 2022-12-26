@@ -4,14 +4,17 @@ Created on Wed Apr 27 21:09:24 2022
 
 @author: nicolas.christ@kit.edu
 
-Mori-Tanaka Homogenization after Seelig (2016). Multi-inclusion implementation after Brylka (2017).
-Eshelby Tensor is taken from Tandon, Weng (1984) but can also be found in Seelig (2016).
-Halpin-Tsai homogenization after Fu, Lauke, Mai (2019, p. 143 ff.). Also, the effective planar stiffness 
-matrix for the Halpin-Tsai homogenization is based on the laminate analogy approach after Fu, Lauke, Mai
-(2019, p. 155 ff.).
+Mori-Tanaka Homogenization after Gross and Seelig (cf. [1]_). Multi-inclusion implementation after Brylka (cf. [2]_).
+Eshelby Tensor is taken from Tandon and Weng (cf. [3]_) but can also be found in Groos and Seelig.
+Halpin-Tsai homogenization after Fu, Lauke, and Mai (cf. [4]_, pp. 143 ff.). Also, the effective planar stiffness 
+matrix for the Halpin-Tsai homogenization is based on the laminate analogy approach after Fu, Lauke and Mai
+(pp. 155 ff.).
 
-Tested:
-    - Young's modulus for "almost"sphere (a = 1) in correspondance to Isotropic implementation.
+.. [1] Gross, D. and Seelig, T. (2016), *Bruchmechanik*, Springer Berlin Heidelberg
+.. [2] Brylka, B. (2017), *Charakterisierung und Modellierung der Steifigkeit von langfaserverstärktem Polypropylen*, KIT Scientific Publishing
+.. [3] Tandon, G. P. and Weng, G. J. (1984), 'The effect of aspect ratio of inclusions on the elastic properties of unidirectionally aligned composites', *Polymer Composites*, pp. 327-333, Available at: https://doi.org/10.1002/pc.750050413
+.. [4] Fu, S.-Y., Lauke, B. and Mai, Y. W. (2019), *Science and engineering of short fibre-reinforced polymer composites*, Woodhead Publishing
+
 """
 
 import numpy as np
@@ -38,8 +41,7 @@ class MoriTanaka(Tensor):
         Parameters:
             - matrix : class object of the Elasticity class (or any child class)
                 Polymer matrix material.
-            - fiber : class object of the Elasticity class (or any child class)
-                      or list of objects of the Elasticity class
+            - fiber : class object of the Elasticity class (or any child class) or list of objects of the Elasticity class
                 Fiber material.
             - v_frac : float
                 Volume fraction of the fiber material within the matrix
@@ -92,7 +94,7 @@ class MoriTanaka(Tensor):
                 Cf_alpha = fiber[i].stiffness66
                 pol = Cf_alpha - self.Cm
                 self.pol_alpha.append(pol)
-                S = self.get_eshelby(a_ratio[i])
+                S = self._get_eshelby(a_ratio[i])
                 A_inv = self.eye + self.tensor_product(
                     S, self.tensor_product(Cm_inv, pol)
                 )
@@ -100,7 +102,7 @@ class MoriTanaka(Tensor):
                 self.A_f_alpha.append(A)
                 self.c_alpha.append(v_frac[i] / self.c_f)
 
-    def get_eshelby(self, a_ratio, return_dim="66", shape="ellipsoid"):
+    def _get_eshelby(self, a_ratio, return_dim="66", shape="ellipsoid"):
         """
         Return the Eshelby tensor according to the fiber type.
 
@@ -324,28 +326,30 @@ class HalpinTsai:
         """
         Class to perform the Halpin-Tsai homogenization.
 
-        Parameters
-        ----------
-        E_f : Float
-            Young's modulus of fiber.
-        E_m : Float
-            Young's modulus of matrix.
-        G_f : Float
-            Shear modulus of fiber.
-        G_m : Float
-            Shear modulus of matrix.
-        nu_f : Float
-            Poisson ratio of fiber.
-        nu_m : Float
-            Poisson ratio of matrix.
-        l_f : Float
-            Average length of fiber.
-        r_f : Float
-            Average radius of fiber.
-        vol_f : Float
-            Poisson ratio of matrix.
-        package : String (default: hex), other options: square
-            Package structure of fibers in composite.
+        Parameters:
+            - E_f : float
+                Young's modulus of fiber.
+            - E_m : float
+                Young's modulus of matrix.
+            - G_f : float
+                Shear modulus of fiber.
+            - G_m : float
+                Shear modulus of matrix.
+            - nu_f : float
+                Poisson ratio of fiber.
+            - nu_m : float
+                Poisson ratio of matrix.
+            - l_f : float
+                Average length of fiber.
+            - r_f : float
+                Average radius of fiber.
+            - vol_f : float
+                Poisson ratio of matrix.
+            - package : string (default: hex), other options: square
+                Package structure of fibers in composite.
+
+        Returns:
+            - None
         """
 
         self.E_f = E_f
@@ -358,20 +362,21 @@ class HalpinTsai:
         self.r_f = r_f
         self.vol_f = vol_f
         self.package = package
-        self.get_effective_parameters()
+        self._get_effective_parameters()
 
-    def get_effective_parameters(self):
+    def _get_effective_parameters(self):
         """
         Calculates the effective parameters of a single lamina for given constituent parameters.
 
-        Raises
-        ------
-        ValueError
-            Package can only be "hex" or "square".
+        Parameters:
+            - None
 
-        Returns
-        -------
-        None.
+        Returns:
+            - None
+        
+        Raises:
+            - ValueError
+                Package can only be "hex" or "square".
         """
 
         if self.package != "hex" and self.package != "square":
@@ -398,10 +403,12 @@ class HalpinTsai:
         """
         Return the planar stiffness based on the effective parameters of a single lamina.
 
-        Returns
-        -------
-        C : ndarray of shape(3,3)
-            Planar stiffness of lamina.
+        Parameters:
+            - None
+
+        Returns:
+            - C : ndarray of shape(3,3)
+                Planar stiffness of lamina.
         """
 
         Q11 = self.E11 / (1 - self.nu12 * self.nu21)
@@ -416,23 +423,24 @@ class HalpinTsai:
 
 class Laminate:
     """
-    Laminate class to build an effective laminate from the Halpin Tsai
-    results.
+    Class to average over n laminas from Halpin-Tsai homogenization.
     """
 
     def __init__(self, lamina_stiffnesses, angles, vol_fracs=None):
         """
-        Class to average over n laminas from Halpin-Tsai homogenization.
+        Initialize the object.
 
-        Parameters
-        ----------
-        lamina_stiffnesses : array of shape (n,)
-            Individual stiffness of n laminas.
-        angles : array of shape (n,)
-            Individual angle of ith lamina in radians.
-        vol_fracs : array of shape (n,)
-            Volume fraction of ith lamina (must sum to 1). If None is given,
-            each lamina is averaged equally.
+        Parameters:
+            - lamina_stiffnesses : array of shape (n,)
+                Individual stiffness of n laminas.
+            - angles : array of shape (n,)
+                Individual angle of ith lamina in radians.
+            - vol_fracs : array of shape (n,)
+                Volume fraction of ith lamina (must sum to 1). If None is given,
+                each lamina is averaged equally.
+
+        Returns:
+            - None
         """
         self.lamina_stiffnesses = lamina_stiffnesses
         self.angles = angles
@@ -450,10 +458,12 @@ class Laminate:
         """
         Return effective stiffness of laminate.
 
-        Returns
-        -------
-        C_eff : ndarray of shape(3,3)
-            Effective stiffness of laminate.
+        Parameters:
+            - None
+
+        Returns:
+            - C_eff : ndarray of shape(3,3)
+                Effective stiffness of laminate.
         """
         C_eff_temp = np.zeros(6)
         for i in range(len(self.lamina_stiffnesses)):
@@ -474,17 +484,15 @@ class Laminate:
         """
         Return planarly rotated stiffness matrix.
 
-        Parameters
-        ----------
-        lamina_stiffness : ndarray of shape(3, 3)
-            Stiffness matrix of lamina.
-        angle : float
-            Planar angle to rotate the stiffness matrix about.
+        Parameters:
+            - lamina_stiffness : ndarray of shape(3, 3)
+                Stiffness matrix of lamina.
+            - angle : float
+                Planar angle to rotate the stiffness matrix about.
 
-        Returns
-        -------
-        rot_stiffness : ndarray of shape(3, 3)
-            Rotated stiffness matrix.
+        Returns:
+            - rot_stiffness : ndarray of shape(3, 3)
+                Rotated stiffness matrix.
         """
         m = cos(angle)
         n = sin(angle)

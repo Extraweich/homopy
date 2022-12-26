@@ -44,30 +44,30 @@
 <li class="toctree-l1"><a class="reference internal" href="statement_of_need.html">Statement of need</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="example_notebooks.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example_notebooks.html">Jupyter Notebooks</a></li>
 </ul>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="tensor.html">tensor</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">elasticity</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#homopy.elasticity.Elasticity"><code class="docutils literal notranslate"><span class="pre">Elasticity</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#homopy.elasticity.Elasticity.__init__"><code class="docutils literal notranslate"><span class="pre">Elasticity.__init__()</span></code></a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="code.html">Modules</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="tensor.html">tensor</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">elasticity</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#homopy.elasticity.Elasticity"><code class="docutils literal notranslate"><span class="pre">Elasticity</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#homopy.elasticity.Elasticity.__init__"><code class="docutils literal notranslate"><span class="pre">Elasticity.__init__()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#homopy.elasticity.TransverseIsotropy"><code class="docutils literal notranslate"><span class="pre">TransverseIsotropy</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#homopy.elasticity.TransverseIsotropy.__init__"><code class="docutils literal notranslate"><span class="pre">TransverseIsotropy.__init__()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#homopy.elasticity.TransverseIsotropy.get_stiffness"><code class="docutils literal notranslate"><span class="pre">TransverseIsotropy.get_stiffness()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#homopy.elasticity.TransverseIsotropy"><code class="docutils literal notranslate"><span class="pre">TransverseIsotropy</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#homopy.elasticity.TransverseIsotropy.__init__"><code class="docutils literal notranslate"><span class="pre">TransverseIsotropy.__init__()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#homopy.elasticity.Isotropy"><code class="docutils literal notranslate"><span class="pre">Isotropy</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#homopy.elasticity.Isotropy.__init__"><code class="docutils literal notranslate"><span class="pre">Isotropy.__init__()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#homopy.elasticity.Isotropy.get_lambda"><code class="docutils literal notranslate"><span class="pre">Isotropy.get_lambda()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#homopy.elasticity.Isotropy.get_mu"><code class="docutils literal notranslate"><span class="pre">Isotropy.get_mu()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#homopy.elasticity.Isotropy"><code class="docutils literal notranslate"><span class="pre">Isotropy</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#homopy.elasticity.Isotropy.__init__"><code class="docutils literal notranslate"><span class="pre">Isotropy.__init__()</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="methods.html">methods</a></li>
-<li class="toctree-l1"><a class="reference internal" href="stiffness_plot.html">stiffness_plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="methods.html">methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stiffness_plot.html">stiffness_plot</a></li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -84,6 +84,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="code.html">Modules</a></li>
       <li class="breadcrumb-item active">elasticity</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/source/elasticity.rst.txt" rel="nofollow"> View page source</a>
@@ -134,6 +135,10 @@ inherits from the Tensor class.</p>
 <span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/elasticity.html#Elasticity.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.elasticity.Elasticity.__init__" title="Permalink to this definition"></a></dt>
 <dd><p>Initialize the object and call super class initialization.</p>
 <dl class="simple">
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><p>None</p></li>
+</ul>
+</dd>
 <dt>Object variables:</dt><dd><ul class="simple">
 <li><dl class="simple">
 <dt>stiffness3333<span class="classifier">ndarray of shape(3, 3, 3, 3)</span></dt><dd><p>Holds the stiffness values in the regular tensor notation.</p>
@@ -235,22 +240,6 @@ The class inherits from the Elasticity class.</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="homopy.elasticity.TransverseIsotropy.get_stiffness">
-<span class="sig-name descname"><span class="pre">get_stiffness</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/elasticity.html#TransverseIsotropy.get_stiffness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.elasticity.TransverseIsotropy.get_stiffness" title="Permalink to this definition"></a></dt>
-<dd><p>Calculate the stiffness parameters for both notations.</p>
-<dl class="simple">
-<dt>Parameters:</dt><dd><ul class="simple">
-<li><p>None</p></li>
-</ul>
-</dd>
-<dt>Returns:</dt><dd><ul class="simple">
-<li><p>None</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
@@ -302,46 +291,6 @@ The class inherits from the Transverse Isotropy class.</p>
 </dd>
 <dt>Returns:</dt><dd><ul class="simple">
 <li><p>None</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="homopy.elasticity.Isotropy.get_lambda">
-<span class="sig-name descname"><span class="pre">get_lambda</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/elasticity.html#Isotropy.get_lambda"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.elasticity.Isotropy.get_lambda" title="Permalink to this definition"></a></dt>
-<dd><p>Return the first Lamé constant from other material parameters.</p>
-<dl class="simple">
-<dt>Parameters:</dt><dd><ul class="simple">
-<li><p>None</p></li>
-</ul>
-</dd>
-<dt>Returns:</dt><dd><ul class="simple">
-<li><dl class="simple">
-<dt>…<span class="classifier">float</span></dt><dd><p>First Lamé constant.</p>
-</dd>
-</dl>
-</li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="homopy.elasticity.Isotropy.get_mu">
-<span class="sig-name descname"><span class="pre">get_mu</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/elasticity.html#Isotropy.get_mu"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.elasticity.Isotropy.get_mu" title="Permalink to this definition"></a></dt>
-<dd><p>Return the second Lamé constant from other material parameters.</p>
-<dl class="simple">
-<dt>Parameters:</dt><dd><ul class="simple">
-<li><p>None</p></li>
-</ul>
-</dd>
-<dt>Returns:</dt><dd><ul class="simple">
-<li><dl class="simple">
-<dt>…<span class="classifier">float</span></dt><dd><p>Second Lamé constant.</p>
-</dd>
-</dl>
-</li>
 </ul>
 </dd>
 </dl>

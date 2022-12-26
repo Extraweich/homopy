@@ -41,13 +41,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../source/statement_of_need.html">Statement of need</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../source/example_notebooks.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../source/example_notebooks.html">Jupyter Notebooks</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../source/tensor.html">tensor</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../source/elasticity.html">elasticity</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../source/methods.html">methods</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../source/stiffness_plot.html">stiffness_plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../source/code.html">Modules</a></li>
 </ul>
 
         </div>
@@ -81,7 +78,9 @@
 
 <span class="sd">@author: nicolas.christ@kit.edu</span>
 
-<span class="sd">Tensor class for basic arithmetic operations.</span>
+<span class="sd">Tensor class for basic arithmetic operations. More information on tensor representation in Voigt and Mandel notations are given in Brannon (cf. [1]_).</span>
+
+<span class="sd">.. [1] Brannon, R. M. (2018), &#39;Voigt and Mandel components&#39;, in *Rotation, Reflection, and Frame Changes*, IOP Publishing</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -96,10 +95,13 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize the object.</span>
 
+<span class="sd">        Parameters:</span>
+<span class="sd">            - None</span>
+
 <span class="sd">        Object variables:</span>
-<span class="sd">            - e1, e2, e3 : ndarray of shape(3,)</span>
+<span class="sd">            - e1, e2, e3 : ndarray of shape (3,)</span>
 <span class="sd">                Orthonormalbasis of 1st order tensors (vectors)</span>
-<span class="sd">            - B : ndarray of shape(3, 3, 6)</span>
+<span class="sd">            - B : ndarray of shape (3, 3, 6)</span>
 <span class="sd">                Orthonormalbasis of 4th order tensors in normalized Voigt</span>
 <span class="sd">                notation.</span>
 
@@ -112,59 +114,59 @@
 
         <span class="c1"># Orthonormalbasis 4th order tensor</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">diade</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">e1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">e1</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">diade</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">e2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">e2</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">diade</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">e3</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">e3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_diade</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">e1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">e1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_diade</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">e2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">e2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_diade</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">e3</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">e3</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
             <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
             <span class="o">/</span> <span class="mi">2</span>
-            <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">diade</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">e2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">e3</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">diade</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">e3</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">e2</span><span class="p">))</span>
+            <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_diade</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">e2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">e3</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_diade</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">e3</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">e2</span><span class="p">))</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
             <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
             <span class="o">/</span> <span class="mi">2</span>
-            <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">diade</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">e1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">e3</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">diade</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">e3</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">e1</span><span class="p">))</span>
+            <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_diade</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">e1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">e3</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_diade</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">e3</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">e1</span><span class="p">))</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
             <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
             <span class="o">/</span> <span class="mi">2</span>
-            <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">diade</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">e1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">e2</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">diade</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">e2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">e1</span><span class="p">))</span>
+            <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_diade</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">e1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">e2</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_diade</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">e2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">e1</span><span class="p">))</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="Tensor.diade"><a class="viewcode-back" href="../../source/tensor.html#homopy.tensor.Tensor.diade">[docs]</a>    <span class="k">def</span> <span class="nf">diade</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">di</span><span class="p">,</span> <span class="n">dj</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_diade</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">di</span><span class="p">,</span> <span class="n">dj</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return diadic product of two directional vectors. This is used to</span>
 <span class="sd">        calculate the basis tensors in the normalized Voigt notation.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            - di : ndarray of shape(3,)</span>
+<span class="sd">            - di : ndarray of shape (3,)</span>
 <span class="sd">                Directional vector #1.</span>
-<span class="sd">            - dj : ndarray of shape(3,)</span>
+<span class="sd">            - dj : ndarray of shape (3,)</span>
 <span class="sd">                Directional vector #2.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            - ... : ndarray of shape(3, 3)</span>
+<span class="sd">            - ... : ndarray of shape (3, 3)</span>
 <span class="sd">                Tensor of 2nd order in tensor notation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;i,j-&gt;ij&quot;</span><span class="p">,</span> <span class="n">di</span><span class="p">,</span> <span class="n">dj</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;i,j-&gt;ij&quot;</span><span class="p">,</span> <span class="n">di</span><span class="p">,</span> <span class="n">dj</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Tensor.diade4"><a class="viewcode-back" href="../../source/tensor.html#homopy.tensor.Tensor.diade4">[docs]</a>    <span class="k">def</span> <span class="nf">diade4</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bi</span><span class="p">,</span> <span class="n">bj</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_diade4</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bi</span><span class="p">,</span> <span class="n">bj</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return diadic product of two tensors. This is used to transfer</span>
 <span class="sd">        stiffness tensors from normalized Voigt notation to regular tensor</span>
 <span class="sd">        notation.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            - bi : ndarray of shape(3, 3)</span>
+<span class="sd">            - bi : ndarray of shape (3, 3)</span>
 <span class="sd">                Orthonormal basis tensor #1.</span>
-<span class="sd">            - bj : ndarray of shape(3, 3)</span>
+<span class="sd">            - bj : ndarray of shape (3, 3)</span>
 <span class="sd">                Orthonormal basis tensor #2.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            - ... : ndarray of shape(3, 3, 3, 3)</span>
+<span class="sd">            - ... : ndarray of shape (3, 3, 3, 3)</span>
 <span class="sd">                Tensor of 4th order in tensor notation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ij,kl-&gt;ijkl&quot;</span><span class="p">,</span> <span class="n">bi</span><span class="p">,</span> <span class="n">bj</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ij,kl-&gt;ijkl&quot;</span><span class="p">,</span> <span class="n">bi</span><span class="p">,</span> <span class="n">bj</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Tensor.tensor_product"><a class="viewcode-back" href="../../source/tensor.html#homopy.tensor.Tensor.tensor_product">[docs]</a>    <span class="k">def</span> <span class="nf">tensor_product</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tensor_a</span><span class="p">,</span> <span class="n">tensor_b</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -172,13 +174,13 @@
 <span class="sd">        normalized Voigt notation.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            - tensor_a : ndarray of shape(6, 6)</span>
+<span class="sd">            - tensor_a : ndarray of shape (6, 6)</span>
 <span class="sd">                Tensor #1.</span>
-<span class="sd">            - tensor_b : ndarray of shape(6, 6)</span>
-<span class="sd">                Tensor #2</span>
+<span class="sd">            - tensor_b : ndarray of shape (6, 6)</span>
+<span class="sd">                Tensor #2.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            - ... : ndarray of shape(6,6)</span>
+<span class="sd">            - ... : ndarray of shape (6,6)</span>
 <span class="sd">                Resulting mapping.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ij,jk-&gt;ik&quot;</span><span class="p">,</span> <span class="n">tensor_a</span><span class="p">,</span> <span class="n">tensor_b</span><span class="p">)</span></div>
@@ -189,11 +191,11 @@
 <span class="sd">        calculated from the regular tensor notation.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            - matrix : ndarray of shape(3, 3)</span>
+<span class="sd">            - matrix : ndarray of shape (3, 3)</span>
 <span class="sd">                Tensor in regular tensor notation.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            - ... : ndarray of shape(6, 1)</span>
+<span class="sd">            - ... : ndarray of shape (6, 1)</span>
 <span class="sd">                Tensor in Voigt notation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
@@ -213,11 +215,11 @@
 <span class="sd">        calculated from the regular tensor notation.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            - matrix : ndarray of shape(3, 3)</span>
+<span class="sd">            - matrix : ndarray of shape (3, 3)</span>
 <span class="sd">                Tensor in regular tensor notation.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            - ... : ndarray of shape(6, 1)</span>
+<span class="sd">            - ... : ndarray of shape (6, 1)</span>
 <span class="sd">                Tensor in normalized Voigt notation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
@@ -238,11 +240,11 @@
 <span class="sd">        order calculated fromthe regular tensor notation.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            - tensor : ndarray of shape(3, 3, 3, 3)</span>
+<span class="sd">            - tensor : ndarray of shape (3, 3, 3, 3)</span>
 <span class="sd">                Tensor in regular tensor notation.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            - ... : ndarray of shape(6, 6)</span>
+<span class="sd">            - ... : ndarray of shape (6, 6)</span>
 <span class="sd">                Tensor in normalized Voigt notation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
@@ -306,17 +308,17 @@
 <span class="sd">        the normalized Voigt (Mandel) notation.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            - mandel : ndarray of shape(6, 6)</span>
+<span class="sd">            - mandel : ndarray of shape (6, 6)</span>
 <span class="sd">                Tensor in normalized Voigt notation.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            - tensor : ndarray of shape(3, 3, 3, 3)</span>
+<span class="sd">            - tensor : ndarray of shape (3, 3, 3, 3)</span>
 <span class="sd">                Tensor in regular tensor notation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">tensor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">):</span>
-                <span class="n">tensor</span> <span class="o">+=</span> <span class="n">mandel</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">diade4</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">j</span><span class="p">])</span>
+                <span class="n">tensor</span> <span class="o">+=</span> <span class="n">mandel</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_diade4</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">j</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">tensor</span></div></div>
 </pre></div>
 

@@ -4,7 +4,9 @@ Created on Thu Apr 28 16:24:54 2022
 
 @author: nicolas.christ@kit.edu
 
-3D and Polar plot of Young's modulus body based on Böhlke, Brüggemann (2001).
+3D and Polar plot of Young's modulus body based on Böhlke and Brüggemann (cf. [1]_).
+
+.. [1] Böhlke, T. and Brüggemann, C. (2001), 'Graphical representation of the generalized Hooke's law', *Technische Mechanik*, 21 (2), pp. 145-158
 """
 
 import numpy as np
@@ -29,7 +31,7 @@ class ElasticPlot(Tensor):
                 Flag which determines the usage of Voigt (USEVOIGT=True),
                 or Normalized Voigt / Mandel (USEVOIGT=False).
 
-        Return:
+        Returns:
             - None
         """
 
@@ -46,7 +48,7 @@ class ElasticPlot(Tensor):
                 Tensor in regular tensor notation.
 
         Returns:
-            - ... : ndarray of shape(6,19
+            - ... : ndarray of shape(6, 1)
                 Tensor in Voigt or normalized Voigt notation.
         """
 
@@ -55,7 +57,7 @@ class ElasticPlot(Tensor):
         else:
             return self.matrix2mandel(matrix)
 
-    def get_reciprocal_E(self, didi, S):
+    def _get_reciprocal_E(self, didi, S):
         """
         Return the reciprocal of Young's modulus (compliance) in
         the direction of di.
@@ -74,7 +76,7 @@ class ElasticPlot(Tensor):
 
         return np.einsum("i,ij,j->", didi, S, didi)
 
-    def get_E(self, di, S):
+    def _get_E(self, di, S):
         """
         Return Young's modulus in the direction of di.
 
@@ -90,10 +92,10 @@ class ElasticPlot(Tensor):
                 Scalar stiffness value in direction of didi.
         """
 
-        didi = self.matrix_reduction(self.diade(di, di))
-        return self.get_reciprocal_E(didi, S) ** (-1)
+        didi = self.matrix_reduction(self.__diade(di, di))
+        return self._get_reciprocal_E(didi, S) ** (-1)
 
-    def dir_vec(self, phi, theta):
+    def _dir_vec(self, phi, theta):
         """
         Return directional vector based on angular parametrization.
 
@@ -143,8 +145,8 @@ class ElasticPlot(Tensor):
             for j in range(0, m + 1, 1):
                 phi = i / n * 2 * np.pi
                 theta = j / m * np.pi
-                vec = self.dir_vec(phi, theta)
-                E = self.get_E(vec, S)
+                vec = self._dir_vec(phi, theta)
+                E = self._get_E(vec, S)
                 E_x[i, j] = E * vec[0]
                 E_y[i, j] = E * vec[1]
                 E_z[i, j] = E * vec[2]
@@ -212,8 +214,8 @@ class ElasticPlot(Tensor):
         theta = np.pi / 2 + angle  # changing angle does not work yet
         for i in range(0, n + 1, 1):
             phi = i / n * 2 * np.pi
-            vec = self.dir_vec(phi, theta)
-            E_temp = self.get_E(vec, S)
+            vec = self._dir_vec(phi, theta)
+            E_temp = self._get_E(vec, S)
             E[i] = E_temp
             rad[i] = phi
 
@@ -266,7 +268,6 @@ class ElasticPlot(Tensor):
         for laminate results for the Halpin-Tsai homogenization.
 
         Parameters:
-        -----------
             - laminate_stiffness : ndarray of shape(3, 3)
                 Planar stiffness matrix in Voigt or normalized Voigt
                 notation.
@@ -313,27 +314,25 @@ class ElasticPlot(Tensor):
 
     def get_E_laminate(self, C, phi):
         """
-        Return Young's modulus of lamina as a function of angle omega.
+        Return Young's modulus of laminate as a function of angle omega.
 
-        Parameters
-        ----------
-        C : ndarray of shape (3, 3)
-            Stiffness of laminate in default (orthonormal) coordinate system.
-        phi : float
-            Angle of orientation in radians.
+        Parameters:
+            - C : ndarray of shape (3, 3)
+                Stiffness of laminate in default (orthonormal) coordinate system.
+            - phi : float
+                Angle of orientation in radians.
 
-        Returns
-        -------
-        E : float
-            Young's modulus in angle direction
+        Returns:
+            - E : float
+                Young's modulus in angle direction
         """
 
         C_inv = np.linalg.inv(C)
 
         theta = np.pi / 2
-        vec = self.dir_vec(phi, theta)
+        vec = self._dir_vec(phi, theta)
 
-        didi = self.diade(vec, vec)
+        didi = self.__diade(vec, vec)
         didi_flat = self.matrix_reduction(didi)
         if self.USEVOIGT == False:
             b = 1 / np.sqrt(2)

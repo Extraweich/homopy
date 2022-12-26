@@ -21,6 +21,9 @@ class Elasticity(Tensor):
         """
         Initialize the object and call super class initialization.
 
+        Parameters:
+            - None
+
         Object variables:
             - stiffness3333 : ndarray of shape(3, 3, 3, 3)
                 Holds the stiffness values in the regular tensor notation.
@@ -82,9 +85,9 @@ class TransverseIsotropy(Elasticity):
         self.nu12 = nu12
         self.nu21 = self.E2 / self.E1 * self.nu12
         self.nu23 = self.E2 / (2 * self.G23) - 1
-        self.get_stiffness()
+        self._get_stiffness()
 
-    def get_stiffness(self):
+    def _get_stiffness(self):
         """
         Calculate the stiffness parameters for both notations.
 
@@ -152,11 +155,11 @@ class Isotropy(TransverseIsotropy):
         """
         self.E = E
         self.nu = nu
-        self.lam = self.get_lambda()
-        self.mu = self.get_mu()
+        self.lam = self._get_lambda()
+        self.mu = self._get_mu()
         super().__init__(self.E, self.E, self.mu, self.mu, self.nu)
 
-    def get_lambda(self):
+    def _get_lambda(self):
         """
         Return the first Lamé constant from other material parameters.
 
@@ -169,7 +172,7 @@ class Isotropy(TransverseIsotropy):
         """
         return self.nu / (1 - 2 * self.nu) * 1 / (1 + self.nu) * self.E
 
-    def get_mu(self):
+    def _get_mu(self):
         """
         Return the second Lamé constant from other material parameters.
 
