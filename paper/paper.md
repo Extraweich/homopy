@@ -9,7 +9,6 @@ tags:
 authors:
   - name: Nicolas Christ
     orcid: 0000-0002-4713-8096
-    equal-contrib: true
     affiliation: "1, 2" # (Multiple affiliations must be quoted)
 affiliations:
  - name: Karlsruhe Institute of Technology, Karlsruhe, Germany
