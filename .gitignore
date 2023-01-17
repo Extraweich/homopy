@@ -2,4 +2,3 @@
 .vscode/
 mk_doc.sh
 refresh.sh
-.readthedocs.yaml

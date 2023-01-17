@@ -118,11 +118,11 @@
 <span class="sd">        on which one is ought to be used.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            - matrix : ndarray of shape(3, 3)</span>
+<span class="sd">            - matrix : ndarray of shape (3, 3)</span>
 <span class="sd">                Tensor in regular tensor notation.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            - ... : ndarray of shape(6, 1)</span>
+<span class="sd">            - ... : ndarray of shape (6, 1)</span>
 <span class="sd">                Tensor in Voigt or normalized Voigt notation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -137,9 +137,9 @@
 <span class="sd">        the direction of di.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            - didi : ndarray of shape(6, 1)</span>
+<span class="sd">            - didi : ndarray of shape (6, 1)</span>
 <span class="sd">                Directional tensor.</span>
-<span class="sd">            - S : ndarray of shape(6, 6)</span>
+<span class="sd">            - S : ndarray of shape (6, 6)</span>
 <span class="sd">                Compliance tensor in Voigt or normalized Voigt</span>
 <span class="sd">                notation.</span>
 
@@ -155,9 +155,9 @@
 <span class="sd">        Return Young&#39;s modulus in the direction of di.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            - di : ndarray of shape(3, 1)</span>
+<span class="sd">            - di : ndarray of shape (3, 1)</span>
 <span class="sd">                Directional vector.</span>
-<span class="sd">            - S : ndarray of shape(6, 6)</span>
+<span class="sd">            - S : ndarray of shape (6, 6)</span>
 <span class="sd">                Compliance tensor in Voigt or normalized Voigt</span>
 <span class="sd">                notation.</span>
 
@@ -180,7 +180,7 @@
 <span class="sd">                Second angle in [0, pi].</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            - ... : ndarray of shape(3,)</span>
+<span class="sd">            - ... : ndarray of shape (3,)</span>
 <span class="sd">                Directional vector.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -191,14 +191,14 @@
 <span class="sd">        Plot stiffness body.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            - S : ndarray of shape(6, 6)</span>
+<span class="sd">            - S : ndarray of shape (6, 6)</span>
 <span class="sd">                Compliance tensor in Voigt or normalized Voigt</span>
 <span class="sd">                notation.</span>
 <span class="sd">            - o : int</span>
 <span class="sd">                Number of discretization steps for first angle.</span>
 <span class="sd">            - p : int</span>
 <span class="sd">                Number of discretization steps for second angle.</span>
-<span class="sd">            - bound : array of shape(3,), default=[0,0,0]</span>
+<span class="sd">            - bound : array of shape (3,), default=[0,0,0]</span>
 <span class="sd">                Boundaries for the 3 axis for the visualization.</span>
 <span class="sd">                If [0,0,0], boundaries are set automatically.</span>
 <span class="sd">            - rcount, ccount : int</span>
@@ -254,12 +254,12 @@
 
         <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="ElasticPlot.polar_plot_E_body"><a class="viewcode-back" href="../../source/stiffness_plot.html#homopy.stiffness_plot.ElasticPlot.polar_plot_E_body">[docs]</a>    <span class="k">def</span> <span class="nf">polar_plot_E_body</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">o</span><span class="p">,</span> <span class="n">angle</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">plot</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="ElasticPlot.polar_plot_E_body"><a class="viewcode-back" href="../../source/stiffness_plot.html#homopy.stiffness_plot.ElasticPlot.polar_plot_E_body">[docs]</a>    <span class="k">def</span> <span class="nf">polar_plot_E_body</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">o</span><span class="p">,</span> <span class="n">angle</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot slice of stiffness body.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            - S : ndarray of shape(6, 6)</span>
+<span class="sd">            - S : ndarray of shape (6, 6)</span>
 <span class="sd">                Compliance tensor in Voigt or normalized Voigt</span>
 <span class="sd">                notation.</span>
 <span class="sd">            - o : int</span>
@@ -267,17 +267,14 @@
 <span class="sd">            - angle : float</span>
 <span class="sd">                Angle to determine the angular orientation of the slice.</span>
 <span class="sd">                Does not work yet.</span>
-<span class="sd">            - bound : array of shape(3,), default=[0,0,0]</span>
-<span class="sd">                Boundaries for the 3 axis for the visualization.</span>
-<span class="sd">                If [0,0,0], boundaries are set automatically.</span>
 <span class="sd">            - plot : boolean</span>
 <span class="sd">                Determines whether the plot will be displayed. If False,</span>
 <span class="sd">                the metadata of the plot will be returned instead.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            - rad : ndarray of shape(n+1,)</span>
+<span class="sd">            - rad : ndarray of shape (n+1,)</span>
 <span class="sd">                Angular positions for polar plot.</span>
-<span class="sd">            - E : ndarray of shape(n+1,)</span>
+<span class="sd">            - E : ndarray of shape (n+1,)</span>
 <span class="sd">                Sitffness at corresponding angle.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -342,7 +339,7 @@
 <span class="sd">        for laminate results for the Halpin-Tsai homogenization.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            - laminate_stiffness : ndarray of shape(3, 3)</span>
+<span class="sd">            - laminate_stiffness : ndarray of shape (3, 3)</span>
 <span class="sd">                Planar stiffness matrix in Voigt or normalized Voigt</span>
 <span class="sd">                notation.</span>
 <span class="sd">            - o : int</span>
@@ -354,9 +351,9 @@
 <span class="sd">                the metadata of the plot will be returned instead.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            - rad : ndarray of shape(n+1,)</span>
+<span class="sd">            - rad : ndarray of shape (n+1,)</span>
 <span class="sd">                Angular positions for polar plot.</span>
-<span class="sd">            - E : ndarray of shape(n+1,)</span>
+<span class="sd">            - E : ndarray of shape (n+1,)</span>
 <span class="sd">                Sitffness at corresponding angle.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 

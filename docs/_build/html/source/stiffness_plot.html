@@ -160,7 +160,7 @@ on which one is ought to be used.</p>
 <dl class="simple">
 <dt>Parameters:</dt><dd><ul class="simple">
 <li><dl class="simple">
-<dt>matrix<span class="classifier">ndarray of shape(3, 3)</span></dt><dd><p>Tensor in regular tensor notation.</p>
+<dt>matrix<span class="classifier">ndarray of shape (3, 3)</span></dt><dd><p>Tensor in regular tensor notation.</p>
 </dd>
 </dl>
 </li>
@@ -168,7 +168,7 @@ on which one is ought to be used.</p>
 </dd>
 <dt>Returns:</dt><dd><ul class="simple">
 <li><dl class="simple">
-<dt>…<span class="classifier">ndarray of shape(6, 1)</span></dt><dd><p>Tensor in Voigt or normalized Voigt notation.</p>
+<dt>…<span class="classifier">ndarray of shape (6, 1)</span></dt><dd><p>Tensor in Voigt or normalized Voigt notation.</p>
 </dd>
 </dl>
 </li>
@@ -184,7 +184,7 @@ on which one is ought to be used.</p>
 <dl class="simple">
 <dt>Parameters:</dt><dd><ul class="simple">
 <li><dl class="simple">
-<dt>S<span class="classifier">ndarray of shape(6, 6)</span></dt><dd><p>Compliance tensor in Voigt or normalized Voigt
+<dt>S<span class="classifier">ndarray of shape (6, 6)</span></dt><dd><p>Compliance tensor in Voigt or normalized Voigt
 notation.</p>
 </dd>
 </dl>
@@ -200,7 +200,7 @@ notation.</p>
 </dl>
 </li>
 <li><dl class="simple">
-<dt>bound<span class="classifier">array of shape(3,), default=[0,0,0]</span></dt><dd><p>Boundaries for the 3 axis for the visualization.
+<dt>bound<span class="classifier">array of shape (3,), default=[0,0,0]</span></dt><dd><p>Boundaries for the 3 axis for the visualization.
 If [0,0,0], boundaries are set automatically.</p>
 </dd>
 </dl>
@@ -223,12 +223,12 @@ If the input data is larger, it will be downsampled
 
 <dl class="py method">
 <dt class="sig sig-object py" id="homopy.stiffness_plot.ElasticPlot.polar_plot_E_body">
-<span class="sig-name descname"><span class="pre">polar_plot_E_body</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">S</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">o</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bound</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0,</span> <span class="pre">0,</span> <span class="pre">0]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/stiffness_plot.html#ElasticPlot.polar_plot_E_body"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.stiffness_plot.ElasticPlot.polar_plot_E_body" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">polar_plot_E_body</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">S</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">o</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/stiffness_plot.html#ElasticPlot.polar_plot_E_body"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.stiffness_plot.ElasticPlot.polar_plot_E_body" title="Permalink to this definition"></a></dt>
 <dd><p>Plot slice of stiffness body.</p>
 <dl class="simple">
 <dt>Parameters:</dt><dd><ul class="simple">
 <li><dl class="simple">
-<dt>S<span class="classifier">ndarray of shape(6, 6)</span></dt><dd><p>Compliance tensor in Voigt or normalized Voigt
+<dt>S<span class="classifier">ndarray of shape (6, 6)</span></dt><dd><p>Compliance tensor in Voigt or normalized Voigt
 notation.</p>
 </dd>
 </dl>
@@ -245,12 +245,6 @@ Does not work yet.</p>
 </dl>
 </li>
 <li><dl class="simple">
-<dt>bound<span class="classifier">array of shape(3,), default=[0,0,0]</span></dt><dd><p>Boundaries for the 3 axis for the visualization.
-If [0,0,0], boundaries are set automatically.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
 <dt>plot<span class="classifier">boolean</span></dt><dd><p>Determines whether the plot will be displayed. If False,
 the metadata of the plot will be returned instead.</p>
 </dd>
@@ -260,12 +254,12 @@ the metadata of the plot will be returned instead.</p>
 </dd>
 <dt>Returns:</dt><dd><ul class="simple">
 <li><dl class="simple">
-<dt>rad<span class="classifier">ndarray of shape(n+1,)</span></dt><dd><p>Angular positions for polar plot.</p>
+<dt>rad<span class="classifier">ndarray of shape (n+1,)</span></dt><dd><p>Angular positions for polar plot.</p>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
-<dt>E<span class="classifier">ndarray of shape(n+1,)</span></dt><dd><p>Sitffness at corresponding angle.</p>
+<dt>E<span class="classifier">ndarray of shape (n+1,)</span></dt><dd><p>Sitffness at corresponding angle.</p>
 </dd>
 </dl>
 </li>
@@ -305,7 +299,7 @@ for laminate results for the Halpin-Tsai homogenization.</p>
 <dl class="simple">
 <dt>Parameters:</dt><dd><ul class="simple">
 <li><dl class="simple">
-<dt>laminate_stiffness<span class="classifier">ndarray of shape(3, 3)</span></dt><dd><p>Planar stiffness matrix in Voigt or normalized Voigt
+<dt>laminate_stiffness<span class="classifier">ndarray of shape (3, 3)</span></dt><dd><p>Planar stiffness matrix in Voigt or normalized Voigt
 notation.</p>
 </dd>
 </dl>
@@ -330,12 +324,12 @@ the metadata of the plot will be returned instead.</p>
 </dd>
 <dt>Returns:</dt><dd><ul class="simple">
 <li><dl class="simple">
-<dt>rad<span class="classifier">ndarray of shape(n+1,)</span></dt><dd><p>Angular positions for polar plot.</p>
+<dt>rad<span class="classifier">ndarray of shape (n+1,)</span></dt><dd><p>Angular positions for polar plot.</p>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
-<dt>E<span class="classifier">ndarray of shape(n+1,)</span></dt><dd><p>Sitffness at corresponding angle.</p>
+<dt>E<span class="classifier">ndarray of shape (n+1,)</span></dt><dd><p>Sitffness at corresponding angle.</p>
 </dd>
 </dl>
 </li>

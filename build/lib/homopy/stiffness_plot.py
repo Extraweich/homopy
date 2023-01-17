@@ -44,11 +44,11 @@ class ElasticPlot(Tensor):
         on which one is ought to be used.
 
         Parameters:
-            - matrix : ndarray of shape(3, 3)
+            - matrix : ndarray of shape (3, 3)
                 Tensor in regular tensor notation.
 
         Returns:
-            - ... : ndarray of shape(6, 1)
+            - ... : ndarray of shape (6, 1)
                 Tensor in Voigt or normalized Voigt notation.
         """
 
@@ -63,9 +63,9 @@ class ElasticPlot(Tensor):
         the direction of di.
 
         Parameters:
-            - didi : ndarray of shape(6, 1)
+            - didi : ndarray of shape (6, 1)
                 Directional tensor.
-            - S : ndarray of shape(6, 6)
+            - S : ndarray of shape (6, 6)
                 Compliance tensor in Voigt or normalized Voigt
                 notation.
 
@@ -81,9 +81,9 @@ class ElasticPlot(Tensor):
         Return Young's modulus in the direction of di.
 
         Parameters:
-            - di : ndarray of shape(3, 1)
+            - di : ndarray of shape (3, 1)
                 Directional vector.
-            - S : ndarray of shape(6, 6)
+            - S : ndarray of shape (6, 6)
                 Compliance tensor in Voigt or normalized Voigt
                 notation.
 
@@ -106,7 +106,7 @@ class ElasticPlot(Tensor):
                 Second angle in [0, pi].
 
         Returns:
-            - ... : ndarray of shape(3,)
+            - ... : ndarray of shape (3,)
                 Directional vector.
         """
 
@@ -117,14 +117,14 @@ class ElasticPlot(Tensor):
         Plot stiffness body.
 
         Parameters:
-            - S : ndarray of shape(6, 6)
+            - S : ndarray of shape (6, 6)
                 Compliance tensor in Voigt or normalized Voigt
                 notation.
             - o : int
                 Number of discretization steps for first angle.
             - p : int
                 Number of discretization steps for second angle.
-            - bound : array of shape(3,), default=[0,0,0]
+            - bound : array of shape (3,), default=[0,0,0]
                 Boundaries for the 3 axis for the visualization.
                 If [0,0,0], boundaries are set automatically.
             - rcount, ccount : int
@@ -180,12 +180,12 @@ class ElasticPlot(Tensor):
 
         plt.show()
 
-    def polar_plot_E_body(self, S, o, angle, bound=[0, 0, 0], plot=True):
+    def polar_plot_E_body(self, S, o, angle, plot=True):
         """
         Plot slice of stiffness body.
 
         Parameters:
-            - S : ndarray of shape(6, 6)
+            - S : ndarray of shape (6, 6)
                 Compliance tensor in Voigt or normalized Voigt
                 notation.
             - o : int
@@ -193,17 +193,14 @@ class ElasticPlot(Tensor):
             - angle : float
                 Angle to determine the angular orientation of the slice.
                 Does not work yet.
-            - bound : array of shape(3,), default=[0,0,0]
-                Boundaries for the 3 axis for the visualization.
-                If [0,0,0], boundaries are set automatically.
             - plot : boolean
                 Determines whether the plot will be displayed. If False,
                 the metadata of the plot will be returned instead.
 
         Returns:
-            - rad : ndarray of shape(n+1,)
+            - rad : ndarray of shape (n+1,)
                 Angular positions for polar plot.
-            - E : ndarray of shape(n+1,)
+            - E : ndarray of shape (n+1,)
                 Sitffness at corresponding angle.
         """
 
@@ -268,7 +265,7 @@ class ElasticPlot(Tensor):
         for laminate results for the Halpin-Tsai homogenization.
 
         Parameters:
-            - laminate_stiffness : ndarray of shape(3, 3)
+            - laminate_stiffness : ndarray of shape (3, 3)
                 Planar stiffness matrix in Voigt or normalized Voigt
                 notation.
             - o : int
@@ -280,9 +277,9 @@ class ElasticPlot(Tensor):
                 the metadata of the plot will be returned instead.
 
         Returns:
-            - rad : ndarray of shape(n+1,)
+            - rad : ndarray of shape (n+1,)
                 Angular positions for polar plot.
-            - E : ndarray of shape(n+1,)
+            - E : ndarray of shape (n+1,)
                 Sitffness at corresponding angle.
         """
 
