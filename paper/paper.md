@@ -3,6 +3,7 @@ title: 'HomoPy: A Python package for homogenization procedures in fiber reinforc
 tags:
   - Python
   - Mechanics
+  - Homogenization
   - Fiber Reinforced Polymers
   - Mori-Tanaka
   - Halpin-Tsai
