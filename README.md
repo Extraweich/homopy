@@ -1,3 +1,5 @@
+[![PyPI version](https://badge.fury.io/py/homopy.svg)](https://badge.fury.io/py/homopy)
+
 # HomoPy
 *Your solution for stiffness problems*
 
