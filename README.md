@@ -1,6 +1,6 @@
 [![PyPI version](https://badge.fury.io/py/homopy.svg)](https://badge.fury.io/py/homopy)
-[![Documentation status](https://readthedocs.org/projects/homopy/badge/?version=latest)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+[![Documentation status](https://readthedocs.org/projects/homopy/badge/?version=latest)](https://homopy.readthedocs.io/en/latest/?badge=latest)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 # HomoPy
 *Your solution for stiffness problems*
