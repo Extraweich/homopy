@@ -92,7 +92,7 @@ class ElasticPlot(Tensor):
                 Scalar stiffness value in direction of didi.
         """
 
-        didi = self.matrix_reduction(self.__diade(di, di))
+        didi = self.matrix_reduction(self._diade(di, di))
         return self._get_reciprocal_E(didi, S) ** (-1)
 
     def _dir_vec(self, phi, theta):
@@ -329,7 +329,7 @@ class ElasticPlot(Tensor):
         theta = np.pi / 2
         vec = self._dir_vec(phi, theta)
 
-        didi = self.__diade(vec, vec)
+        didi = self._diade(vec, vec)
         didi_flat = self.matrix_reduction(didi)
         if self.USEVOIGT == False:
             b = 1 / np.sqrt(2)

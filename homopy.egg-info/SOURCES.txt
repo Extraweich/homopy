@@ -1,4 +1,4 @@
-LICENCE
+LICENSE
 README.md
 setup.py
 homopy/__init__.py
@@ -11,3 +11,4 @@ homopy.egg-info/SOURCES.txt
 homopy.egg-info/dependency_links.txt
 homopy.egg-info/requires.txt
 homopy.egg-info/top_level.txt
+test/test_tensor.py

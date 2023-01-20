@@ -54,9 +54,9 @@ class MoriTanaka(Tensor):
                 Polymer matrix material.
             - fiber : class object of the Elasticity class (or any child class)
                 Fiber material.
-            - Cm : ndarray of shape(6, 6)
+            - Cm : ndarray of shape (6, 6)
                 Stiffness of matrix material in normalized Voigt notation.
-            - eye : ndarray of shape(6, 6)
+            - eye : ndarray of shape (6, 6)
                 Identity tensor in normalized Voigt notation.
 
         Returns:
@@ -75,7 +75,7 @@ class MoriTanaka(Tensor):
             self.Cf = fiber.stiffness66
             self.v_frac = v_frac
             self.a_ratio = a_ratio
-            self.eshelby66 = self.get_eshelby(self.a_ratio)
+            self.eshelby66 = self._get_eshelby(self.a_ratio)
 
         else:
             assert (
@@ -117,7 +117,7 @@ class MoriTanaka(Tensor):
                 for the geometry of the fiber. So far not in use...
 
         Returns:
-            - S : ndarray of shape(6, 6) or (3, 3, 3, 3)
+            - S : ndarray of shape (6, 6) or (3, 3, 3, 3)
                 Eshelby inclusion tensor.
         """
 
@@ -223,11 +223,11 @@ class MoriTanaka(Tensor):
         Return the averaged effective stiffness based on orientation tensors.
 
         Parameters:
-            - C_eff : ndarray of shape(6, 6) or (3, 3, 3, 3)
+            - C_eff : ndarray of shape (6, 6) or (3, 3, 3, 3)
                 Effective stiffness in normalized Voigt or regular tensor notation.
-            - N2 : ndarray of shape(3, 3)
+            - N2 : ndarray of shape (3, 3)
                 Orientation tensor of 2nd order.
-            - N4 : ndarray of shape(3, 3, 3, 3)
+            - N4 : ndarray of shape (3, 3, 3, 3)
                 Orientation tensor of 4th order.
 
         Returns:
@@ -407,7 +407,7 @@ class HalpinTsai:
             - None
 
         Returns:
-            - C : ndarray of shape(3,3)
+            - C : ndarray of shape (3,3)
                 Planar stiffness of lamina.
         """
 
@@ -462,7 +462,7 @@ class Laminate:
             - None
 
         Returns:
-            - C_eff : ndarray of shape(3,3)
+            - C_eff : ndarray of shape (3,3)
                 Effective stiffness of laminate.
         """
         C_eff_temp = np.zeros(6)
@@ -485,13 +485,13 @@ class Laminate:
         Return planarly rotated stiffness matrix.
 
         Parameters:
-            - lamina_stiffness : ndarray of shape(3, 3)
+            - lamina_stiffness : ndarray of shape (3, 3)
                 Stiffness matrix of lamina.
             - angle : float
                 Planar angle to rotate the stiffness matrix about.
 
         Returns:
-            - rot_stiffness : ndarray of shape(3, 3)
+            - rot_stiffness : ndarray of shape (3, 3)
                 Rotated stiffness matrix.
         """
         m = cos(angle)
