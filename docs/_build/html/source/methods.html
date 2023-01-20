@@ -196,12 +196,12 @@ material.</p>
 </dl>
 </li>
 <li><dl class="simple">
-<dt>Cm<span class="classifier">ndarray of shape(6, 6)</span></dt><dd><p>Stiffness of matrix material in normalized Voigt notation.</p>
+<dt>Cm<span class="classifier">ndarray of shape (6, 6)</span></dt><dd><p>Stiffness of matrix material in normalized Voigt notation.</p>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
-<dt>eye<span class="classifier">ndarray of shape(6, 6)</span></dt><dd><p>Identity tensor in normalized Voigt notation.</p>
+<dt>eye<span class="classifier">ndarray of shape (6, 6)</span></dt><dd><p>Identity tensor in normalized Voigt notation.</p>
 </dd>
 </dl>
 </li>
@@ -241,17 +241,17 @@ material.</p>
 <dl class="simple">
 <dt>Parameters:</dt><dd><ul class="simple">
 <li><dl class="simple">
-<dt>C_eff<span class="classifier">ndarray of shape(6, 6) or (3, 3, 3, 3)</span></dt><dd><p>Effective stiffness in normalized Voigt or regular tensor notation.</p>
+<dt>C_eff<span class="classifier">ndarray of shape (6, 6) or (3, 3, 3, 3)</span></dt><dd><p>Effective stiffness in normalized Voigt or regular tensor notation.</p>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
-<dt>N2<span class="classifier">ndarray of shape(3, 3)</span></dt><dd><p>Orientation tensor of 2nd order.</p>
+<dt>N2<span class="classifier">ndarray of shape (3, 3)</span></dt><dd><p>Orientation tensor of 2nd order.</p>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
-<dt>N4<span class="classifier">ndarray of shape(3, 3, 3, 3)</span></dt><dd><p>Orientation tensor of 4th order.</p>
+<dt>N4<span class="classifier">ndarray of shape (3, 3, 3, 3)</span></dt><dd><p>Orientation tensor of 4th order.</p>
 </dd>
 </dl>
 </li>
@@ -358,7 +358,7 @@ polymers as laminas. This is then used as input for the Laminate class.</p>
 </dd>
 <dt>Returns:</dt><dd><ul class="simple">
 <li><dl class="simple">
-<dt>C<span class="classifier">ndarray of shape(3,3)</span></dt><dd><p>Planar stiffness of lamina.</p>
+<dt>C<span class="classifier">ndarray of shape (3,3)</span></dt><dd><p>Planar stiffness of lamina.</p>
 </dd>
 </dl>
 </li>
@@ -416,7 +416,7 @@ each lamina is averaged equally.</p>
 </dd>
 <dt>Returns:</dt><dd><ul class="simple">
 <li><dl class="simple">
-<dt>C_eff<span class="classifier">ndarray of shape(3,3)</span></dt><dd><p>Effective stiffness of laminate.</p>
+<dt>C_eff<span class="classifier">ndarray of shape (3,3)</span></dt><dd><p>Effective stiffness of laminate.</p>
 </dd>
 </dl>
 </li>
@@ -432,7 +432,7 @@ each lamina is averaged equally.</p>
 <dl class="simple">
 <dt>Parameters:</dt><dd><ul class="simple">
 <li><dl class="simple">
-<dt>lamina_stiffness<span class="classifier">ndarray of shape(3, 3)</span></dt><dd><p>Stiffness matrix of lamina.</p>
+<dt>lamina_stiffness<span class="classifier">ndarray of shape (3, 3)</span></dt><dd><p>Stiffness matrix of lamina.</p>
 </dd>
 </dl>
 </li>
@@ -445,7 +445,7 @@ each lamina is averaged equally.</p>
 </dd>
 <dt>Returns:</dt><dd><ul class="simple">
 <li><dl class="simple">
-<dt>rot_stiffness<span class="classifier">ndarray of shape(3, 3)</span></dt><dd><p>Rotated stiffness matrix.</p>
+<dt>rot_stiffness<span class="classifier">ndarray of shape (3, 3)</span></dt><dd><p>Rotated stiffness matrix.</p>
 </dd>
 </dl>
 </li>

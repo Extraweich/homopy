@@ -25,9 +25,9 @@ class Elasticity(Tensor):
             - None
 
         Object variables:
-            - stiffness3333 : ndarray of shape(3, 3, 3, 3)
+            - stiffness3333 : ndarray of shape (3, 3, 3, 3)
                 Holds the stiffness values in the regular tensor notation.
-            - stiffness66 : ndarray of shape(6, 6)
+            - stiffness66 : ndarray of shape (6, 6)
                 Holds the stiffness values in the normalized Voigt notation.
 
         Returns:

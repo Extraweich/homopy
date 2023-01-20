@@ -128,9 +128,9 @@
 <span class="sd">                Polymer matrix material.</span>
 <span class="sd">            - fiber : class object of the Elasticity class (or any child class)</span>
 <span class="sd">                Fiber material.</span>
-<span class="sd">            - Cm : ndarray of shape(6, 6)</span>
+<span class="sd">            - Cm : ndarray of shape (6, 6)</span>
 <span class="sd">                Stiffness of matrix material in normalized Voigt notation.</span>
-<span class="sd">            - eye : ndarray of shape(6, 6)</span>
+<span class="sd">            - eye : ndarray of shape (6, 6)</span>
 <span class="sd">                Identity tensor in normalized Voigt notation.</span>
 
 <span class="sd">        Returns:</span>
@@ -149,7 +149,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">Cf</span> <span class="o">=</span> <span class="n">fiber</span><span class="o">.</span><span class="n">stiffness66</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">v_frac</span> <span class="o">=</span> <span class="n">v_frac</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">a_ratio</span> <span class="o">=</span> <span class="n">a_ratio</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">eshelby66</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_eshelby</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">a_ratio</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">eshelby66</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_eshelby</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">a_ratio</span><span class="p">)</span>
 
         <span class="k">else</span><span class="p">:</span>
             <span class="k">assert</span> <span class="p">(</span>
@@ -191,7 +191,7 @@
 <span class="sd">                for the geometry of the fiber. So far not in use...</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            - S : ndarray of shape(6, 6) or (3, 3, 3, 3)</span>
+<span class="sd">            - S : ndarray of shape (6, 6) or (3, 3, 3, 3)</span>
 <span class="sd">                Eshelby inclusion tensor.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -297,11 +297,11 @@
 <span class="sd">        Return the averaged effective stiffness based on orientation tensors.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            - C_eff : ndarray of shape(6, 6) or (3, 3, 3, 3)</span>
+<span class="sd">            - C_eff : ndarray of shape (6, 6) or (3, 3, 3, 3)</span>
 <span class="sd">                Effective stiffness in normalized Voigt or regular tensor notation.</span>
-<span class="sd">            - N2 : ndarray of shape(3, 3)</span>
+<span class="sd">            - N2 : ndarray of shape (3, 3)</span>
 <span class="sd">                Orientation tensor of 2nd order.</span>
-<span class="sd">            - N4 : ndarray of shape(3, 3, 3, 3)</span>
+<span class="sd">            - N4 : ndarray of shape (3, 3, 3, 3)</span>
 <span class="sd">                Orientation tensor of 4th order.</span>
 
 <span class="sd">        Returns:</span>
@@ -481,7 +481,7 @@
 <span class="sd">            - None</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            - C : ndarray of shape(3,3)</span>
+<span class="sd">            - C : ndarray of shape (3,3)</span>
 <span class="sd">                Planar stiffness of lamina.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -536,7 +536,7 @@
 <span class="sd">            - None</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            - C_eff : ndarray of shape(3,3)</span>
+<span class="sd">            - C_eff : ndarray of shape (3,3)</span>
 <span class="sd">                Effective stiffness of laminate.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">C_eff_temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
@@ -559,13 +559,13 @@
 <span class="sd">        Return planarly rotated stiffness matrix.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            - lamina_stiffness : ndarray of shape(3, 3)</span>
+<span class="sd">            - lamina_stiffness : ndarray of shape (3, 3)</span>
 <span class="sd">                Stiffness matrix of lamina.</span>
 <span class="sd">            - angle : float</span>
 <span class="sd">                Planar angle to rotate the stiffness matrix about.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            - rot_stiffness : ndarray of shape(3, 3)</span>
+<span class="sd">            - rot_stiffness : ndarray of shape (3, 3)</span>
 <span class="sd">                Rotated stiffness matrix.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">m</span> <span class="o">=</span> <span class="n">cos</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
