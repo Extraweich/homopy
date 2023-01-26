@@ -55,12 +55,13 @@
 <li class="toctree-l4"><a class="reference internal" href="#homopy.methods.MoriTanaka.__init__"><code class="docutils literal notranslate"><span class="pre">MoriTanaka.__init__()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#homopy.methods.MoriTanaka.get_effective_stiffness"><code class="docutils literal notranslate"><span class="pre">MoriTanaka.get_effective_stiffness()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#homopy.methods.MoriTanaka.get_average_stiffness"><code class="docutils literal notranslate"><span class="pre">MoriTanaka.get_average_stiffness()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#homopy.methods.MoriTanaka.get_orientation_average"><code class="docutils literal notranslate"><span class="pre">MoriTanaka.get_orientation_average()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#homopy.methods.MoriTanaka.is_symmetric"><code class="docutils literal notranslate"><span class="pre">MoriTanaka.is_symmetric()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#homopy.methods.HalpinTsai"><code class="docutils literal notranslate"><span class="pre">HalpinTsai</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#homopy.methods.HalpinTsai.__init__"><code class="docutils literal notranslate"><span class="pre">HalpinTsai.__init__()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#homopy.methods.HalpinTsai.get_stiffness"><code class="docutils literal notranslate"><span class="pre">HalpinTsai.get_stiffness()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#homopy.methods.HalpinTsai.get_effective_stiffness"><code class="docutils literal notranslate"><span class="pre">HalpinTsai.get_effective_stiffness()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#homopy.methods.Laminate"><code class="docutils literal notranslate"><span class="pre">Laminate</span></code></a><ul>
@@ -162,12 +163,12 @@ the Tensor class.</p>
 <dl class="simple">
 <dt>Parameters:</dt><dd><ul class="simple">
 <li><dl class="simple">
-<dt>matrix<span class="classifier">class object of the Elasticity class (or any child class)</span></dt><dd><p>Polymer matrix material.</p>
+<dt>matrix<span class="classifier">class object of the Elasticity class (or any child class)</span></dt><dd><p>Polymer matrix material in normalized Voigt notation.</p>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
-<dt>fiber<span class="classifier">class object of the Elasticity class (or any child class) or list of objects of the Elasticity class</span></dt><dd><p>Fiber material.</p>
+<dt>fiber<span class="classifier">class object of the Elasticity class (or any child class) or list of objects of the Elasticity class</span></dt><dd><p>Fiber material in normalized Voigt notation.</p>
 </dd>
 </dl>
 </li>
@@ -217,7 +218,7 @@ material.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="homopy.methods.MoriTanaka.get_effective_stiffness">
 <span class="sig-name descname"><span class="pre">get_effective_stiffness</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/methods.html#MoriTanaka.get_effective_stiffness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.methods.MoriTanaka.get_effective_stiffness" title="Permalink to this definition"></a></dt>
-<dd><p>Return the effective stiffness of a inhomogeneous material.</p>
+<dd><p>Return the effective stiffness of an inhomogeneous material.</p>
 <dl class="simple">
 <dt>Parameters:</dt><dd><ul class="simple">
 <li><p>None</p></li>
@@ -236,7 +237,7 @@ material.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="homopy.methods.MoriTanaka.get_average_stiffness">
-<span class="sig-name descname"><span class="pre">get_average_stiffness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">C_eff</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N4</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/methods.html#MoriTanaka.get_average_stiffness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.methods.MoriTanaka.get_average_stiffness" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_average_stiffness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">N2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'66'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/methods.html#MoriTanaka.get_average_stiffness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.methods.MoriTanaka.get_average_stiffness" title="Permalink to this definition"></a></dt>
 <dd><p>Return the averaged effective stiffness based on orientation tensors.</p>
 <dl class="simple">
 <dt>Parameters:</dt><dd><ul class="simple">
@@ -255,6 +256,12 @@ material.</p>
 </dd>
 </dl>
 </li>
+<li><dl class="simple">
+<dt>return_dim<span class="classifier">string, default=’66’</span></dt><dd><p>Flag to determine whether the tensor should be returned in
+normalized Voigt or regular tensor notation (options: ‘66’, ‘3333’)</p>
+</dd>
+</dl>
+</li>
 </ul>
 </dd>
 <dt>Returns:</dt><dd><ul class="simple">
@@ -269,9 +276,53 @@ material.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="homopy.methods.MoriTanaka.get_orientation_average">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_orientation_average</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N4</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/methods.html#MoriTanaka.get_orientation_average"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.methods.MoriTanaka.get_orientation_average" title="Permalink to this definition"></a></dt>
+<dd><p>Return the orientation average of a tensor (after Advani and Tucker (1987), Eq. ..).</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>tensor<span class="classifier">ndarray of shape (3, 3, 3, 3)</span></dt><dd><p>Tensor to be averaged (must be transversely isotropic).</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>N2<span class="classifier">ndarray of shape (3, 3)</span></dt><dd><p>Orientation tensor of 2nd order.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>N4<span class="classifier">ndarray of shape (3, 3, 3, 3)</span></dt><dd><p>Orientation tensor of 4th order.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt>Returns:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>ave_tensor<span class="classifier">ndarray of shape (3, 3, 3, 3)</span></dt><dd><p>Orientation average of given tensor.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="homopy.methods.MoriTanaka.is_symmetric">
 <span class="sig-name descname"><span class="pre">is_symmetric</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/methods.html#MoriTanaka.is_symmetric"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.methods.MoriTanaka.is_symmetric" title="Permalink to this definition"></a></dt>
 <dd><p>Print the symmetry status of the effective stiffness.</p>
+<dl class="simple">
+<dt>Paremeters:</dt><dd><ul class="simple">
+<li><p>None</p></li>
+</ul>
+</dd>
+<dt>Return:</dt><dd><ul class="simple">
+<li><p>None</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -348,8 +399,8 @@ polymers as laminas. This is then used as input for the Laminate class.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="homopy.methods.HalpinTsai.get_stiffness">
-<span class="sig-name descname"><span class="pre">get_stiffness</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/methods.html#HalpinTsai.get_stiffness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.methods.HalpinTsai.get_stiffness" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="homopy.methods.HalpinTsai.get_effective_stiffness">
+<span class="sig-name descname"><span class="pre">get_effective_stiffness</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/methods.html#HalpinTsai.get_effective_stiffness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.methods.HalpinTsai.get_effective_stiffness" title="Permalink to this definition"></a></dt>
 <dd><p>Return the planar stiffness based on the effective parameters of a single lamina.</p>
 <dl class="simple">
 <dt>Parameters:</dt><dd><ul class="simple">

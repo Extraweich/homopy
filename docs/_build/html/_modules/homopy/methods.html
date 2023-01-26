@@ -114,9 +114,9 @@
 
 <span class="sd">        Parameters:</span>
 <span class="sd">            - matrix : class object of the Elasticity class (or any child class)</span>
-<span class="sd">                Polymer matrix material.</span>
+<span class="sd">                Polymer matrix material in normalized Voigt notation.</span>
 <span class="sd">            - fiber : class object of the Elasticity class (or any child class) or list of objects of the Elasticity class</span>
-<span class="sd">                Fiber material.</span>
+<span class="sd">                Fiber material in normalized Voigt notation.</span>
 <span class="sd">            - v_frac : float</span>
 <span class="sd">                Volume fraction of the fiber material within the matrix</span>
 <span class="sd">                material.</span>
@@ -174,7 +174,10 @@
                 <span class="p">)</span>
                 <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A_inv</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">A_f_alpha</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">c_alpha</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v_frac</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">c_f</span><span class="p">)</span></div>
+                <span class="bp">self</span><span class="o">.</span><span class="n">c_alpha</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v_frac</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">c_f</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">effective_stiffness66</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_effective_stiffness</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">effective_stiffness3333</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mandel2tensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">effective_stiffness66</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_get_eshelby</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a_ratio</span><span class="p">,</span> <span class="n">return_dim</span><span class="o">=</span><span class="s2">&quot;66&quot;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s2">&quot;ellipsoid&quot;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -255,7 +258,7 @@
 
 <div class="viewcode-block" id="MoriTanaka.get_effective_stiffness"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.MoriTanaka.get_effective_stiffness">[docs]</a>    <span class="k">def</span> <span class="nf">get_effective_stiffness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Return the effective stiffness of a inhomogeneous material.</span>
+<span class="sd">        Return the effective stiffness of an inhomogeneous material.</span>
 
 <span class="sd">        Parameters:</span>
 <span class="sd">            - None</span>
@@ -292,7 +295,7 @@
 
         <span class="k">return</span> <span class="n">C_eff</span></div>
 
-<div class="viewcode-block" id="MoriTanaka.get_average_stiffness"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.MoriTanaka.get_average_stiffness">[docs]</a>    <span class="k">def</span> <span class="nf">get_average_stiffness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">C_eff</span><span class="p">,</span> <span class="n">N2</span><span class="p">,</span> <span class="n">N4</span><span class="p">):</span>
+<div class="viewcode-block" id="MoriTanaka.get_average_stiffness"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.MoriTanaka.get_average_stiffness">[docs]</a>    <span class="k">def</span> <span class="nf">get_average_stiffness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">N2</span><span class="p">,</span> <span class="n">N4</span><span class="p">,</span> <span class="n">return_dim</span><span class="o">=</span><span class="s2">&quot;66&quot;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the averaged effective stiffness based on orientation tensors.</span>
 
@@ -303,89 +306,122 @@
 <span class="sd">                Orientation tensor of 2nd order.</span>
 <span class="sd">            - N4 : ndarray of shape (3, 3, 3, 3)</span>
 <span class="sd">                Orientation tensor of 4th order.</span>
+<span class="sd">            - return_dim : string, default=&#39;66&#39;</span>
+<span class="sd">                Flag to determine whether the tensor should be returned in</span>
+<span class="sd">                normalized Voigt or regular tensor notation (options: &#39;66&#39;, &#39;3333&#39;)</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            - ... : ndarray of shape (6, 6)</span>
 <span class="sd">                Averaged stiffness tensor in the normalized Voigt notation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">if</span> <span class="n">C_eff</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">):</span>
-            <span class="n">C_eff</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mandel2tensor</span><span class="p">(</span><span class="n">C_eff</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">N4</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">):</span>
+            <span class="n">N4</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mandel2tensor</span><span class="p">(</span><span class="n">N4</span><span class="p">)</span>
+
+        <span class="n">C_eff_ave</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_orientation_average</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">effective_stiffness3333</span><span class="p">,</span> <span class="n">N2</span><span class="p">,</span> <span class="n">N4</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">return_dim</span> <span class="o">==</span> <span class="s2">&quot;66&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tensor2mandel</span><span class="p">(</span><span class="n">C_eff_ave</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">C_eff_ave</span></div>
+
+<div class="viewcode-block" id="MoriTanaka.get_orientation_average"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.MoriTanaka.get_orientation_average">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_orientation_average</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="n">N2</span><span class="p">,</span> <span class="n">N4</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the orientation average of a tensor (after Advani and Tucker (1987), Eq. ..).</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            - tensor : ndarray of shape (3, 3, 3, 3)</span>
+<span class="sd">                Tensor to be averaged (must be transversely isotropic).</span>
+<span class="sd">            - N2 : ndarray of shape (3, 3)</span>
+<span class="sd">                Orientation tensor of 2nd order.</span>
+<span class="sd">            - N4 : ndarray of shape (3, 3, 3, 3)</span>
+<span class="sd">                Orientation tensor of 4th order.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            - ave_tensor : ndarray of shape (3, 3, 3, 3)</span>
+<span class="sd">                Orientation average of given tensor.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">N4</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">):</span>
+            <span class="n">N4</span> <span class="o">=</span> <span class="n">Tensor</span><span class="p">()</span><span class="o">.</span><span class="n">mandel2tensor</span><span class="p">(</span><span class="n">N4</span><span class="p">)</span>
 
         <span class="n">b1</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">C_eff</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
-            <span class="o">+</span> <span class="n">C_eff</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
-            <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">C_eff</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
-            <span class="o">-</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">C_eff</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="n">tensor</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+            <span class="o">+</span> <span class="n">tensor</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">tensor</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="o">-</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">tensor</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
         <span class="p">)</span>
-        <span class="n">b2</span> <span class="o">=</span> <span class="n">C_eff</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">C_eff</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
-        <span class="n">b3</span> <span class="o">=</span> <span class="n">C_eff</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">C_eff</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">C_eff</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-        <span class="n">b4</span> <span class="o">=</span> <span class="n">C_eff</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
-        <span class="n">b5</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">C_eff</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">C_eff</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+        <span class="n">b2</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">tensor</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+        <span class="n">b3</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">tensor</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">tensor</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="n">b4</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+        <span class="n">b5</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">tensor</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">tensor</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
 
-        <span class="n">eye2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+        <span class="n">eye3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 
-        <span class="n">C_eff_ave</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">ave_tensor</span> <span class="o">=</span> <span class="p">(</span>
             <span class="n">b1</span> <span class="o">*</span> <span class="n">N4</span>
             <span class="o">+</span> <span class="n">b2</span>
-            <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ij,kl-&gt;ijkl&quot;</span><span class="p">,</span> <span class="n">N2</span><span class="p">,</span> <span class="n">eye2</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ij,kl-&gt;ijkl&quot;</span><span class="p">,</span> <span class="n">eye2</span><span class="p">,</span> <span class="n">N2</span><span class="p">))</span>
+            <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ij,kl-&gt;ijkl&quot;</span><span class="p">,</span> <span class="n">N2</span><span class="p">,</span> <span class="n">eye3</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ij,kl-&gt;ijkl&quot;</span><span class="p">,</span> <span class="n">eye3</span><span class="p">,</span> <span class="n">N2</span><span class="p">))</span>
             <span class="o">+</span> <span class="n">b3</span>
             <span class="o">*</span> <span class="p">(</span>
-                <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ik,lj-&gt;ijkl&quot;</span><span class="p">,</span> <span class="n">N2</span><span class="p">,</span> <span class="n">eye2</span><span class="p">)</span>
-                <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ik,lj-&gt;ijlk&quot;</span><span class="p">,</span> <span class="n">N2</span><span class="p">,</span> <span class="n">eye2</span><span class="p">)</span>
-                <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ik,lj-&gt;klij&quot;</span><span class="p">,</span> <span class="n">eye2</span><span class="p">,</span> <span class="n">N2</span><span class="p">)</span>
-                <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ik,lj-&gt;ijlk&quot;</span><span class="p">,</span> <span class="n">eye2</span><span class="p">,</span> <span class="n">N2</span><span class="p">)</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ik,lj-&gt;ijkl&quot;</span><span class="p">,</span> <span class="n">N2</span><span class="p">,</span> <span class="n">eye3</span><span class="p">)</span>
+                <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ik,lj-&gt;ijlk&quot;</span><span class="p">,</span> <span class="n">N2</span><span class="p">,</span> <span class="n">eye3</span><span class="p">)</span>
+                <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ik,lj-&gt;klij&quot;</span><span class="p">,</span> <span class="n">eye3</span><span class="p">,</span> <span class="n">N2</span><span class="p">)</span>
+                <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ik,lj-&gt;ijlk&quot;</span><span class="p">,</span> <span class="n">eye3</span><span class="p">,</span> <span class="n">N2</span><span class="p">)</span>
             <span class="p">)</span>
-            <span class="o">+</span> <span class="n">b4</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ij,kl-&gt;ijkl&quot;</span><span class="p">,</span> <span class="n">eye2</span><span class="p">,</span> <span class="n">eye2</span><span class="p">))</span>
+            <span class="o">+</span> <span class="n">b4</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ij,kl-&gt;ijkl&quot;</span><span class="p">,</span> <span class="n">eye3</span><span class="p">,</span> <span class="n">eye3</span><span class="p">))</span>
             <span class="o">+</span> <span class="mi">2</span>
             <span class="o">*</span> <span class="n">b5</span>
             <span class="o">*</span> <span class="mi">1</span>
             <span class="o">/</span> <span class="mi">2</span>
             <span class="o">*</span> <span class="p">(</span>
-                <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ik,lj-&gt;ijkl&quot;</span><span class="p">,</span> <span class="n">eye2</span><span class="p">,</span> <span class="n">eye2</span><span class="p">)</span>
-                <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ik,lj-&gt;ijlk&quot;</span><span class="p">,</span> <span class="n">eye2</span><span class="p">,</span> <span class="n">eye2</span><span class="p">)</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ik,lj-&gt;ijkl&quot;</span><span class="p">,</span> <span class="n">eye3</span><span class="p">,</span> <span class="n">eye3</span><span class="p">)</span>
+                <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ik,lj-&gt;ijlk&quot;</span><span class="p">,</span> <span class="n">eye3</span><span class="p">,</span> <span class="n">eye3</span><span class="p">)</span>
             <span class="p">)</span>
         <span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tensor2mandel</span><span class="p">(</span><span class="n">C_eff_ave</span><span class="p">)</span></div>
+
+        <span class="k">return</span> <span class="n">ave_tensor</span></div>
 
 <div class="viewcode-block" id="MoriTanaka.is_symmetric"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.MoriTanaka.is_symmetric">[docs]</a>    <span class="k">def</span> <span class="nf">is_symmetric</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Print the symmetry status of the effective stiffness.</span>
+
+<span class="sd">        Paremeters:</span>
+<span class="sd">            - None</span>
+
+<span class="sd">        Return:</span>
+<span class="sd">            - None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">stiffness</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_effective_stiffness</span><span class="p">()</span>
-        <span class="c1"># transform to Mandel notation</span>
-        <span class="n">stiffness</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">*=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-        <span class="n">stiffness</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span> <span class="o">*=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-        <span class="n">stiffness</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span> <span class="o">*=</span> <span class="mi">2</span>
-        <span class="n">stiffness</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mandel2tensor</span><span class="p">(</span><span class="n">stiffness</span><span class="p">)</span>
-        <span class="n">left_minor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ijkl-&gt;jikl&quot;</span><span class="p">,</span> <span class="n">stiffness</span><span class="p">)</span>
-        <span class="n">right_minor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ijkl-&gt;ijlk&quot;</span><span class="p">,</span> <span class="n">stiffness</span><span class="p">)</span>
-        <span class="n">major</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ijkl-&gt;klij&quot;</span><span class="p">,</span> <span class="n">stiffness</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">stiffness</span> <span class="o">-</span> <span class="n">left_minor</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1e-3</span><span class="p">:</span>
+        <span class="n">left_minor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ijkl-&gt;jikl&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">effective_stiffness3333</span><span class="p">)</span>
+        <span class="n">right_minor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ijkl-&gt;ijlk&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">effective_stiffness3333</span><span class="p">)</span>
+        <span class="n">major</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ijkl-&gt;klij&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">effective_stiffness3333</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">effective_stiffness3333</span> <span class="o">-</span> <span class="n">left_minor</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1e-3</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Left minor symmetry: passed&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Left minor symmetry: failed&quot;</span><span class="p">)</span>
             <span class="nb">print</span><span class="p">(</span>
                 <span class="s2">&quot;The residuum was: res = </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                    <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">stiffness</span> <span class="o">-</span> <span class="n">left_minor</span><span class="p">)</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">effective_stiffness3333</span> <span class="o">-</span> <span class="n">left_minor</span><span class="p">)</span>
                 <span class="p">)</span>
             <span class="p">)</span>
-        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">stiffness</span> <span class="o">-</span> <span class="n">right_minor</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1e-3</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">effective_stiffness3333</span> <span class="o">-</span> <span class="n">right_minor</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1e-3</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Right minor symmetry: passed&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Right minor symmetry: failed&quot;</span><span class="p">)</span>
             <span class="nb">print</span><span class="p">(</span>
                 <span class="s2">&quot;The residuum was: res = </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                    <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">stiffness</span> <span class="o">-</span> <span class="n">right_minor</span><span class="p">)</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">effective_stiffness3333</span> <span class="o">-</span> <span class="n">right_minor</span><span class="p">)</span>
                 <span class="p">)</span>
             <span class="p">)</span>
-        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">stiffness</span> <span class="o">-</span> <span class="n">major</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1e-3</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">effective_stiffness3333</span> <span class="o">-</span> <span class="n">major</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1e-3</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Major symmetry: passed&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Major symmetry: failed&quot;</span><span class="p">)</span>
             <span class="nb">print</span><span class="p">(</span>
-                <span class="s2">&quot;The residuum was: res = </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">stiffness</span> <span class="o">-</span> <span class="n">major</span><span class="p">))</span>
+                <span class="s2">&quot;The residuum was: res = </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">effective_stiffness3333</span> <span class="o">-</span> <span class="n">major</span><span class="p">)</span>
+                <span class="p">)</span>
             <span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span></div></div>
 
@@ -473,7 +509,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">nu12</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu_f</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">vol_f</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu_m</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">vol_f</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">nu21</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu12</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">E22</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">E11</span>
 
-<div class="viewcode-block" id="HalpinTsai.get_stiffness"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.HalpinTsai.get_stiffness">[docs]</a>    <span class="k">def</span> <span class="nf">get_stiffness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="HalpinTsai.get_effective_stiffness"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.HalpinTsai.get_effective_stiffness">[docs]</a>    <span class="k">def</span> <span class="nf">get_effective_stiffness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the planar stiffness based on the effective parameters of a single lamina.</span>
 

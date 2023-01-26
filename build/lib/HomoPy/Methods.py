@@ -40,9 +40,9 @@ class MoriTanaka(Tensor):
 
         Parameters:
             - matrix : class object of the Elasticity class (or any child class)
-                Polymer matrix material.
+                Polymer matrix material in normalized Voigt notation.
             - fiber : class object of the Elasticity class (or any child class) or list of objects of the Elasticity class
-                Fiber material.
+                Fiber material in normalized Voigt notation.
             - v_frac : float
                 Volume fraction of the fiber material within the matrix
                 material.
@@ -101,6 +101,9 @@ class MoriTanaka(Tensor):
                 A = np.linalg.inv(A_inv)
                 self.A_f_alpha.append(A)
                 self.c_alpha.append(v_frac[i] / self.c_f)
+
+        self.effective_stiffness66 = self.get_effective_stiffness()
+        self.effective_stiffness3333 = self.mandel2tensor(self.effective_stiffness66)
 
     def _get_eshelby(self, a_ratio, return_dim="66", shape="ellipsoid"):
         """
@@ -181,7 +184,7 @@ class MoriTanaka(Tensor):
 
     def get_effective_stiffness(self):
         """
-        Return the effective stiffness of a inhomogeneous material.
+        Return the effective stiffness of an inhomogeneous material.
 
         Parameters:
             - None
@@ -218,7 +221,7 @@ class MoriTanaka(Tensor):
 
         return C_eff
 
-    def get_average_stiffness(self, C_eff, N2, N4):
+    def get_average_stiffness(self, N2, N4, return_dim="66"):
         """
         Return the averaged effective stiffness based on orientation tensors.
 
@@ -229,89 +232,122 @@ class MoriTanaka(Tensor):
                 Orientation tensor of 2nd order.
             - N4 : ndarray of shape (3, 3, 3, 3)
                 Orientation tensor of 4th order.
+            - return_dim : string, default='66'
+                Flag to determine whether the tensor should be returned in
+                normalized Voigt or regular tensor notation (options: '66', '3333')
 
         Returns:
             - ... : ndarray of shape (6, 6)
                 Averaged stiffness tensor in the normalized Voigt notation.
         """
 
-        if C_eff.shape == (6, 6):
-            C_eff = self.mandel2tensor(C_eff)
+        if N4.shape == (6, 6):
+            N4 = self.mandel2tensor(N4)
+
+        C_eff_ave = self.get_orientation_average(self.effective_stiffness3333, N2, N4)
+
+        if return_dim == "66":
+            return self.tensor2mandel(C_eff_ave)
+        else:
+            return C_eff_ave
+
+    @staticmethod
+    def get_orientation_average(tensor, N2, N4):
+        """
+        Return the orientation average of a tensor (after Advani and Tucker (1987), Eq. ..).
+
+        Parameters:
+            - tensor : ndarray of shape (3, 3, 3, 3)
+                Tensor to be averaged (must be transversely isotropic).
+            - N2 : ndarray of shape (3, 3)
+                Orientation tensor of 2nd order.
+            - N4 : ndarray of shape (3, 3, 3, 3)
+                Orientation tensor of 4th order.
+        Returns:
+            - ave_tensor : ndarray of shape (3, 3, 3, 3)
+                Orientation average of given tensor.
+        """
+
+        if N4.shape == (6, 6):
+            N4 = Tensor().mandel2tensor(N4)
 
         b1 = (
-            C_eff[0, 0, 0, 0]
-            + C_eff[1, 1, 1, 1]
-            - 2 * C_eff[0, 0, 1, 1]
-            - 4 * C_eff[0, 1, 0, 1]
+            tensor[0, 0, 0, 0]
+            + tensor[1, 1, 1, 1]
+            - 2 * tensor[0, 0, 1, 1]
+            - 4 * tensor[0, 1, 0, 1]
         )
-        b2 = C_eff[0, 0, 1, 1] - C_eff[1, 1, 2, 2]
-        b3 = C_eff[0, 1, 0, 1] + 1 / 2 * (C_eff[1, 1, 2, 2] - C_eff[1, 1, 1, 1])
-        b4 = C_eff[1, 1, 2, 2]
-        b5 = 1 / 2 * (C_eff[1, 1, 1, 1] - C_eff[1, 1, 2, 2])
+        b2 = tensor[0, 0, 1, 1] - tensor[1, 1, 2, 2]
+        b3 = tensor[0, 1, 0, 1] + 1 / 2 * (tensor[1, 1, 2, 2] - tensor[1, 1, 1, 1])
+        b4 = tensor[1, 1, 2, 2]
+        b5 = 1 / 2 * (tensor[1, 1, 1, 1] - tensor[1, 1, 2, 2])
 
-        eye2 = np.eye(3)
+        eye3 = np.eye(3)
 
-        C_eff_ave = (
+        ave_tensor = (
             b1 * N4
             + b2
-            * (np.einsum("ij,kl->ijkl", N2, eye2) + np.einsum("ij,kl->ijkl", eye2, N2))
+            * (np.einsum("ij,kl->ijkl", N2, eye3) + np.einsum("ij,kl->ijkl", eye3, N2))
             + b3
             * (
-                np.einsum("ik,lj->ijkl", N2, eye2)
-                + np.einsum("ik,lj->ijlk", N2, eye2)
-                + np.einsum("ik,lj->klij", eye2, N2)
-                + np.einsum("ik,lj->ijlk", eye2, N2)
+                np.einsum("ik,lj->ijkl", N2, eye3)
+                + np.einsum("ik,lj->ijlk", N2, eye3)
+                + np.einsum("ik,lj->klij", eye3, N2)
+                + np.einsum("ik,lj->ijlk", eye3, N2)
             )
-            + b4 * (np.einsum("ij,kl->ijkl", eye2, eye2))
+            + b4 * (np.einsum("ij,kl->ijkl", eye3, eye3))
             + 2
             * b5
             * 1
             / 2
             * (
-                np.einsum("ik,lj->ijkl", eye2, eye2)
-                + np.einsum("ik,lj->ijlk", eye2, eye2)
+                np.einsum("ik,lj->ijkl", eye3, eye3)
+                + np.einsum("ik,lj->ijlk", eye3, eye3)
             )
         )
-        return self.tensor2mandel(C_eff_ave)
+
+        return ave_tensor
 
     def is_symmetric(self):
         """
         Print the symmetry status of the effective stiffness.
+
+        Paremeters:
+            - None
+
+        Return:
+            - None
         """
 
-        stiffness = self.get_effective_stiffness()
-        # transform to Mandel notation
-        stiffness[3:6, 0:3] *= np.sqrt(2)
-        stiffness[0:3, 3:6] *= np.sqrt(2)
-        stiffness[3:6, 3:6] *= 2
-        stiffness = self.mandel2tensor(stiffness)
-        left_minor = np.einsum("ijkl->jikl", stiffness)
-        right_minor = np.einsum("ijkl->ijlk", stiffness)
-        major = np.einsum("ijkl->klij", stiffness)
-        if np.linalg.norm(stiffness - left_minor) < 1e-3:
+        left_minor = np.einsum("ijkl->jikl", self.effective_stiffness3333)
+        right_minor = np.einsum("ijkl->ijlk", self.effective_stiffness3333)
+        major = np.einsum("ijkl->klij", self.effective_stiffness3333)
+        if np.linalg.norm(self.effective_stiffness3333 - left_minor) < 1e-3:
             print("Left minor symmetry: passed")
         else:
             print("Left minor symmetry: failed")
             print(
                 "The residuum was: res = {}".format(
-                    np.linalg.norm(stiffness - left_minor)
+                    np.linalg.norm(self.effective_stiffness3333 - left_minor)
                 )
             )
-        if np.linalg.norm(stiffness - right_minor) < 1e-3:
+        if np.linalg.norm(self.effective_stiffness3333 - right_minor) < 1e-3:
             print("Right minor symmetry: passed")
         else:
             print("Right minor symmetry: failed")
             print(
                 "The residuum was: res = {}".format(
-                    np.linalg.norm(stiffness - right_minor)
+                    np.linalg.norm(self.effective_stiffness3333 - right_minor)
                 )
             )
-        if np.linalg.norm(stiffness - major) < 1e-3:
+        if np.linalg.norm(self.effective_stiffness3333 - major) < 1e-3:
             print("Major symmetry: passed")
         else:
             print("Major symmetry: failed")
             print(
-                "The residuum was: res = {}".format(np.linalg.norm(stiffness - major))
+                "The residuum was: res = {}".format(
+                    np.linalg.norm(self.effective_stiffness3333 - major)
+                )
             )
         print("\n")
 
@@ -399,7 +435,7 @@ class HalpinTsai:
         self.nu12 = self.nu_f * self.vol_f + self.nu_m * (1 - self.vol_f)
         self.nu21 = self.nu12 * self.E22 / self.E11
 
-    def get_stiffness(self):
+    def get_effective_stiffness(self):
         """
         Return the planar stiffness based on the effective parameters of a single lamina.
 
