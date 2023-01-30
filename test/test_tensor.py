@@ -58,7 +58,9 @@ class Test_Converter:
     @pytest.mark.parametrize(
         "fixture_name", ["random_hooke_sym", "random_complete_sym"]
     )
-    def test_compare_with_mechkit(self, fixture_name, mechkit_converter, t, request):
+    def test_compare_to_mandel_with_mechkit(
+        self, fixture_name, mechkit_converter, t, request
+    ):
 
         # Get the random tensors which are stored as fixture following
         # https://engineeringfordatascience.com/posts/pytest_fixtures_with_parameterize/
