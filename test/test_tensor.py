@@ -70,3 +70,12 @@ class Test_Converter:
         mandel_mechkit = mechkit_converter.to_mandel6(random_tensor)
 
         assert np.allclose(mandel_homopy, mandel_mechkit)
+
+    def test_compare_to_tensor_with_mechkit(
+        self, random_mandel6_sym, mechkit_converter, t
+    ):
+
+        tensor_homopy = t.mandel2tensor(random_mandel6_sym)
+        tensor_mechkit = mechkit_converter.to_tensor(random_mandel6_sym)
+
+        assert np.allclose(tensor_homopy, tensor_mechkit)
