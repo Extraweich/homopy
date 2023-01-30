@@ -12,13 +12,16 @@ def test_orthogonal_base():
     assert np.allclose(orthogonal_base, tensor_base, rtol=1e-6)
 
 
-def test_converter():
-    t = Tensor()
+class Test_Converter():
 
-    random_mat = np.random.rand(6, 6)
-    random_mat_sym = 1 / 2 * (random_mat + random_mat.T)
+    def test_random_mandel_to_tensor_and_back(self):
+        t = Tensor()
 
-    random_tensor_sym = t.mandel2tensor(random_mat_sym)
-    recovered_mat = t.tensor2mandel(random_tensor_sym)
+        random_mat = np.random.rand(6, 6)
+        random_mat_sym = 1 / 2 * (random_mat + random_mat.T)
 
-    assert np.allclose(random_mat_sym, recovered_mat, rtol=1e-6)
+        random_tensor_sym = t.mandel2tensor(random_mat_sym)
+        recovered_mat = t.tensor2mandel(random_tensor_sym)
+
+        assert np.allclose(random_mat_sym, recovered_mat, rtol=1e-6)
+
