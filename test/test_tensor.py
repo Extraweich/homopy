@@ -2,7 +2,7 @@ import numpy as np
 import pytest
 import mechkit
 from mechkit.operators import Sym_Fourth_Order_Special
-from homopy.tensor import *
+from homopy import tensor
 
 
 @pytest.fixture()
@@ -29,13 +29,17 @@ def random_mandel6_sym(random_mandel6):
     return 1.0 / 2.0 * (random_mandel6 + random_mandel6.T)
 
 
+@pytest.fixture()
+def t():
+    return tensor.Tensor()
+
+
 @pytest.fixture(name="mechkit_converter")
 def set_up_implicit_mechkit_converter():
     return mechkit.notation.Converter()
 
 
-def test_orthogonal_base():
-    t = Tensor()
+def test_orthogonal_base(t):
 
     orthogonal_base = np.array([[1, 0, 0], [0, 1, 0], [0, 0, 1]])
     tensor_base = np.vstack((t.e1, t.e2, t.e3))
@@ -44,8 +48,7 @@ def test_orthogonal_base():
 
 
 class Test_Converter:
-    def test_random_mandel_to_tensor_and_back(self, random_mandel6_sym):
-        t = Tensor()
+    def test_random_mandel_to_tensor_and_back(self, t, random_mandel6_sym):
 
         random_tensor_sym = t.mandel2tensor(random_mandel6_sym)
         recovered_mat = t.tensor2mandel(random_tensor_sym)
@@ -55,13 +58,13 @@ class Test_Converter:
     @pytest.mark.parametrize(
         "fixture_name", ["random_hooke_sym", "random_complete_sym"]
     )
-    def test_compare_with_mechkit(self, fixture_name, mechkit_converter, request):
+    def test_compare_with_mechkit(self, fixture_name, mechkit_converter, t, request):
 
         # Get the random tensors which are stored as fixture following
         # https://engineeringfordatascience.com/posts/pytest_fixtures_with_parameterize/
         random_tensor = request.getfixturevalue(fixture_name)
 
-        mandel_homopy = Tensor().tensor2mandel(random_tensor)
+        mandel_homopy = t.tensor2mandel(random_tensor)
         mandel_mechkit = mechkit_converter.to_mandel6(random_tensor)
 
         assert np.allclose(mandel_homopy, mandel_mechkit)
