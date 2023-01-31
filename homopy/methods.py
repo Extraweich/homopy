@@ -55,9 +55,13 @@ class MoriTanaka(Tensor):
             - fiber : class object of the Elasticity class (or any child class)
                 Fiber material.
             - Cm : ndarray of shape (6, 6)
-                Stiffness of matrix material in normalized Voigt notation.
+                Stiffness of matrix material in normalized Voigt notation in Pa.
             - eye : ndarray of shape (6, 6)
                 Identity tensor in normalized Voigt notation.
+            - stiffness3333 : ndarray of shape (3, 3, 3, 3)
+                Holds the stiffness values in the regular tensor notation in Pa.
+            - stiffness66 : ndarray of shape (6, 6)
+                Holds the stiffness values in the normalized Voigt notation in Pa.
 
         Returns:
             - None
@@ -111,7 +115,7 @@ class MoriTanaka(Tensor):
 
         Parameters:
             - a_ratio : float
-                Aspect ratio of fiber.
+                Aspect ratio of fiber (dimensionless).
             - return_dim : string, default='66'
                 Flag to determine whether the tensor should be returned in
                 normalized Voigt or regular tensor notation (options: '66', '3333')
@@ -191,7 +195,7 @@ class MoriTanaka(Tensor):
 
         Returns:
             - C_eff : ndarray of shape (6, 6)
-                Homogenized stiffness tensor in the normalized Voigt notation.
+                Homogenized stiffness tensor in the normalized Voigt notation in Pa.
         """
 
         if not type(self.fiber) == list:
@@ -227,7 +231,7 @@ class MoriTanaka(Tensor):
 
         Parameters:
             - C_eff : ndarray of shape (6, 6) or (3, 3, 3, 3)
-                Effective stiffness in normalized Voigt or regular tensor notation.
+                Effective stiffness in normalized Voigt or regular tensor notation in Pa.
             - N2 : ndarray of shape (3, 3)
                 Orientation tensor of 2nd order.
             - N4 : ndarray of shape (3, 3, 3, 3)
@@ -238,7 +242,7 @@ class MoriTanaka(Tensor):
 
         Returns:
             - ... : ndarray of shape (6, 6)
-                Averaged stiffness tensor in the normalized Voigt notation.
+                Averaged stiffness tensor in the normalized Voigt notation in Pa.
         """
 
         if N4.shape == (6, 6):
@@ -364,23 +368,23 @@ class HalpinTsai:
 
         Parameters:
             - E_f : float
-                Young's modulus of fiber.
+                Young's modulus of fiber in Pa.
             - E_m : float
-                Young's modulus of matrix.
+                Young's modulus of matrix in Pa.
             - G_f : float
-                Shear modulus of fiber.
+                Shear modulus of fiber in Pa.
             - G_m : float
-                Shear modulus of matrix.
+                Shear modulus of matrix in Pa.
             - nu_f : float
-                Poisson ratio of fiber.
+                Poisson ratio of fiber (dimensionless).
             - nu_m : float
-                Poisson ratio of matrix.
+                Poisson ratio of matrix (dimensionless).
             - l_f : float
-                Average length of fiber.
+                Average length of fiber in m.
             - r_f : float
-                Average radius of fiber.
+                Average radius of fiber in m.
             - vol_f : float
-                Poisson ratio of matrix.
+                Poisson ratio of matrix (dimensionless).
             - package : string (default: hex), other options: square
                 Package structure of fibers in composite.
 
@@ -468,7 +472,7 @@ class Laminate:
 
         Parameters:
             - lamina_stiffnesses : array of shape (n,)
-                Individual stiffness of n laminas.
+                Individual stiffness of n laminas in Pa.
             - angles : array of shape (n,)
                 Individual angle of ith lamina in radians.
             - vol_fracs : array of shape (n,)
@@ -499,7 +503,7 @@ class Laminate:
 
         Returns:
             - C_eff : ndarray of shape (3,3)
-                Effective stiffness of laminate.
+                Effective stiffness of laminate in Pa.
         """
         C_eff_temp = np.zeros(6)
         for i in range(len(self.lamina_stiffnesses)):
@@ -522,13 +526,13 @@ class Laminate:
 
         Parameters:
             - lamina_stiffness : ndarray of shape (3, 3)
-                Stiffness matrix of lamina.
+                Stiffness matrix of lamina in Pa.
             - angle : float
-                Planar angle to rotate the stiffness matrix about.
+                Planar angle to rotate the stiffness matrix about in radiants.
 
         Returns:
             - rot_stiffness : ndarray of shape (3, 3)
-                Rotated stiffness matrix.
+                Rotated stiffness matrix in Pa.
         """
         m = cos(angle)
         n = sin(angle)
