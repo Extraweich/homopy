@@ -25,11 +25,6 @@ def random_mandel6():
 
 
 @pytest.fixture()
-def random_mandel6_sym(random_mandel6):
-    return 1.0 / 2.0 * (random_mandel6 + random_mandel6.T)
-
-
-@pytest.fixture()
 def t():
     return tensor.Tensor()
 
@@ -48,12 +43,12 @@ def test_orthogonal_base(t):
 
 
 class Test_Converter:
-    def test_random_mandel_to_tensor_and_back(self, t, random_mandel6_sym):
+    def test_random_mandel_to_tensor_and_back(self, t, random_mandel6):
 
-        random_tensor_sym = t.mandel2tensor(random_mandel6_sym)
+        random_tensor_sym = t.mandel2tensor(random_mandel6)
         recovered_mat = t.tensor2mandel(random_tensor_sym)
 
-        assert np.allclose(random_mandel6_sym, recovered_mat, rtol=1e-6)
+        assert np.allclose(random_mandel6, recovered_mat, rtol=1e-6)
 
     @pytest.mark.parametrize(
         "fixture_name", ["random_hooke_sym", "random_complete_sym"]
@@ -72,10 +67,10 @@ class Test_Converter:
         assert np.allclose(mandel_homopy, mandel_mechkit)
 
     def test_compare_to_tensor_with_mechkit(
-        self, random_mandel6_sym, mechkit_converter, t
+        self, random_mandel6, mechkit_converter, t
     ):
 
-        tensor_homopy = t.mandel2tensor(random_mandel6_sym)
-        tensor_mechkit = mechkit_converter.to_tensor(random_mandel6_sym)
+        tensor_homopy = t.mandel2tensor(random_mandel6)
+        tensor_mechkit = mechkit_converter.to_tensor(random_mandel6)
 
         assert np.allclose(tensor_homopy, tensor_mechkit)
