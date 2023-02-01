@@ -5,15 +5,17 @@ Created on Wed Apr 27 21:09:24 2022
 @author: nicolas.christ@kit.edu
 
 Mori-Tanaka Homogenization after Gross and Seelig (cf. [1]_). Multi-inclusion implementation after Brylka (cf. [2]_).
-Eshelby Tensor is taken from Tandon and Weng (cf. [3]_) but can also be found in Groos and Seelig.
-Halpin-Tsai homogenization after Fu, Lauke, and Mai (cf. [4]_, pp. 143 ff.). Also, the effective planar stiffness 
+Eshelby's tensor is taken from Tandon and Weng (cf. [3]_) but can also be found in Groos and Seelig. Thoroughly literature
+on Eshelby's tensor can also be found in Mura (cf. [4]_, pp. 74 ff.).
+Halpin-Tsai homogenization after Fu, Lauke, and Mai (cf. [5]_, pp. 143 ff.). Also, the effective planar stiffness 
 matrix for the Halpin-Tsai homogenization is based on the laminate analogy approach after Fu, Lauke and Mai
 (pp. 155 ff.).
 
 .. [1] Gross, D. and Seelig, T. (2016), *Bruchmechanik*, Springer Berlin Heidelberg
 .. [2] Brylka, B. (2017), *Charakterisierung und Modellierung der Steifigkeit von langfaserverstärktem Polypropylen*, KIT Scientific Publishing
 .. [3] Tandon, G. P. and Weng, G. J. (1984), 'The effect of aspect ratio of inclusions on the elastic properties of unidirectionally aligned composites', *Polymer Composites*, pp. 327-333, Available at: https://doi.org/10.1002/pc.750050413
-.. [4] Fu, S.-Y., Lauke, B. and Mai, Y. W. (2019), *Science and engineering of short fibre-reinforced polymer composites*, Woodhead Publishing
+.. [4] Mura, T (1987), *Micromechanics of defects in solids*, Springer Dordrecht
+.. [5] Fu, S.-Y., Lauke, B. and Mai, Y. W. (2019), *Science and engineering of short fibre-reinforced polymer composites*, Woodhead Publishing
 
 """
 
@@ -131,56 +133,74 @@ class MoriTanaka(Tensor):
         nu = self.matrix.nu
         a = a_ratio
         a2 = a ** 2
-        g = a / (a2 - 1) ** (3 / 2) * (a * (a2 - 1) ** (1 / 2) - np.arccosh(a))
-        S = np.zeros((3, 3, 3, 3))
-        S[0, 0, 0, 0] = (
-            1
-            / (2 * (1 - nu))
-            * (
+        if shape == "ellipsoid":
+            g = a / (a2 - 1) ** (3 / 2) * (a * (a2 - 1) ** (1 / 2) - np.arccosh(a))
+            S = np.zeros((3, 3, 3, 3))
+            S[0, 0, 0, 0] = (
                 1
-                - 2 * nu
-                + (3 * a2 - 1) / (a2 - 1)
-                - (1 - 2 * nu + 3 * a2 / (a2 - 1)) * g
+                / (2 * (1 - nu))
+                * (
+                    1
+                    - 2 * nu
+                    + (3 * a2 - 1) / (a2 - 1)
+                    - (1 - 2 * nu + 3 * a2 / (a2 - 1)) * g
+                )
             )
-        )
-        S[1, 1, 1, 1] = (
-            3 / (8 * (1 - nu)) * a2 / (a2 - 1)
-            + 1 / (4 * (1 - nu)) * (1 - 2 * nu - 9 / (4 * (a2 - 1))) * g
-        )
-        S[2, 2, 2, 2] = S[1, 1, 1, 1]
-        S[1, 1, 2, 2] = (
-            1
-            / (4 * (1 - nu))
-            * (a2 / (2 * (a2 - 1)) - (1 - 2 * nu + 3 / (4 * (a2 - 1))) * g)
-        )
-        S[2, 2, 1, 1] = S[1, 1, 2, 2]
-        S[1, 1, 0, 0] = (
-            -1 / (2 * (1 - nu)) * a2 / (a2 - 1)
-            + 1 / (4 * (1 - nu)) * (3 * a2 / (a2 - 1) - (1 - 2 * nu)) * g
-        )
-        S[2, 2, 0, 0] = S[1, 1, 0, 0]
-        S[0, 0, 1, 1] = (
-            -1 / (2 * (1 - nu)) * (1 - 2 * nu + 1 / (a2 - 1))
-            + 1 / (2 * (1 - nu)) * (1 - 2 * nu + 3 / (2 * (a2 - 1))) * g
-        )
-        S[0, 0, 2, 2] = S[0, 0, 1, 1]
-        S[1, 2, 1, 2] = (
-            1
-            / (4 * (1 - nu))
-            * (a2 / (2 * (a2 - 1)) + (1 - 2 * nu - 3 / (4 * (a2 - 1))) * g)
-        )
-        S[2, 1, 2, 1] = S[1, 2, 1, 2]
-        S[0, 1, 0, 1] = (
-            1
-            / (4 * (1 - nu))
-            * (
+            S[1, 1, 1, 1] = S[2, 2, 2, 2] = (
+                3 / (8 * (1 - nu)) * a2 / (a2 - 1)
+                + 1 / (4 * (1 - nu)) * (1 - 2 * nu - 9 / (4 * (a2 - 1))) * g
+            )
+            S[1, 1, 2, 2] = S[2, 2, 1, 1] = (
                 1
-                - 2 * nu
-                - (a2 + 1) / (a2 - 1)
-                - 1 / 2 * (1 - 2 * nu - 3 * (a2 + 1) / (a2 - 1)) * g
+                / (4 * (1 - nu))
+                * (a2 / (2 * (a2 - 1)) - (1 - 2 * nu + 3 / (4 * (a2 - 1))) * g)
             )
-        )
-        S[0, 2, 0, 2] = S[0, 1, 0, 1]
+            S[1, 1, 0, 0] = S[2, 2, 0, 0] = (
+                -1 / (2 * (1 - nu)) * a2 / (a2 - 1)
+                + 1 / (4 * (1 - nu)) * (3 * a2 / (a2 - 1) - (1 - 2 * nu)) * g
+            )
+            S[0, 0, 1, 1] = S[0, 0, 2, 2] = (
+                -1 / (2 * (1 - nu)) * (1 - 2 * nu + 1 / (a2 - 1))
+                + 1 / (2 * (1 - nu)) * (1 - 2 * nu + 3 / (2 * (a2 - 1))) * g
+            )
+            S[1, 2, 1, 2] = S[2, 1, 2, 1] = S[2, 1, 1, 2] = S[1, 2, 2, 1] = (
+                1
+                / (4 * (1 - nu))
+                * (a2 / (2 * (a2 - 1)) + (1 - 2 * nu - 3 / (4 * (a2 - 1))) * g)
+            )
+            S[0, 1, 0, 1] = S[0, 2, 0, 2] = S[1, 0, 1, 0] = S[1, 0, 0, 1] = S[
+                0, 1, 1, 0
+            ] = S[2, 0, 2, 0] = S[2, 0, 0, 2] = S[0, 2, 2, 0] = (
+                1
+                / (4 * (1 - nu))
+                * (
+                    1
+                    - 2 * nu
+                    - (a2 + 1) / (a2 - 1)
+                    - 1 / 2 * (1 - 2 * nu - 3 * (a2 + 1) / (a2 - 1)) * g
+                )
+            )
+        elif shape == "sphere":
+            S[0, 0, 0, 0] = S[1, 1, 1, 1] = S[2, 2, 2, 2] = (7 - 5 * nu) / (
+                15 * (1 - nu)
+            )
+            S[0, 0, 1, 1] = S[1, 1, 2, 2] = S[2, 2, 0, 0] = (5 * nu - 1) / (
+                15 * (1 - nu)
+            )
+            S[0, 1, 0, 1] = S[1, 0, 1, 0] = S[1, 0, 0, 1] = S[0, 1, 1, 0] = S[
+                1, 2, 1, 2
+            ] = S[2, 1, 2, 1] = S[2, 1, 1, 2] = S[1, 2, 2, 1] = S[2, 0, 2, 0] = S[
+                0, 2, 0, 2
+            ] = S[
+                0, 2, 2, 0
+            ] = S[
+                2, 0, 0, 2
+            ] = (
+                4 - 5 * nu
+            ) / (
+                15 * (1 - nu)
+            )
+
         if return_dim == "66":
             return self.tensor2mandel(S)
         elif return_dim == "3333":
