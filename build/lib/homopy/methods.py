@@ -5,15 +5,17 @@ Created on Wed Apr 27 21:09:24 2022
 @author: nicolas.christ@kit.edu
 
 Mori-Tanaka Homogenization after Gross and Seelig (cf. [1]_). Multi-inclusion implementation after Brylka (cf. [2]_).
-Eshelby Tensor is taken from Tandon and Weng (cf. [3]_) but can also be found in Groos and Seelig.
-Halpin-Tsai homogenization after Fu, Lauke, and Mai (cf. [4]_, pp. 143 ff.). Also, the effective planar stiffness 
+Eshelby's tensor is taken from Tandon and Weng (cf. [3]_) but can also be found in Groos and Seelig. Thoroughly literature
+on Eshelby's tensor can also be found in Mura (cf. [4]_, pp. 74 ff.).
+Halpin-Tsai homogenization after Fu, Lauke, and Mai (cf. [5]_, pp. 143 ff.). Also, the effective planar stiffness 
 matrix for the Halpin-Tsai homogenization is based on the laminate analogy approach after Fu, Lauke and Mai
 (pp. 155 ff.).
 
 .. [1] Gross, D. and Seelig, T. (2016), *Bruchmechanik*, Springer Berlin Heidelberg
 .. [2] Brylka, B. (2017), *Charakterisierung und Modellierung der Steifigkeit von langfaserverstärktem Polypropylen*, KIT Scientific Publishing
 .. [3] Tandon, G. P. and Weng, G. J. (1984), 'The effect of aspect ratio of inclusions on the elastic properties of unidirectionally aligned composites', *Polymer Composites*, pp. 327-333, Available at: https://doi.org/10.1002/pc.750050413
-.. [4] Fu, S.-Y., Lauke, B. and Mai, Y. W. (2019), *Science and engineering of short fibre-reinforced polymer composites*, Woodhead Publishing
+.. [4] Mura, T (1987), *Micromechanics of defects in solids*, Springer Dordrecht
+.. [5] Fu, S.-Y., Lauke, B. and Mai, Y. W. (2019), *Science and engineering of short fibre-reinforced polymer composites*, Woodhead Publishing
 
 """
 
@@ -34,7 +36,7 @@ class MoriTanaka(Tensor):
     the Tensor class.
     """
 
-    def __init__(self, matrix, fiber, v_frac, a_ratio):
+    def __init__(self, matrix, fiber, v_frac, a_ratio, shape='ellipsoid'):
         """
         Initialize the object and call super class initialization.
 
@@ -48,6 +50,9 @@ class MoriTanaka(Tensor):
                 material.
             - a_ratio : float
                 Aspect ratio of the fiber material.
+            - shape : string, default='ellipsoid'
+                Flag to determine which assumptions are taken into consideration
+                for the geometry of the fiber (options: 'ellipsoid', 'sphere', 'needle')
 
         Object variables:
             - matrix : class object of the Elasticity class (or any child class)
@@ -55,9 +60,13 @@ class MoriTanaka(Tensor):
             - fiber : class object of the Elasticity class (or any child class)
                 Fiber material.
             - Cm : ndarray of shape (6, 6)
-                Stiffness of matrix material in normalized Voigt notation.
+                Stiffness of matrix material in normalized Voigt notation in Pa.
             - eye : ndarray of shape (6, 6)
                 Identity tensor in normalized Voigt notation.
+            - stiffness3333 : ndarray of shape (3, 3, 3, 3)
+                Holds the stiffness values in the regular tensor notation in Pa.
+            - stiffness66 : ndarray of shape (6, 6)
+                Holds the stiffness values in the normalized Voigt notation in Pa.
 
         Returns:
             - None
@@ -75,7 +84,7 @@ class MoriTanaka(Tensor):
             self.Cf = fiber.stiffness66
             self.v_frac = v_frac
             self.a_ratio = a_ratio
-            self.eshelby66 = self._get_eshelby(self.a_ratio)
+            self.eshelby66 = self._get_eshelby(self.a_ratio,  return_dim='66',shape=shape)
 
         else:
             assert (
@@ -94,7 +103,7 @@ class MoriTanaka(Tensor):
                 Cf_alpha = fiber[i].stiffness66
                 pol = Cf_alpha - self.Cm
                 self.pol_alpha.append(pol)
-                S = self._get_eshelby(a_ratio[i])
+                S = self._get_eshelby(a_ratio[i], return_dim='66',shape=shape)
                 A_inv = self.eye + self.tensor_product(
                     S, self.tensor_product(Cm_inv, pol)
                 )
@@ -111,13 +120,13 @@ class MoriTanaka(Tensor):
 
         Parameters:
             - a_ratio : float
-                Aspect ratio of fiber.
+                Aspect ratio of fiber (dimensionless).
             - return_dim : string, default='66'
                 Flag to determine whether the tensor should be returned in
                 normalized Voigt or regular tensor notation (options: '66', '3333')
             - shape : string, default='ellipsoid'
                 Flag to determine which assumptions are taken into consideration
-                for the geometry of the fiber. So far not in use...
+                for the geometry of the fiber (options: 'ellipsoid', 'sphere', 'needle')
 
         Returns:
             - S : ndarray of shape (6, 6) or (3, 3, 3, 3)
@@ -126,57 +135,97 @@ class MoriTanaka(Tensor):
 
         nu = self.matrix.nu
         a = a_ratio
-        a2 = a ** 2
-        g = a / (a2 - 1) ** (3 / 2) * (a * (a2 - 1) ** (1 / 2) - np.arccosh(a))
+        a2 = a**2
         S = np.zeros((3, 3, 3, 3))
-        S[0, 0, 0, 0] = (
-            1
-            / (2 * (1 - nu))
-            * (
+        if shape == "ellipsoid":
+            g = a / (a2 - 1) ** (3 / 2) * (a * (a2 - 1) ** (1 / 2) - np.arccosh(a))
+            S[0, 0, 0, 0] = (
                 1
-                - 2 * nu
-                + (3 * a2 - 1) / (a2 - 1)
-                - (1 - 2 * nu + 3 * a2 / (a2 - 1)) * g
+                / (2 * (1 - nu))
+                * (
+                    1
+                    - 2 * nu
+                    + (3 * a2 - 1) / (a2 - 1)
+                    - (1 - 2 * nu + 3 * a2 / (a2 - 1)) * g
+                )
             )
-        )
-        S[1, 1, 1, 1] = (
-            3 / (8 * (1 - nu)) * a2 / (a2 - 1)
-            + 1 / (4 * (1 - nu)) * (1 - 2 * nu - 9 / (4 * (a2 - 1))) * g
-        )
-        S[2, 2, 2, 2] = S[1, 1, 1, 1]
-        S[1, 1, 2, 2] = (
-            1
-            / (4 * (1 - nu))
-            * (a2 / (2 * (a2 - 1)) - (1 - 2 * nu + 3 / (4 * (a2 - 1))) * g)
-        )
-        S[2, 2, 1, 1] = S[1, 1, 2, 2]
-        S[1, 1, 0, 0] = (
-            -1 / (2 * (1 - nu)) * a2 / (a2 - 1)
-            + 1 / (4 * (1 - nu)) * (3 * a2 / (a2 - 1) - (1 - 2 * nu)) * g
-        )
-        S[2, 2, 0, 0] = S[1, 1, 0, 0]
-        S[0, 0, 1, 1] = (
-            -1 / (2 * (1 - nu)) * (1 - 2 * nu + 1 / (a2 - 1))
-            + 1 / (2 * (1 - nu)) * (1 - 2 * nu + 3 / (2 * (a2 - 1))) * g
-        )
-        S[0, 0, 2, 2] = S[0, 0, 1, 1]
-        S[1, 2, 1, 2] = (
-            1
-            / (4 * (1 - nu))
-            * (a2 / (2 * (a2 - 1)) + (1 - 2 * nu - 3 / (4 * (a2 - 1))) * g)
-        )
-        S[2, 1, 2, 1] = S[1, 2, 1, 2]
-        S[0, 1, 0, 1] = (
-            1
-            / (4 * (1 - nu))
-            * (
+            S[1, 1, 1, 1] = S[2, 2, 2, 2] = (
+                3 / (8 * (1 - nu)) * a2 / (a2 - 1)
+                + 1 / (4 * (1 - nu)) * (1 - 2 * nu - 9 / (4 * (a2 - 1))) * g
+            )
+            S[1, 1, 2, 2] = S[2, 2, 1, 1] = (
                 1
-                - 2 * nu
-                - (a2 + 1) / (a2 - 1)
-                - 1 / 2 * (1 - 2 * nu - 3 * (a2 + 1) / (a2 - 1)) * g
+                / (4 * (1 - nu))
+                * (a2 / (2 * (a2 - 1)) - (1 - 2 * nu + 3 / (4 * (a2 - 1))) * g)
             )
-        )
-        S[0, 2, 0, 2] = S[0, 1, 0, 1]
+            S[1, 1, 0, 0] = S[2, 2, 0, 0] = (
+                -1 / (2 * (1 - nu)) * a2 / (a2 - 1)
+                + 1 / (4 * (1 - nu)) * (3 * a2 / (a2 - 1) - (1 - 2 * nu)) * g
+            )
+            S[0, 0, 1, 1] = S[0, 0, 2, 2] = (
+                -1 / (2 * (1 - nu)) * (1 - 2 * nu + 1 / (a2 - 1))
+                + 1 / (2 * (1 - nu)) * (1 - 2 * nu + 3 / (2 * (a2 - 1))) * g
+            )
+            S[1, 2, 1, 2] = S[2, 1, 2, 1] = S[2, 1, 1, 2] = S[1, 2, 2, 1] = (
+                1
+                / (4 * (1 - nu))
+                * (a2 / (2 * (a2 - 1)) + (1 - 2 * nu - 3 / (4 * (a2 - 1))) * g)
+            )
+            S[0, 1, 0, 1] = S[0, 2, 0, 2] = S[1, 0, 1, 0] = S[1, 0, 0, 1] = S[
+                0, 1, 1, 0
+            ] = S[2, 0, 2, 0] = S[2, 0, 0, 2] = S[0, 2, 2, 0] = (
+                1
+                / (4 * (1 - nu))
+                * (
+                    1
+                    - 2 * nu
+                    - (a2 + 1) / (a2 - 1)
+                    - 1 / 2 * (1 - 2 * nu - 3 * (a2 + 1) / (a2 - 1)) * g
+                )
+            )
+        elif shape == "sphere":
+            fac1 = 15 * (1 - nu)
+            S[0, 0, 0, 0] = S[1, 1, 1, 1] = S[2, 2, 2, 2] = (7 - 5 * nu) / fac1
+            S[0, 0, 1, 1] = S[1, 1, 2, 2] = S[2, 2, 0, 0] = S[0, 0, 2, 2] = S[
+                1, 1, 0, 0
+            ] = S[2, 2, 1, 1] = (5 * nu - 1) / fac1
+            S[0, 1, 0, 1] = S[1, 0, 1, 0] = S[1, 0, 0, 1] = S[0, 1, 1, 0] = S[
+                1, 2, 1, 2
+            ] = S[2, 1, 2, 1] = S[2, 1, 1, 2] = S[1, 2, 2, 1] = S[2, 0, 2, 0] = S[
+                0, 2, 0, 2
+            ] = S[
+                0, 2, 2, 0
+            ] = S[
+                2, 0, 0, 2
+            ] = (
+                4 - 5 * nu
+            ) / fac1
+
+        elif shape == "needle":
+            # Here the aspect ratio a describes the relation between the two minor axes
+            pre_fac = 1 / (2 * (1 - nu))
+            fac1 = 1 / (a + 1)
+            fac2 = a / (a + 1)
+            fac3 = 1 - 2 * nu
+            fac4 = (a + 1) ** 2
+
+            S[0, 0, 0, 0] = pre_fac * ((1 + 2 * a) / fac4 + fac3 * fac1)
+            S[1, 1, 1, 1] = pre_fac * ((a2 + 2 * a) / fac4 + fac3 * fac2)
+            S[0, 0, 1, 1] = pre_fac * (1 / fac4 - fac3 * fac1)
+            S[1, 1, 2, 2] = pre_fac * 2 * nu * fac2
+            S[0, 0, 2, 2] = pre_fac * 2 * nu * fac1
+            S[1, 1, 0, 0] = pre_fac * (a2 / fac4 - fac3 * fac2)
+            S[0, 1, 0, 1] = S[1, 0, 1, 0] = S[1, 0, 0, 1] = S[0, 1, 1, 0] = pre_fac * (
+                (a2 + 1) / (2 * fac4) + fac3 / 2
+            )
+            S[1, 2, 1, 2] = S[2, 1, 2, 1] = S[2, 1, 1, 2] = S[1, 2, 2, 1] = 1 / 2 * fac2
+            S[2, 0, 2, 0] = S[0, 2, 0, 2] = S[0, 2, 2, 0] = S[2, 0, 0, 2] = 1 / 2 * fac1
+        else:
+            raise ValueError(
+                "Please chose a valid 'shape' option."
+                "Options supported: 'ellipsoid', 'sphere', 'needle'."
+            )
+
         if return_dim == "66":
             return self.tensor2mandel(S)
         elif return_dim == "3333":
@@ -191,7 +240,7 @@ class MoriTanaka(Tensor):
 
         Returns:
             - C_eff : ndarray of shape (6, 6)
-                Homogenized stiffness tensor in the normalized Voigt notation.
+                Homogenized stiffness tensor in the normalized Voigt notation in Pa.
         """
 
         if not type(self.fiber) == list:
@@ -227,7 +276,7 @@ class MoriTanaka(Tensor):
 
         Parameters:
             - C_eff : ndarray of shape (6, 6) or (3, 3, 3, 3)
-                Effective stiffness in normalized Voigt or regular tensor notation.
+                Effective stiffness in normalized Voigt or regular tensor notation in Pa.
             - N2 : ndarray of shape (3, 3)
                 Orientation tensor of 2nd order.
             - N4 : ndarray of shape (3, 3, 3, 3)
@@ -238,7 +287,7 @@ class MoriTanaka(Tensor):
 
         Returns:
             - ... : ndarray of shape (6, 6)
-                Averaged stiffness tensor in the normalized Voigt notation.
+                Averaged stiffness tensor in the normalized Voigt notation in Pa.
         """
 
         if N4.shape == (6, 6):
@@ -322,7 +371,7 @@ class MoriTanaka(Tensor):
         left_minor = np.einsum("ijkl->jikl", self.effective_stiffness3333)
         right_minor = np.einsum("ijkl->ijlk", self.effective_stiffness3333)
         major = np.einsum("ijkl->klij", self.effective_stiffness3333)
-        if np.linalg.norm(self.effective_stiffness3333 - left_minor) < 1e-3:
+        if np.allclose(self.effective_stiffness3333, left_minor, rtol=1e-6):
             print("Left minor symmetry: passed")
         else:
             print("Left minor symmetry: failed")
@@ -331,7 +380,7 @@ class MoriTanaka(Tensor):
                     np.linalg.norm(self.effective_stiffness3333 - left_minor)
                 )
             )
-        if np.linalg.norm(self.effective_stiffness3333 - right_minor) < 1e-3:
+        if np.allclose(self.effective_stiffness3333, right_minor, rtol=1e-6):
             print("Right minor symmetry: passed")
         else:
             print("Right minor symmetry: failed")
@@ -340,7 +389,7 @@ class MoriTanaka(Tensor):
                     np.linalg.norm(self.effective_stiffness3333 - right_minor)
                 )
             )
-        if np.linalg.norm(self.effective_stiffness3333 - major) < 1e-3:
+        if np.allclose(self.effective_stiffness3333, major, rtol=1e-6):
             print("Major symmetry: passed")
         else:
             print("Major symmetry: failed")
@@ -364,23 +413,23 @@ class HalpinTsai:
 
         Parameters:
             - E_f : float
-                Young's modulus of fiber.
+                Young's modulus of fiber in Pa.
             - E_m : float
-                Young's modulus of matrix.
+                Young's modulus of matrix in Pa.
             - G_f : float
-                Shear modulus of fiber.
+                Shear modulus of fiber in Pa.
             - G_m : float
-                Shear modulus of matrix.
+                Shear modulus of matrix in Pa.
             - nu_f : float
-                Poisson ratio of fiber.
+                Poisson ratio of fiber (dimensionless).
             - nu_m : float
-                Poisson ratio of matrix.
+                Poisson ratio of matrix (dimensionless).
             - l_f : float
-                Average length of fiber.
+                Average length of fiber in m.
             - r_f : float
-                Average radius of fiber.
+                Average radius of fiber in m.
             - vol_f : float
-                Poisson ratio of matrix.
+                Poisson ratio of matrix (dimensionless).
             - package : string (default: hex), other options: square
                 Package structure of fibers in composite.
 
@@ -409,7 +458,7 @@ class HalpinTsai:
 
         Returns:
             - None
-        
+
         Raises:
             - ValueError
                 Package can only be "hex" or "square".
@@ -423,7 +472,7 @@ class HalpinTsai:
         else:
             p = 1 / 2 * np.log(np.pi / self.vol_f)
 
-        beta = np.sqrt(2 * np.pi * self.G_m / (self.E_f * (np.pi * self.r_f ** 2) * p))
+        beta = np.sqrt(2 * np.pi * self.G_m / (self.E_f * (np.pi * self.r_f**2) * p))
         nu1 = (self.E_f / self.E_m - 1) / (self.E_f / self.E_m + 2)
         nu2 = (self.G_f / self.G_m - 1) / (self.G_f / self.G_m + 1)
 
@@ -468,7 +517,7 @@ class Laminate:
 
         Parameters:
             - lamina_stiffnesses : array of shape (n,)
-                Individual stiffness of n laminas.
+                Individual stiffness of n laminas in Pa.
             - angles : array of shape (n,)
                 Individual angle of ith lamina in radians.
             - vol_fracs : array of shape (n,)
@@ -499,7 +548,7 @@ class Laminate:
 
         Returns:
             - C_eff : ndarray of shape (3,3)
-                Effective stiffness of laminate.
+                Effective stiffness of laminate in Pa.
         """
         C_eff_temp = np.zeros(6)
         for i in range(len(self.lamina_stiffnesses)):
@@ -522,43 +571,43 @@ class Laminate:
 
         Parameters:
             - lamina_stiffness : ndarray of shape (3, 3)
-                Stiffness matrix of lamina.
+                Stiffness matrix of lamina in Pa.
             - angle : float
-                Planar angle to rotate the stiffness matrix about.
+                Planar angle to rotate the stiffness matrix about in radiants.
 
         Returns:
             - rot_stiffness : ndarray of shape (3, 3)
-                Rotated stiffness matrix.
+                Rotated stiffness matrix in Pa.
         """
         m = cos(angle)
         n = sin(angle)
         rot_mat = np.array(
             [
-                [m ** 4, n ** 4, 2 * m ** 2 * n ** 2, 4 * m ** 2 * n ** 2],
-                [n ** 4, m ** 4, 2 * m ** 2 * n ** 2, 4 * m ** 2 * n ** 2],
+                [m**4, n**4, 2 * m**2 * n**2, 4 * m**2 * n**2],
+                [n**4, m**4, 2 * m**2 * n**2, 4 * m**2 * n**2],
                 [
-                    m ** 2 * n ** 2,
-                    m ** 2 * n ** 2,
-                    m ** 4 + n ** 4,
-                    -4 * m ** 2 * n ** 2,
+                    m**2 * n**2,
+                    m**2 * n**2,
+                    m**4 + n**4,
+                    -4 * m**2 * n**2,
                 ],
                 [
-                    m ** 2 * n ** 2,
-                    m ** 2 * n ** 2,
-                    -2 * m ** 2 * n ** 2,
-                    (m ** 2 - n ** 2) ** 2,
+                    m**2 * n**2,
+                    m**2 * n**2,
+                    -2 * m**2 * n**2,
+                    (m**2 - n**2) ** 2,
                 ],
                 [
-                    m ** 3 * n,
-                    -m * n ** 3,
-                    m * n ** 3 - m ** 3 * n,
-                    2 * (m * n ** 3 - m ** 3 * n),
+                    m**3 * n,
+                    -m * n**3,
+                    m * n**3 - m**3 * n,
+                    2 * (m * n**3 - m**3 * n),
                 ],
                 [
-                    m * n ** 3,
-                    -(m ** 3) * n,
-                    m ** 3 * n - m * n ** 3,
-                    2 * (m ** 3 * n - m * n ** 3),
+                    m * n**3,
+                    -(m**3) * n,
+                    m**3 * n - m * n**3,
+                    2 * (m**3 * n - m * n**3),
                 ],
             ]
         )

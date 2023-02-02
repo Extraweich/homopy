@@ -1,3 +1,5 @@
+test_eshelby.py
+
 .venv/
 .vscode/
 mk_doc.sh
