@@ -5,15 +5,17 @@ Created on Wed Apr 27 21:09:24 2022
 @author: nicolas.christ@kit.edu
 
 Mori-Tanaka Homogenization after Gross and Seelig (cf. [1]_). Multi-inclusion implementation after Brylka (cf. [2]_).
-Eshelby Tensor is taken from Tandon and Weng (cf. [3]_) but can also be found in Groos and Seelig.
-Halpin-Tsai homogenization after Fu, Lauke, and Mai (cf. [4]_, pp. 143 ff.). Also, the effective planar stiffness 
+Eshelby's tensor is taken from Tandon and Weng (cf. [3]_) but can also be found in Groos and Seelig. Thoroughly literature
+on Eshelby's tensor can also be found in Mura (cf. [4]_, pp. 74 ff.).
+Halpin-Tsai homogenization after Fu, Lauke, and Mai (cf. [5]_, pp. 143 ff.). Also, the effective planar stiffness 
 matrix for the Halpin-Tsai homogenization is based on the laminate analogy approach after Fu, Lauke and Mai
 (pp. 155 ff.).
 
 .. [1] Gross, D. and Seelig, T. (2016), *Bruchmechanik*, Springer Berlin Heidelberg
 .. [2] Brylka, B. (2017), *Charakterisierung und Modellierung der Steifigkeit von langfaserverstärktem Polypropylen*, KIT Scientific Publishing
 .. [3] Tandon, G. P. and Weng, G. J. (1984), 'The effect of aspect ratio of inclusions on the elastic properties of unidirectionally aligned composites', *Polymer Composites*, pp. 327-333, Available at: https://doi.org/10.1002/pc.750050413
-.. [4] Fu, S.-Y., Lauke, B. and Mai, Y. W. (2019), *Science and engineering of short fibre-reinforced polymer composites*, Woodhead Publishing
+.. [4] Mura, T (1987), *Micromechanics of defects in solids*, Springer Dordrecht
+.. [5] Fu, S.-Y., Lauke, B. and Mai, Y. W. (2019), *Science and engineering of short fibre-reinforced polymer composites*, Woodhead Publishing
 
 """
 
@@ -34,7 +36,7 @@ class MoriTanaka(Tensor):
     the Tensor class.
     """
 
-    def __init__(self, matrix, fiber, v_frac, a_ratio):
+    def __init__(self, matrix, fiber, v_frac, a_ratio, shape='ellipsoid'):
         """
         Initialize the object and call super class initialization.
 
@@ -48,6 +50,9 @@ class MoriTanaka(Tensor):
                 material.
             - a_ratio : float
                 Aspect ratio of the fiber material.
+            - shape : string, default='ellipsoid'
+                Flag to determine which assumptions are taken into consideration
+                for the geometry of the fiber (options: 'ellipsoid', 'sphere', 'needle')
 
         Object variables:
             - matrix : class object of the Elasticity class (or any child class)
@@ -79,7 +84,7 @@ class MoriTanaka(Tensor):
             self.Cf = fiber.stiffness66
             self.v_frac = v_frac
             self.a_ratio = a_ratio
-            self.eshelby66 = self._get_eshelby(self.a_ratio)
+            self.eshelby66 = self._get_eshelby(self.a_ratio,  return_dim='66',shape=shape)
 
         else:
             assert (
@@ -98,7 +103,7 @@ class MoriTanaka(Tensor):
                 Cf_alpha = fiber[i].stiffness66
                 pol = Cf_alpha - self.Cm
                 self.pol_alpha.append(pol)
-                S = self._get_eshelby(a_ratio[i])
+                S = self._get_eshelby(a_ratio[i], return_dim='66',shape=shape)
                 A_inv = self.eye + self.tensor_product(
                     S, self.tensor_product(Cm_inv, pol)
                 )
@@ -121,7 +126,7 @@ class MoriTanaka(Tensor):
                 normalized Voigt or regular tensor notation (options: '66', '3333')
             - shape : string, default='ellipsoid'
                 Flag to determine which assumptions are taken into consideration
-                for the geometry of the fiber. So far not in use...
+                for the geometry of the fiber (options: 'ellipsoid', 'sphere', 'needle')
 
         Returns:
             - S : ndarray of shape (6, 6) or (3, 3, 3, 3)
@@ -130,10 +135,10 @@ class MoriTanaka(Tensor):
 
         nu = self.matrix.nu
         a = a_ratio
-        a2 = a ** 2
+        a2 = a**2
+        S = np.zeros((3, 3, 3, 3))
         if shape == "ellipsoid":
             g = a / (a2 - 1) ** (3 / 2) * (a * (a2 - 1) ** (1 / 2) - np.arccosh(a))
-            S = np.zeros((3, 3, 3, 3))
             S[0, 0, 0, 0] = (
                 1
                 / (2 * (1 - nu))
@@ -179,14 +184,46 @@ class MoriTanaka(Tensor):
                 )
             )
         elif shape == "sphere":
-            S[0, 0, 0, 0] = S[1, 1, 1, 1] = S[2, 2, 2, 2] = (7 - 5 * nu) / (
-                15 * (1 - nu)
+            fac1 = 15 * (1 - nu)
+            S[0, 0, 0, 0] = S[1, 1, 1, 1] = S[2, 2, 2, 2] = (7 - 5 * nu) / fac1
+            S[0, 0, 1, 1] = S[1, 1, 2, 2] = S[2, 2, 0, 0] = S[0, 0, 2, 2] = S[
+                1, 1, 0, 0
+            ] = S[2, 2, 1, 1] = (5 * nu - 1) / fac1
+            S[0, 1, 0, 1] = S[1, 0, 1, 0] = S[1, 0, 0, 1] = S[0, 1, 1, 0] = S[
+                1, 2, 1, 2
+            ] = S[2, 1, 2, 1] = S[2, 1, 1, 2] = S[1, 2, 2, 1] = S[2, 0, 2, 0] = S[
+                0, 2, 0, 2
+            ] = S[
+                0, 2, 2, 0
+            ] = S[
+                2, 0, 0, 2
+            ] = (
+                4 - 5 * nu
+            ) / fac1
+
+        elif shape == "needle":
+            # Here the aspect ratio a describes the relation between the two minor axes
+            pre_fac = 1 / (2 * (1 - nu))
+            fac1 = 1 / (a + 1)
+            fac2 = a / (a + 1)
+            fac3 = 1 - 2 * nu
+            fac4 = (a + 1) ** 2
+
+            S[0, 0, 0, 0] = pre_fac * ((1 + 2 * a) / fac4 + fac3 * fac1)
+            S[1, 1, 1, 1] = pre_fac * ((a2 + 2 * a) / fac4 + fac3 * fac2)
+            S[0, 0, 1, 1] = pre_fac * (1 / fac4 - fac3 * fac1)
+            S[1, 1, 2, 2] = pre_fac * 2 * nu * fac2
+            S[0, 0, 2, 2] = pre_fac * 2 * nu * fac1
+            S[1, 1, 0, 0] = pre_fac * (a2 / fac4 - fac3 * fac2)
+            S[0, 1, 0, 1] = S[1, 0, 1, 0] = S[1, 0, 0, 1] = S[0, 1, 1, 0] = pre_fac * (
+                (a2 + 1) / (2 * fac4) + fac3 / 2
             )
-            S[0, 0, 1, 1] = S[1, 1, 2, 2] = S[2, 2, 0, 0] = (5 * nu - 1) / (
-                15 * (1 - nu)
-            )
-            S[0, 1, 0, 1] = S[1, 2, 1, 2] = S[2, 0, 2, 0] = (4 - 5 * nu) / (
-                15 * (1 - nu)
+            S[1, 2, 1, 2] = S[2, 1, 2, 1] = S[2, 1, 1, 2] = S[1, 2, 2, 1] = 1 / 2 * fac2
+            S[2, 0, 2, 0] = S[0, 2, 0, 2] = S[0, 2, 2, 0] = S[2, 0, 0, 2] = 1 / 2 * fac1
+        else:
+            raise ValueError(
+                "Please chose a valid 'shape' option."
+                "Options supported: 'ellipsoid', 'sphere', 'needle'."
             )
 
         if return_dim == "66":
@@ -334,7 +371,7 @@ class MoriTanaka(Tensor):
         left_minor = np.einsum("ijkl->jikl", self.effective_stiffness3333)
         right_minor = np.einsum("ijkl->ijlk", self.effective_stiffness3333)
         major = np.einsum("ijkl->klij", self.effective_stiffness3333)
-        if np.linalg.norm(self.effective_stiffness3333 - left_minor) < 1e-3:
+        if np.allclose(self.effective_stiffness3333, left_minor, rtol=1e-6):
             print("Left minor symmetry: passed")
         else:
             print("Left minor symmetry: failed")
@@ -343,7 +380,7 @@ class MoriTanaka(Tensor):
                     np.linalg.norm(self.effective_stiffness3333 - left_minor)
                 )
             )
-        if np.linalg.norm(self.effective_stiffness3333 - right_minor) < 1e-3:
+        if np.allclose(self.effective_stiffness3333, right_minor, rtol=1e-6):
             print("Right minor symmetry: passed")
         else:
             print("Right minor symmetry: failed")
@@ -352,7 +389,7 @@ class MoriTanaka(Tensor):
                     np.linalg.norm(self.effective_stiffness3333 - right_minor)
                 )
             )
-        if np.linalg.norm(self.effective_stiffness3333 - major) < 1e-3:
+        if np.allclose(self.effective_stiffness3333, major, rtol=1e-6):
             print("Major symmetry: passed")
         else:
             print("Major symmetry: failed")
@@ -421,7 +458,7 @@ class HalpinTsai:
 
         Returns:
             - None
-        
+
         Raises:
             - ValueError
                 Package can only be "hex" or "square".
@@ -435,7 +472,7 @@ class HalpinTsai:
         else:
             p = 1 / 2 * np.log(np.pi / self.vol_f)
 
-        beta = np.sqrt(2 * np.pi * self.G_m / (self.E_f * (np.pi * self.r_f ** 2) * p))
+        beta = np.sqrt(2 * np.pi * self.G_m / (self.E_f * (np.pi * self.r_f**2) * p))
         nu1 = (self.E_f / self.E_m - 1) / (self.E_f / self.E_m + 2)
         nu2 = (self.G_f / self.G_m - 1) / (self.G_f / self.G_m + 1)
 
@@ -546,31 +583,31 @@ class Laminate:
         n = sin(angle)
         rot_mat = np.array(
             [
-                [m ** 4, n ** 4, 2 * m ** 2 * n ** 2, 4 * m ** 2 * n ** 2],
-                [n ** 4, m ** 4, 2 * m ** 2 * n ** 2, 4 * m ** 2 * n ** 2],
+                [m**4, n**4, 2 * m**2 * n**2, 4 * m**2 * n**2],
+                [n**4, m**4, 2 * m**2 * n**2, 4 * m**2 * n**2],
                 [
-                    m ** 2 * n ** 2,
-                    m ** 2 * n ** 2,
-                    m ** 4 + n ** 4,
-                    -4 * m ** 2 * n ** 2,
+                    m**2 * n**2,
+                    m**2 * n**2,
+                    m**4 + n**4,
+                    -4 * m**2 * n**2,
                 ],
                 [
-                    m ** 2 * n ** 2,
-                    m ** 2 * n ** 2,
-                    -2 * m ** 2 * n ** 2,
-                    (m ** 2 - n ** 2) ** 2,
+                    m**2 * n**2,
+                    m**2 * n**2,
+                    -2 * m**2 * n**2,
+                    (m**2 - n**2) ** 2,
                 ],
                 [
-                    m ** 3 * n,
-                    -m * n ** 3,
-                    m * n ** 3 - m ** 3 * n,
-                    2 * (m * n ** 3 - m ** 3 * n),
+                    m**3 * n,
+                    -m * n**3,
+                    m * n**3 - m**3 * n,
+                    2 * (m * n**3 - m**3 * n),
                 ],
                 [
-                    m * n ** 3,
-                    -(m ** 3) * n,
-                    m ** 3 * n - m * n ** 3,
-                    2 * (m ** 3 * n - m * n ** 3),
+                    m * n**3,
+                    -(m**3) * n,
+                    m**3 * n - m * n**3,
+                    2 * (m**3 * n - m * n**3),
                 ],
             ]
         )
