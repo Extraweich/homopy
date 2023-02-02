@@ -36,7 +36,7 @@ class MoriTanaka(Tensor):
     the Tensor class.
     """
 
-    def __init__(self, matrix, fiber, v_frac, a_ratio, shape='ellipsoid'):
+    def __init__(self, matrix, fiber, v_frac, a_ratio, shape="ellipsoid"):
         """
         Initialize the object and call super class initialization.
 
@@ -85,7 +85,8 @@ class MoriTanaka(Tensor):
             self.v_frac = v_frac
             self.a_ratio = a_ratio
             self.eshelby66 = self._get_eshelby(
-                self.a_ratio,  return_dim='66', shape=shape)
+                self.a_ratio, return_dim="66", shape=shape
+            )
 
         else:
             assert (
@@ -105,14 +106,12 @@ class MoriTanaka(Tensor):
                 pol = Cf_alpha - self.Cm
                 self.pol_alpha.append(pol)
                 if type(shape) == list:
-                    assert (
-                        len(fiber) == len(shape)
+                    assert len(fiber) == len(
+                        shape
                     ), "When `shape` is a list, it must have the same length as `fiber`!"
-                    S = self._get_eshelby(
-                        a_ratio[i], return_dim='66', shape=shape[i])
+                    S = self._get_eshelby(a_ratio[i], return_dim="66", shape=shape[i])
                 else:
-                    S = self._get_eshelby(
-                        a_ratio[i], return_dim='66', shape=shape)
+                    S = self._get_eshelby(a_ratio[i], return_dim="66", shape=shape)
                 A_inv = self.eye + self.tensor_product(
                     S, self.tensor_product(Cm_inv, pol)
                 )
@@ -121,8 +120,7 @@ class MoriTanaka(Tensor):
                 self.c_alpha.append(v_frac[i] / self.c_f)
 
         self.effective_stiffness66 = self.get_effective_stiffness()
-        self.effective_stiffness3333 = self.mandel2tensor(
-            self.effective_stiffness66)
+        self.effective_stiffness3333 = self.mandel2tensor(self.effective_stiffness66)
 
     def _get_eshelby(self, a_ratio, return_dim="66", shape="ellipsoid"):
         """
@@ -148,8 +146,7 @@ class MoriTanaka(Tensor):
         a2 = a**2
         S = np.zeros((3, 3, 3, 3))
         if shape == "ellipsoid":
-            g = a / (a2 - 1) ** (3 / 2) * \
-                (a * (a2 - 1) ** (1 / 2) - np.arccosh(a))
+            g = a / (a2 - 1) ** (3 / 2) * (a * (a2 - 1) ** (1 / 2) - np.arccosh(a))
             S[0, 0, 0, 0] = (
                 1
                 / (2 * (1 - nu))
@@ -229,10 +226,8 @@ class MoriTanaka(Tensor):
             S[2, 1, 2, 1] = S[1, 2, 1, 2] = S[1, 2, 2, 1] = S[2, 1, 1, 2] = pre_fac * (
                 (a2 + 1) / (2 * fac4) + fac3 / 2
             )
-            S[2, 0, 2, 0] = S[0, 2, 0, 2] = S[0, 2,
-                                              2, 0] = S[2, 0, 0, 2] = 1 / 2 * fac2
-            S[0, 1, 0, 1] = S[1, 0, 1, 0] = S[1, 0,
-                                              0, 1] = S[0, 1, 1, 0] = 1 / 2 * fac1
+            S[2, 0, 2, 0] = S[0, 2, 0, 2] = S[0, 2, 2, 0] = S[2, 0, 0, 2] = 1 / 2 * fac2
+            S[0, 1, 0, 1] = S[1, 0, 1, 0] = S[1, 0, 0, 1] = S[0, 1, 1, 0] = 1 / 2 * fac1
         else:
             raise ValueError(
                 "Please chose a valid 'shape' option. "
@@ -264,8 +259,7 @@ class MoriTanaka(Tensor):
             )
             # A = np.linalg.inv(A_inv)
             C_eff = self.Cm + self.v_frac * self.tensor_product(
-                pol, np.linalg.inv(self.v_frac * self.eye +
-                                   (1 - self.v_frac) * A_inv)
+                pol, np.linalg.inv(self.v_frac * self.eye + (1 - self.v_frac) * A_inv)
             )
         else:
             pol_A_ave = np.zeros((6, 6))
@@ -307,8 +301,7 @@ class MoriTanaka(Tensor):
         if N4.shape == (6, 6):
             N4 = self.mandel2tensor(N4)
 
-        C_eff_ave = self.get_orientation_average(
-            self.effective_stiffness3333, N2, N4)
+        C_eff_ave = self.get_orientation_average(self.effective_stiffness3333, N2, N4)
 
         if return_dim == "66":
             return self.tensor2mandel(C_eff_ave)
@@ -342,8 +335,7 @@ class MoriTanaka(Tensor):
             - 4 * tensor[0, 1, 0, 1]
         )
         b2 = tensor[0, 0, 1, 1] - tensor[1, 1, 2, 2]
-        b3 = tensor[0, 1, 0, 1] + 1 / 2 * \
-            (tensor[1, 1, 2, 2] - tensor[1, 1, 1, 1])
+        b3 = tensor[0, 1, 0, 1] + 1 / 2 * (tensor[1, 1, 2, 2] - tensor[1, 1, 1, 1])
         b4 = tensor[1, 1, 2, 2]
         b5 = 1 / 2 * (tensor[1, 1, 1, 1] - tensor[1, 1, 2, 2])
 
@@ -489,18 +481,15 @@ class HalpinTsai:
         else:
             p = 1 / 2 * np.log(np.pi / self.vol_f)
 
-        beta = np.sqrt(2 * np.pi * self.G_m /
-                       (self.E_f * (np.pi * self.r_f**2) * p))
+        beta = np.sqrt(2 * np.pi * self.G_m / (self.E_f * (np.pi * self.r_f**2) * p))
         nu1 = (self.E_f / self.E_m - 1) / (self.E_f / self.E_m + 2)
         nu2 = (self.G_f / self.G_m - 1) / (self.G_f / self.G_m + 1)
 
         self.E11 = self.E_f * (
             1 - tanh(beta * self.l_f / 2) / (beta * self.l_f / 2)
         ) * self.vol_f + self.E_m * (1 - self.vol_f)
-        self.E22 = self.E_m * (1 + 2 * nu1 * self.vol_f) / \
-            (1 - nu1 * self.vol_f)
-        self.G12 = self.G_m * (1 + 2 * nu2 * self.vol_f) / \
-            (1 - nu2 * self.vol_f)
+        self.E22 = self.E_m * (1 + 2 * nu1 * self.vol_f) / (1 - nu1 * self.vol_f)
+        self.G12 = self.G_m * (1 + 2 * nu2 * self.vol_f) / (1 - nu2 * self.vol_f)
         self.nu12 = self.nu_f * self.vol_f + self.nu_m * (1 - self.vol_f)
         self.nu21 = self.nu12 * self.E22 / self.E11
 
@@ -574,8 +563,7 @@ class Laminate:
         C_eff_temp = np.zeros(6)
         for i in range(len(self.lamina_stiffnesses)):
             # rotate by angle
-            Q_temp = self.rotate_stiffness(
-                self.lamina_stiffnesses[i], self.angles[i])
+            Q_temp = self.rotate_stiffness(self.lamina_stiffnesses[i], self.angles[i])
             C_eff_temp += self.vol_fracs[i] * Q_temp
         C_eff = np.array(
             [
