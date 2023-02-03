@@ -23,6 +23,9 @@ The Mori-Tanaka scheme goes back to Mori and Tanaka (cf. [5]) and is a mean-fiel
 
 The documentation can be found in [the docs](https://homopy.readthedocs.io/en/latest/index.html).
 
+### Interactive example
+
+An interactive example to intuitively see the effects of fiber distributions on the effective properties of hybrid materials can be found in [Binder](https://mybinder.org/v2/gh/Extraweich/homopy/main?labpath=%2Fexamples%2FHybrid.ipynb).
 
 ***
 Further topic related methods of the package:
