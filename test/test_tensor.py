@@ -66,9 +66,7 @@ class Test_Converter:
 
         assert np.allclose(mandel_homopy, mandel_mechkit)
 
-    def test_compare_to_tensor_with_mechkit(
-        self, random_mandel6, mechkit_converter, t
-    ):
+    def test_compare_to_tensor_with_mechkit(self, random_mandel6, mechkit_converter, t):
 
         tensor_homopy = t.mandel2tensor(random_mandel6)
         tensor_mechkit = mechkit_converter.to_tensor(random_mandel6)
