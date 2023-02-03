@@ -141,12 +141,12 @@ inherits from the Tensor class.</p>
 </dd>
 <dt>Object variables:</dt><dd><ul class="simple">
 <li><dl class="simple">
-<dt>stiffness3333<span class="classifier">ndarray of shape (3, 3, 3, 3)</span></dt><dd><p>Holds the stiffness values in the regular tensor notation.</p>
+<dt>stiffness3333<span class="classifier">ndarray of shape (3, 3, 3, 3)</span></dt><dd><p>Holds the stiffness values in the regular tensor notation in Pa.</p>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
-<dt>stiffness66<span class="classifier">ndarray of shape (6, 6)</span></dt><dd><p>Holds the stiffness values in the normalized Voigt notation.</p>
+<dt>stiffness66<span class="classifier">ndarray of shape (6, 6)</span></dt><dd><p>Holds the stiffness values in the normalized Voigt notation in Pa.</p>
 </dd>
 </dl>
 </li>
@@ -174,27 +174,27 @@ The class inherits from the Elasticity class.</p>
 <dl class="simple">
 <dt>Parameters:</dt><dd><ul class="simple">
 <li><dl class="simple">
-<dt>E1<span class="classifier">float</span></dt><dd><p>Young’s modulus in longitudinal direction.</p>
+<dt>E1<span class="classifier">float</span></dt><dd><p>Young’s modulus in longitudinal direction in Pa.</p>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
-<dt>E2<span class="classifier">float</span></dt><dd><p>Young’s modulus in transverse direction</p>
+<dt>E2<span class="classifier">float</span></dt><dd><p>Young’s modulus in transverse direction in Pa.</p>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
-<dt>G12<span class="classifier">float</span></dt><dd><p>Shear modulus in the longitudinal-transverse plane.</p>
+<dt>G12<span class="classifier">float</span></dt><dd><p>Shear modulus in the longitudinal-transverse plane in Pa.</p>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
-<dt>G23<span class="classifier">float</span></dt><dd><p>Shear modulus in the transverse-transverse plane.</p>
+<dt>G23<span class="classifier">float</span></dt><dd><p>Shear modulus in the transverse-transverse plane in Pa.</p>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
-<dt>nu12<span class="classifier">float</span></dt><dd><p>Poisson’s ratio in longitudinal direction.</p>
+<dt>nu12<span class="classifier">float</span></dt><dd><p>Poisson’s ratio in longitudinal direction (dimensionless).</p>
 </dd>
 </dl>
 </li>
@@ -202,32 +202,32 @@ The class inherits from the Elasticity class.</p>
 </dd>
 <dt>Object variables:</dt><dd><ul class="simple">
 <li><dl class="simple">
-<dt>E1<span class="classifier">float</span></dt><dd><p>Young’s modulus in longitudinal direction.</p>
+<dt>E1<span class="classifier">float</span></dt><dd><p>Young’s modulus in longitudinal direction in Pa.</p>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
-<dt>E2<span class="classifier">float</span></dt><dd><p>Young’s modulus in transverse direction</p>
+<dt>E2<span class="classifier">float</span></dt><dd><p>Young’s modulus in transverse direction in Pa.</p>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
-<dt>G12<span class="classifier">float</span></dt><dd><p>Shear modulus in the longitudinal-transverse plane.</p>
+<dt>G12<span class="classifier">float</span></dt><dd><p>Shear modulus in the longitudinal-transverse plane in Pa.</p>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
-<dt>G23<span class="classifier">float</span></dt><dd><p>Shear modulus in the transverse-transverse plane.</p>
+<dt>G23<span class="classifier">float</span></dt><dd><p>Shear modulus in the transverse-transverse plane in Pa.</p>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
-<dt>nu12<span class="classifier">float</span></dt><dd><p>Poisson’s ratio in longitudinal direction.</p>
+<dt>nu12<span class="classifier">float</span></dt><dd><p>Poisson’s ratio in longitudinal direction (dimensionless).</p>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
-<dt>nu23<span class="classifier">float</span></dt><dd><p>Poisson’s ratio in transverse direction</p>
+<dt>nu23<span class="classifier">float</span></dt><dd><p>Poisson’s ratio in transverse direction (dimensionless).</p>
 </dd>
 </dl>
 </li>
@@ -255,12 +255,12 @@ The class inherits from the Transverse Isotropy class.</p>
 <dl class="simple">
 <dt>Parameters:</dt><dd><ul class="simple">
 <li><dl class="simple">
-<dt>E<span class="classifier">float</span></dt><dd><p>Young’s modulus.</p>
+<dt>E<span class="classifier">float</span></dt><dd><p>Young’s modulus in Pa.</p>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
-<dt>nu<span class="classifier">float</span></dt><dd><p>Poisson’s ratio.</p>
+<dt>nu<span class="classifier">float</span></dt><dd><p>Poisson’s ratio (dimensionless).</p>
 </dd>
 </dl>
 </li>
@@ -268,22 +268,22 @@ The class inherits from the Transverse Isotropy class.</p>
 </dd>
 <dt>Object variables:</dt><dd><ul class="simple">
 <li><dl class="simple">
-<dt>E<span class="classifier">float</span></dt><dd><p>Young’s modulus.</p>
+<dt>E<span class="classifier">float</span></dt><dd><p>Young’s modulus in Pa.</p>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
-<dt>nu<span class="classifier">float</span></dt><dd><p>Poisson’s ratio.</p>
+<dt>nu<span class="classifier">float</span></dt><dd><p>Poisson’s ratio (dimensionless).</p>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
-<dt>lam<span class="classifier">float</span></dt><dd><p>First Lamé constant.</p>
+<dt>lam<span class="classifier">float</span></dt><dd><p>First Lamé constant in Pa.</p>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
-<dt>mu<span class="classifier">float</span></dt><dd><p>Second Lamé constant.</p>
+<dt>mu<span class="classifier">float</span></dt><dd><p>Second Lamé constant in Pa.</p>
 </dd>
 </dl>
 </li>

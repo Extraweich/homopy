@@ -130,35 +130,39 @@
 <span id="methods"></span><h1>methods<a class="headerlink" href="#module-homopy.methods" title="Permalink to this heading"></a></h1>
 <p>Created on Wed Apr 27 21:09:24 2022</p>
 <p>&#64;author: <a class="reference external" href="mailto:nicolas&#46;christ&#37;&#52;&#48;kit&#46;edu">nicolas<span>&#46;</span>christ<span>&#64;</span>kit<span>&#46;</span>edu</a></p>
-<p>Mori-Tanaka Homogenization after Gross and Seelig (cf. <a class="footnote-reference brackets" href="#id5" id="id1">1</a>). Multi-inclusion implementation after Brylka (cf. <a class="footnote-reference brackets" href="#id6" id="id2">2</a>).
-Eshelby Tensor is taken from Tandon and Weng (cf. <a class="footnote-reference brackets" href="#id7" id="id3">3</a>) but can also be found in Groos and Seelig.
-Halpin-Tsai homogenization after Fu, Lauke, and Mai (cf. <a class="footnote-reference brackets" href="#id8" id="id4">4</a>, pp. 143 ff.). Also, the effective planar stiffness 
+<p>Mori-Tanaka Homogenization after Gross and Seelig (cf. <a class="footnote-reference brackets" href="#id6" id="id1">1</a>). Multi-inclusion implementation after Brylka (cf. <a class="footnote-reference brackets" href="#id7" id="id2">2</a>).
+Eshelby’s tensor is taken from Tandon and Weng (cf. <a class="footnote-reference brackets" href="#id8" id="id3">3</a>) but can also be found in Groos and Seelig. Thoroughly literature
+on Eshelby’s tensor can also be found in Mura (cf. <a class="footnote-reference brackets" href="#id9" id="id4">4</a>, pp. 74 ff.).
+Halpin-Tsai homogenization after Fu, Lauke, and Mai (cf. <a class="footnote-reference brackets" href="#id10" id="id5">5</a>, pp. 143 ff.). Also, the effective planar stiffness 
 matrix for the Halpin-Tsai homogenization is based on the laminate analogy approach after Fu, Lauke and Mai
 (pp. 155 ff.).</p>
 <dl class="footnote brackets">
-<dt class="label" id="id5"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dt class="label" id="id6"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
 <dd><p>Gross, D. and Seelig, T. (2016), <em>Bruchmechanik</em>, Springer Berlin Heidelberg</p>
 </dd>
-<dt class="label" id="id6"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
+<dt class="label" id="id7"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
 <dd><p>Brylka, B. (2017), <em>Charakterisierung und Modellierung der Steifigkeit von langfaserverstärktem Polypropylen</em>, KIT Scientific Publishing</p>
 </dd>
-<dt class="label" id="id7"><span class="brackets"><a class="fn-backref" href="#id3">3</a></span></dt>
+<dt class="label" id="id8"><span class="brackets"><a class="fn-backref" href="#id3">3</a></span></dt>
 <dd><p>Tandon, G. P. and Weng, G. J. (1984), ‘The effect of aspect ratio of inclusions on the elastic properties of unidirectionally aligned composites’, <em>Polymer Composites</em>, pp. 327-333, Available at: <a class="reference external" href="https://doi.org/10.1002/pc.750050413">https://doi.org/10.1002/pc.750050413</a></p>
 </dd>
-<dt class="label" id="id8"><span class="brackets"><a class="fn-backref" href="#id4">4</a></span></dt>
+<dt class="label" id="id9"><span class="brackets"><a class="fn-backref" href="#id4">4</a></span></dt>
+<dd><p>Mura, T (1987), <em>Micromechanics of defects in solids</em>, Springer Dordrecht</p>
+</dd>
+<dt class="label" id="id10"><span class="brackets"><a class="fn-backref" href="#id5">5</a></span></dt>
 <dd><p>Fu, S.-Y., Lauke, B. and Mai, Y. W. (2019), <em>Science and engineering of short fibre-reinforced polymer composites</em>, Woodhead Publishing</p>
 </dd>
 </dl>
 <dl class="py class">
 <dt class="sig sig-object py" id="homopy.methods.MoriTanaka">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">homopy.methods.</span></span><span class="sig-name descname"><span class="pre">MoriTanaka</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fiber</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_frac</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a_ratio</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/methods.html#MoriTanaka"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.methods.MoriTanaka" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">homopy.methods.</span></span><span class="sig-name descname"><span class="pre">MoriTanaka</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fiber</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_frac</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a_ratio</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ellipsoid'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/methods.html#MoriTanaka"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.methods.MoriTanaka" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="tensor.html#homopy.tensor.Tensor" title="homopy.tensor.Tensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></p>
 <p>Mori Tanaka class to calculate the homogenized stiffness for fiber reinforced
 polymers with possibly different types of inclusions. The class inherits from
 the Tensor class.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="homopy.methods.MoriTanaka.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fiber</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_frac</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a_ratio</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/methods.html#MoriTanaka.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.methods.MoriTanaka.__init__" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fiber</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_frac</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a_ratio</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ellipsoid'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/methods.html#MoriTanaka.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.methods.MoriTanaka.__init__" title="Permalink to this definition"></a></dt>
 <dd><p>Initialize the object and call super class initialization.</p>
 <dl class="simple">
 <dt>Parameters:</dt><dd><ul class="simple">
@@ -183,6 +187,12 @@ material.</p>
 </dd>
 </dl>
 </li>
+<li><dl class="simple">
+<dt>shape<span class="classifier">string, default=’ellipsoid’</span></dt><dd><p>Flag to determine which assumptions are taken into consideration
+for the geometry of the fiber (options: ‘ellipsoid’, ‘sphere’, ‘needle’)</p>
+</dd>
+</dl>
+</li>
 </ul>
 </dd>
 <dt>Object variables:</dt><dd><ul class="simple">
@@ -197,12 +207,22 @@ material.</p>
 </dl>
 </li>
 <li><dl class="simple">
-<dt>Cm<span class="classifier">ndarray of shape (6, 6)</span></dt><dd><p>Stiffness of matrix material in normalized Voigt notation.</p>
+<dt>Cm<span class="classifier">ndarray of shape (6, 6)</span></dt><dd><p>Stiffness of matrix material in normalized Voigt notation in Pa.</p>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
 <dt>eye<span class="classifier">ndarray of shape (6, 6)</span></dt><dd><p>Identity tensor in normalized Voigt notation.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>stiffness3333<span class="classifier">ndarray of shape (3, 3, 3, 3)</span></dt><dd><p>Holds the stiffness values in the regular tensor notation in Pa.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>stiffness66<span class="classifier">ndarray of shape (6, 6)</span></dt><dd><p>Holds the stiffness values in the normalized Voigt notation in Pa.</p>
 </dd>
 </dl>
 </li>
@@ -226,7 +246,7 @@ material.</p>
 </dd>
 <dt>Returns:</dt><dd><ul class="simple">
 <li><dl class="simple">
-<dt>C_eff<span class="classifier">ndarray of shape (6, 6)</span></dt><dd><p>Homogenized stiffness tensor in the normalized Voigt notation.</p>
+<dt>C_eff<span class="classifier">ndarray of shape (6, 6)</span></dt><dd><p>Homogenized stiffness tensor in the normalized Voigt notation in Pa.</p>
 </dd>
 </dl>
 </li>
@@ -242,7 +262,7 @@ material.</p>
 <dl class="simple">
 <dt>Parameters:</dt><dd><ul class="simple">
 <li><dl class="simple">
-<dt>C_eff<span class="classifier">ndarray of shape (6, 6) or (3, 3, 3, 3)</span></dt><dd><p>Effective stiffness in normalized Voigt or regular tensor notation.</p>
+<dt>C_eff<span class="classifier">ndarray of shape (6, 6) or (3, 3, 3, 3)</span></dt><dd><p>Effective stiffness in normalized Voigt or regular tensor notation in Pa.</p>
 </dd>
 </dl>
 </li>
@@ -266,7 +286,7 @@ normalized Voigt or regular tensor notation (options: ‘66’, ‘3333’)</p>
 </dd>
 <dt>Returns:</dt><dd><ul class="simple">
 <li><dl class="simple">
-<dt>…<span class="classifier">ndarray of shape (6, 6)</span></dt><dd><p>Averaged stiffness tensor in the normalized Voigt notation.</p>
+<dt>…<span class="classifier">ndarray of shape (6, 6)</span></dt><dd><p>Averaged stiffness tensor in the normalized Voigt notation in Pa.</p>
 </dd>
 </dl>
 </li>
@@ -340,47 +360,47 @@ polymers as laminas. This is then used as input for the Laminate class.</p>
 <dl class="simple">
 <dt>Parameters:</dt><dd><ul class="simple">
 <li><dl class="simple">
-<dt>E_f<span class="classifier">float</span></dt><dd><p>Young’s modulus of fiber.</p>
+<dt>E_f<span class="classifier">float</span></dt><dd><p>Young’s modulus of fiber in Pa.</p>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
-<dt>E_m<span class="classifier">float</span></dt><dd><p>Young’s modulus of matrix.</p>
+<dt>E_m<span class="classifier">float</span></dt><dd><p>Young’s modulus of matrix in Pa.</p>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
-<dt>G_f<span class="classifier">float</span></dt><dd><p>Shear modulus of fiber.</p>
+<dt>G_f<span class="classifier">float</span></dt><dd><p>Shear modulus of fiber in Pa.</p>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
-<dt>G_m<span class="classifier">float</span></dt><dd><p>Shear modulus of matrix.</p>
+<dt>G_m<span class="classifier">float</span></dt><dd><p>Shear modulus of matrix in Pa.</p>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
-<dt>nu_f<span class="classifier">float</span></dt><dd><p>Poisson ratio of fiber.</p>
+<dt>nu_f<span class="classifier">float</span></dt><dd><p>Poisson ratio of fiber (dimensionless).</p>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
-<dt>nu_m<span class="classifier">float</span></dt><dd><p>Poisson ratio of matrix.</p>
+<dt>nu_m<span class="classifier">float</span></dt><dd><p>Poisson ratio of matrix (dimensionless).</p>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
-<dt>l_f<span class="classifier">float</span></dt><dd><p>Average length of fiber.</p>
+<dt>l_f<span class="classifier">float</span></dt><dd><p>Average length of fiber in m.</p>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
-<dt>r_f<span class="classifier">float</span></dt><dd><p>Average radius of fiber.</p>
+<dt>r_f<span class="classifier">float</span></dt><dd><p>Average radius of fiber in m.</p>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
-<dt>vol_f<span class="classifier">float</span></dt><dd><p>Poisson ratio of matrix.</p>
+<dt>vol_f<span class="classifier">float</span></dt><dd><p>Poisson ratio of matrix (dimensionless).</p>
 </dd>
 </dl>
 </li>
@@ -432,7 +452,7 @@ polymers as laminas. This is then used as input for the Laminate class.</p>
 <dl class="simple">
 <dt>Parameters:</dt><dd><ul class="simple">
 <li><dl class="simple">
-<dt>lamina_stiffnesses<span class="classifier">array of shape (n,)</span></dt><dd><p>Individual stiffness of n laminas.</p>
+<dt>lamina_stiffnesses<span class="classifier">array of shape (n,)</span></dt><dd><p>Individual stiffness of n laminas in Pa.</p>
 </dd>
 </dl>
 </li>
@@ -467,7 +487,7 @@ each lamina is averaged equally.</p>
 </dd>
 <dt>Returns:</dt><dd><ul class="simple">
 <li><dl class="simple">
-<dt>C_eff<span class="classifier">ndarray of shape (3,3)</span></dt><dd><p>Effective stiffness of laminate.</p>
+<dt>C_eff<span class="classifier">ndarray of shape (3,3)</span></dt><dd><p>Effective stiffness of laminate in Pa.</p>
 </dd>
 </dl>
 </li>
@@ -483,12 +503,12 @@ each lamina is averaged equally.</p>
 <dl class="simple">
 <dt>Parameters:</dt><dd><ul class="simple">
 <li><dl class="simple">
-<dt>lamina_stiffness<span class="classifier">ndarray of shape (3, 3)</span></dt><dd><p>Stiffness matrix of lamina.</p>
+<dt>lamina_stiffness<span class="classifier">ndarray of shape (3, 3)</span></dt><dd><p>Stiffness matrix of lamina in Pa.</p>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
-<dt>angle<span class="classifier">float</span></dt><dd><p>Planar angle to rotate the stiffness matrix about.</p>
+<dt>angle<span class="classifier">float</span></dt><dd><p>Planar angle to rotate the stiffness matrix about in radiants.</p>
 </dd>
 </dl>
 </li>
@@ -496,7 +516,7 @@ each lamina is averaged equally.</p>
 </dd>
 <dt>Returns:</dt><dd><ul class="simple">
 <li><dl class="simple">
-<dt>rot_stiffness<span class="classifier">ndarray of shape (3, 3)</span></dt><dd><p>Rotated stiffness matrix.</p>
+<dt>rot_stiffness<span class="classifier">ndarray of shape (3, 3)</span></dt><dd><p>Rotated stiffness matrix in Pa.</p>
 </dd>
 </dl>
 </li>
