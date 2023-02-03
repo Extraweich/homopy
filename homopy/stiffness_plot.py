@@ -228,8 +228,8 @@ class ElasticPlot(Tensor):
 
             ax.set_title("Young's modulus over angle", va="bottom")
             plt.show()
-        else:
-            return rad, E
+
+        return rad, E
 
     def polar_plot(self, data):
         """
@@ -306,8 +306,8 @@ class ElasticPlot(Tensor):
 
             ax.set_title("Young's modulus over angle", va="bottom")
             plt.show()
-        else:
-            return rad, E
+
+        return rad, E
 
     def get_E_laminate(self, C, phi):
         """
