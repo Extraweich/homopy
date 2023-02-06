@@ -91,7 +91,7 @@ class MoriTanaka(Tensor):
         else:
             assert (
                 len(fiber) == len(v_frac) == len(a_ratio)
-            ), "Dimensions of stiffnesses, v_fracs, and a_ratios do not match!"
+            ), "Amount of stiffnesses, v_fracs, and a_ratios do not match!"
             self.nr_constituents = len(fiber)
             self.A_f_alpha = list()
             self.pol_alpha = list()
@@ -311,13 +311,10 @@ class MoriTanaka(Tensor):
                 Averaged stiffness tensor in the normalized Voigt notation in Pa.
         """
 
-        if N4.shape == (6, 6):
-            N4 = self.mandel2tensor(N4)
-
         if method == 'trailing':
-            C_eff_ave = self.get_average_stiffness_trailing(N2, N4)
+            C_eff_ave = self._get_average_stiffness_trailing(N2, N4)
         elif method == 'benveniste':
-            C_eff_ave = self.get_average_stiffness_benveniste(N2, N4)
+            C_eff_ave = self._get_average_stiffness_benveniste(N2, N4)
         else:
             raise ValueError(
                 "Please chose a valid 'method' option. "
@@ -329,9 +326,48 @@ class MoriTanaka(Tensor):
         else:
             return C_eff_ave
 
-    def get_average_stiffness_trailing(self, N2, N4):
+    def _get_average_stiffness_trailing(self, N2, N4):
         return self.get_orientation_average(
             self.effective_stiffness3333, N2, N4)
+
+    def _get_average_stiffness_benveniste(self, N2, N4):
+        assert (
+            len(self.fiber) == len(N2) == len(N4)
+        ), "Amount of stiffnesses and orientation tensors do not match!"
+
+        # need to perform MT again
+        pol_A_ave = np.zeros((6, 6))
+        A_ave = np.zeros((6, 6))
+        # calculating the averages
+        for i in range(self.nr_constituents):
+            # here comes the orientation average
+
+            # weight by pol...
+            weighted_A_f_alpha_66 = self.tensor_product(
+                self.pol_alpha[i], self.A_f_alpha[i]
+            )
+            weighted_A_f_alpha_3333 = self.mandel2tensor(weighted_A_f_alpha_66)
+            # orientation average...
+            ave_weighted_A_f_alpha_3333 = self.get_orientation_average(
+                weighted_A_f_alpha_3333, N2[i], N4[i])
+            ave_weighted_A_f_alpha_66 = self.tensor2mandel(
+                ave_weighted_A_f_alpha_3333)
+            # remove weight by inverse...
+            ave_A_f_alpha = self.tensor_product(
+                np.linalg.inv(self.pol_alpha[i]), ave_weighted_A_f_alpha_66
+            )
+
+            A_ave += self.c_alpha[i] * ave_A_f_alpha
+            pol_A_ave += self.c_alpha[i] * self.tensor_product(
+                self.pol_alpha[i], ave_A_f_alpha
+            )
+
+        C_eff = self.Cm + self.tensor_product(
+            self.c_f * pol_A_ave,
+            np.linalg.inv(self.c_f * A_ave + (1 - self.c_f) * self.eye),
+        )
+
+        return self.mandel2tensor(C_eff)
 
     @staticmethod
     def get_orientation_average(tensor, N2, N4):
