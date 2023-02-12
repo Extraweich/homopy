@@ -321,7 +321,7 @@ class MoriTanaka(Tensor):
 
     def _get_average_stiffness_trailing(self, N2, N4):
         """
-        Calculate the average stiffness in accordance to Advani and Tucker
+        Calculate the average stiffness in accordance to Advani and Tucker, 1987 (Eq. 29).
 
         Parameters:
             - N2 : ndarray of shape (3, 3)
@@ -337,7 +337,8 @@ class MoriTanaka(Tensor):
 
     def _get_average_stiffness_benveniste(self, N2, N4):
         """
-        Calculate the average stiffness in accordance to Benveniste
+        Calculate the average stiffness in accordance to Benveniste (1987) and
+        Bauer and Böhlke, 2022 (Eq. 57).
 
         Parameters:
             - N2 : ndarray of shape (3, 3)
@@ -349,9 +350,10 @@ class MoriTanaka(Tensor):
             - ... : ndarray of shape (3, 3, 3, 3)
                 Orientation average of given tensor.
         """
-        assert (
-            len(self.fiber) == len(N2) == len(N4)
-        ), "Amount of stiffnesses and orientation tensors do not match!"
+        if type(N4) == list:
+            assert (
+                len(self.fiber) == len(N2) == len(N4)
+            ), "Amount of stiffnesses and orientation tensors do not match!"
 
         # need to perform MT again
         pol_A_ave = np.zeros((6, 6))
