@@ -177,13 +177,13 @@ the Tensor class.</p>
 </dl>
 </li>
 <li><dl class="simple">
-<dt>v_frac<span class="classifier">float</span></dt><dd><p>Volume fraction of the fiber material within the matrix
+<dt>v_frac<span class="classifier">float (can be list)</span></dt><dd><p>Volume fraction of the fiber material within the matrix
 material.</p>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
-<dt>a_ratio<span class="classifier">float</span></dt><dd><p>Aspect ratio of the fiber material.</p>
+<dt>a_ratio<span class="classifier">float (can be list)</span></dt><dd><p>Aspect ratio of the fiber material.</p>
 </dd>
 </dl>
 </li>
@@ -257,7 +257,7 @@ for the geometry of the fiber (options: ‘ellipsoid’, ‘sphere’, ‘needle
 
 <dl class="py method">
 <dt class="sig sig-object py" id="homopy.methods.MoriTanaka.get_average_stiffness">
-<span class="sig-name descname"><span class="pre">get_average_stiffness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">N2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'66'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/methods.html#MoriTanaka.get_average_stiffness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.methods.MoriTanaka.get_average_stiffness" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_average_stiffness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">N2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'benveniste'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'66'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/methods.html#MoriTanaka.get_average_stiffness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.methods.MoriTanaka.get_average_stiffness" title="Permalink to this definition"></a></dt>
 <dd><p>Return the averaged effective stiffness based on orientation tensors.</p>
 <dl class="simple">
 <dt>Parameters:</dt><dd><ul class="simple">
@@ -273,6 +273,15 @@ for the geometry of the fiber (options: ‘ellipsoid’, ‘sphere’, ‘needle
 </li>
 <li><dl class="simple">
 <dt>N4<span class="classifier">ndarray of shape (3, 3, 3, 3)</span></dt><dd><p>Orientation tensor of 4th order.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>method<span class="classifier">string, default=’benveniste’</span></dt><dd><p>Flag to determine which method should be used for orientation averaging.
+‘trailing’ will average the result with one orientation tensor, while
+‘benveniste’ incorporates the orientation average in the Mori-Tanaka
+calculation and thereby uses one orientation tensor for each inclusion
+(options: ‘trailing’, ‘benveniste’).</p>
 </dd>
 </dl>
 </li>

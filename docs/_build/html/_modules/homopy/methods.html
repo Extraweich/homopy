@@ -119,10 +119,10 @@
 <span class="sd">                Polymer matrix material in normalized Voigt notation.</span>
 <span class="sd">            - fiber : class object of the Elasticity class (or any child class) or list of objects of the Elasticity class</span>
 <span class="sd">                Fiber material in normalized Voigt notation.</span>
-<span class="sd">            - v_frac : float</span>
+<span class="sd">            - v_frac : float (can be list)</span>
 <span class="sd">                Volume fraction of the fiber material within the matrix</span>
 <span class="sd">                material.</span>
-<span class="sd">            - a_ratio : float</span>
+<span class="sd">            - a_ratio : float (can be list)</span>
 <span class="sd">                Aspect ratio of the fiber material.</span>
 <span class="sd">            - shape : string, default=&#39;ellipsoid&#39;</span>
 <span class="sd">                Flag to determine which assumptions are taken into consideration</span>
@@ -165,7 +165,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">assert</span> <span class="p">(</span>
                 <span class="nb">len</span><span class="p">(</span><span class="n">fiber</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">v_frac</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">a_ratio</span><span class="p">)</span>
-            <span class="p">),</span> <span class="s2">&quot;Dimensions of stiffnesses, v_fracs, and a_ratios do not match!&quot;</span>
+            <span class="p">),</span> <span class="s2">&quot;Amount of stiffnesses, v_fracs, and a_ratios do not match!&quot;</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">nr_constituents</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">fiber</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">A_f_alpha</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">pol_alpha</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
@@ -352,7 +352,7 @@
 
         <span class="k">return</span> <span class="n">C_eff</span></div>
 
-<div class="viewcode-block" id="MoriTanaka.get_average_stiffness"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.MoriTanaka.get_average_stiffness">[docs]</a>    <span class="k">def</span> <span class="nf">get_average_stiffness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">N2</span><span class="p">,</span> <span class="n">N4</span><span class="p">,</span> <span class="n">return_dim</span><span class="o">=</span><span class="s2">&quot;66&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="MoriTanaka.get_average_stiffness"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.MoriTanaka.get_average_stiffness">[docs]</a>    <span class="k">def</span> <span class="nf">get_average_stiffness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">N2</span><span class="p">,</span> <span class="n">N4</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;benveniste&quot;</span><span class="p">,</span> <span class="n">return_dim</span><span class="o">=</span><span class="s2">&quot;66&quot;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the averaged effective stiffness based on orientation tensors.</span>
 
@@ -363,6 +363,12 @@
 <span class="sd">                Orientation tensor of 2nd order.</span>
 <span class="sd">            - N4 : ndarray of shape (3, 3, 3, 3)</span>
 <span class="sd">                Orientation tensor of 4th order.</span>
+<span class="sd">            - method : string, default=&#39;benveniste&#39;</span>
+<span class="sd">                Flag to determine which method should be used for orientation averaging.</span>
+<span class="sd">                &#39;trailing&#39; will average the result with one orientation tensor, while</span>
+<span class="sd">                &#39;benveniste&#39; incorporates the orientation average in the Mori-Tanaka</span>
+<span class="sd">                calculation and thereby uses one orientation tensor for each inclusion</span>
+<span class="sd">                (options: &#39;trailing&#39;, &#39;benveniste&#39;).</span>
 <span class="sd">            - return_dim : string, default=&#39;66&#39;</span>
 <span class="sd">                Flag to determine whether the tensor should be returned in</span>
 <span class="sd">                normalized Voigt or regular tensor notation (options: &#39;66&#39;, &#39;3333&#39;)</span>
@@ -372,15 +378,88 @@
 <span class="sd">                Averaged stiffness tensor in the normalized Voigt notation in Pa.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">if</span> <span class="n">N4</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">):</span>
-            <span class="n">N4</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mandel2tensor</span><span class="p">(</span><span class="n">N4</span><span class="p">)</span>
-
-        <span class="n">C_eff_ave</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_orientation_average</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">effective_stiffness3333</span><span class="p">,</span> <span class="n">N2</span><span class="p">,</span> <span class="n">N4</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;trailing&quot;</span><span class="p">:</span>
+            <span class="n">C_eff_ave</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_average_stiffness_trailing</span><span class="p">(</span><span class="n">N2</span><span class="p">,</span> <span class="n">N4</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;benveniste&quot;</span><span class="p">:</span>
+            <span class="n">C_eff_ave</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_average_stiffness_benveniste</span><span class="p">(</span><span class="n">N2</span><span class="p">,</span> <span class="n">N4</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Please chose a valid &#39;method&#39; option. &quot;</span>
+                <span class="s2">&quot;Options supported: &#39;trailing&#39;, &#39;benveniste&#39;.&quot;</span>
+            <span class="p">)</span>
 
         <span class="k">if</span> <span class="n">return_dim</span> <span class="o">==</span> <span class="s2">&quot;66&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tensor2mandel</span><span class="p">(</span><span class="n">C_eff_ave</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">C_eff_ave</span></div>
+
+    <span class="k">def</span> <span class="nf">_get_average_stiffness_trailing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">N2</span><span class="p">,</span> <span class="n">N4</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate the average stiffness in accordance to Advani and Tucker</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            - N2 : ndarray of shape (3, 3)</span>
+<span class="sd">                Orientation tensor of 2nd order.</span>
+<span class="sd">            - N4 : ndarray of shape (3, 3, 3, 3)</span>
+<span class="sd">                Orientation tensor of 4th order.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            - ... : ndarray of shape (3, 3, 3, 3)</span>
+<span class="sd">                Orientation average of given tensor.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_orientation_average</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">effective_stiffness3333</span><span class="p">,</span> <span class="n">N2</span><span class="p">,</span> <span class="n">N4</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_average_stiffness_benveniste</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">N2</span><span class="p">,</span> <span class="n">N4</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate the average stiffness in accordance to Benveniste</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            - N2 : ndarray of shape (3, 3)</span>
+<span class="sd">                Orientation tensor of 2nd order.</span>
+<span class="sd">            - N4 : ndarray of shape (3, 3, 3, 3)</span>
+<span class="sd">                Orientation tensor of 4th order.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            - ... : ndarray of shape (3, 3, 3, 3)</span>
+<span class="sd">                Orientation average of given tensor.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="p">(</span>
+            <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fiber</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">N2</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">N4</span><span class="p">)</span>
+        <span class="p">),</span> <span class="s2">&quot;Amount of stiffnesses and orientation tensors do not match!&quot;</span>
+
+        <span class="c1"># need to perform MT again</span>
+        <span class="n">pol_A_ave</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+        <span class="n">A_ave</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+        <span class="c1"># calculating the averages</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nr_constituents</span><span class="p">):</span>
+            <span class="c1"># here comes the orientation average</span>
+
+            <span class="c1"># weight by pol...</span>
+            <span class="n">weighted_A_f_alpha_66</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tensor_product</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">pol_alpha</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">A_f_alpha</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="p">)</span>
+            <span class="n">weighted_A_f_alpha_3333</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mandel2tensor</span><span class="p">(</span><span class="n">weighted_A_f_alpha_66</span><span class="p">)</span>
+            <span class="c1"># orientation average...</span>
+            <span class="n">ave_weighted_A_f_alpha_3333</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_orientation_average</span><span class="p">(</span>
+                <span class="n">weighted_A_f_alpha_3333</span><span class="p">,</span> <span class="n">N2</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">N4</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="p">)</span>
+            <span class="n">ave_weighted_A_f_alpha_66</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tensor2mandel</span><span class="p">(</span><span class="n">ave_weighted_A_f_alpha_3333</span><span class="p">)</span>
+            <span class="c1"># remove weight by inverse...</span>
+            <span class="n">ave_A_f_alpha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tensor_product</span><span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pol_alpha</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="n">ave_weighted_A_f_alpha_66</span>
+            <span class="p">)</span>
+
+            <span class="n">A_ave</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">c_alpha</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">ave_A_f_alpha</span>
+            <span class="n">pol_A_ave</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">c_alpha</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">tensor_product</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">pol_alpha</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">ave_A_f_alpha</span>
+            <span class="p">)</span>
+
+        <span class="n">C_eff</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cm</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">tensor_product</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">c_f</span> <span class="o">*</span> <span class="n">pol_A_ave</span><span class="p">,</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">c_f</span> <span class="o">*</span> <span class="n">A_ave</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">c_f</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">eye</span><span class="p">),</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">mandel2tensor</span><span class="p">(</span><span class="n">C_eff</span><span class="p">)</span>
 
 <div class="viewcode-block" id="MoriTanaka.get_orientation_average"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.MoriTanaka.get_orientation_average">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">get_orientation_average</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="n">N2</span><span class="p">,</span> <span class="n">N4</span><span class="p">):</span>
