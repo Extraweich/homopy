@@ -102,6 +102,8 @@ class MoriTanaka(Tensor):
         self.a_ratio = a_ratio if isinstance(a_ratio, list) else [a_ratio]
         self.shape = shape if isinstance(shape, list) else [shape]
 
+        self.symmetrize = symmetrize
+
         self.Cm = matrix.stiffness66
         self.eye = np.eye(6)  # make symmetric identity
 
@@ -314,17 +316,15 @@ class MoriTanaka(Tensor):
                 self.stiff_diff[i], ave_A_f_alpha
             )
 
-        X = (1 - self.c_f) * np.linalg.inv(pol_A_ave)
-        Y = self.c_f * self.tensor_product(A_ave, np.linalg.inv(pol_A_ave))
+        pol_A_ave_inv = np.linalg.inv(pol_A_ave)
+        X = (1 - self.c_f) * pol_A_ave_inv
+        Y = self.c_f * self.tensor_product(A_ave, pol_A_ave_inv)
+        Y_symm = 1 / 2 * (Y + Y.T)
 
-        test = self.Cm + self.c_f * np.linalg.inv(X + Y)
-        print("test:")
-        print(test)
-
-        C_eff = self.Cm + self.tensor_product(
-            self.c_f * pol_A_ave,
-            np.linalg.inv(self.c_f * A_ave + (1 - self.c_f) * self.eye),
-        )
+        if self.symmetrize == False:
+            C_eff = self.Cm + self.c_f * np.linalg.inv(X + Y)
+        else:
+            C_eff = self.Cm + self.c_f * np.linalg.inv(X + Y_symm)
 
         return C_eff
 
