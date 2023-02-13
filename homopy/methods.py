@@ -4,20 +4,21 @@ Created on Wed Apr 27 21:09:24 2022
 
 @author: nicolas.christ@kit.edu
 
-Mori-Tanaka Homogenization after Gross and Seelig (cf. [1]_). Multi-inclusion implementation after Brylka (cf. [2]_).
-Eshelby's tensor is taken from Tandon and Weng (cf. [3]_) but can also be found in Gross and Seelig. Thoroughly literature
-on Eshelby's tensor can also be found in Mura (cf. [4]_, pp. 74 ff.).
-Halpin-Tsai homogenization after Fu, Lauke, and Mai (cf. [5]_, pp. 143 ff.). Also, the effective planar stiffness 
-matrix for the Halpin-Tsai homogenization is based on the laminate analogy approach after Fu, Lauke and Mai
+Mori-Tanaka Homogenization after [Benveniste1987]_. Multi-inclusion implementation after [Brylka2017]_.
+Eshelby's tensor is taken from [Tandon1984]_ but can also be found in [Gross2016]_. Thoroughly literature
+on Eshelby's tensor can also be found in [Mura1987]_ (pp. 74 ff.).
+Halpin-Tsai homogenization after [Fu2019]_ (pp. 143 ff.). Also, the effective planar stiffness 
+matrix for the Halpin-Tsai homogenization is based on the laminate analogy approach after [Fu2019]_
 (pp. 155 ff.).
 
-.. [1] Gross, D. and Seelig, T. (2016), *Bruchmechanik*, Springer Berlin Heidelberg
-.. [2] Brylka, B. (2017), *Charakterisierung und Modellierung der Steifigkeit von langfaserverstärktem Polypropylen*, KIT Scientific Publishing
-.. [3] Tandon, G. P. and Weng, G. J. (1984), 'The effect of aspect ratio of inclusions on the elastic properties of unidirectionally aligned composites', *Polymer Composites*, pp. 327-333, Available at: https://doi.org/10.1002/pc.750050413
-.. [4] Mura, T (1987), *Micromechanics of defects in solids*, Springer Dordrecht
-.. [5] Fu, S.-Y., Lauke, B. and Mai, Y. W. (2019), *Science and engineering of short fibre-reinforced polymer composites*, Woodhead Publishing
-.. [6] Segura, N. J., Pichler, B. L.A., Hellmich, C. (2023), 'Concentration tensors preserving elastic symmetry of multiphase composites', *Mechanics of Materials*, Available at: https://doi.org/10.1016/j.mechmat.2023.104555
-.. [7] Advani, S. G., Tucker III, C. L. (1987), 'The Use of Tensors to Describe and Predict Fiber Orientation in Short Fiber Composites', *Journal of Rheology*, pp. 751-784, Available at: https://doi.org/10.1122/1.549945
+.. [Benveniste1987] Benveniste, Y. (1987), 'A new approach to the application of Mori-Tanaka's theory in composite materials', *Mechanics of Materials*, pp. 147-157, Available at: https://doi.org/10.1016/0167-6636(87)90005-6 
+.. [Brylka2017] Brylka, B. (2017), *Charakterisierung und Modellierung der Steifigkeit von langfaserverstärktem Polypropylen*, KIT Scientific Publishing
+.. [Gross2016] Gross, D. and Seelig, T. (2016), *Bruchmechanik*, Springer Berlin Heidelberg
+.. [Tandon1984] Tandon, G.P. and Weng, G.J. (1984), 'The effect of aspect ratio of inclusions on the elastic properties of unidirectionally aligned composites', *Polymer Composites*, pp. 327-333, Available at: https://doi.org/10.1002/pc.750050413
+.. [Mura1987] Mura, T. (1987), *Micromechanics of defects in solids*, Springer Dordrecht
+.. [Fu2019] Fu, S.Y., Lauke, B. and Mai, Y.W. (2019), *Science and engineering of short fibre-reinforced polymer composites*, Woodhead Publishing
+.. [Segura2023] Segura, N.J., Pichler, B.L.A. and Hellmich, C. (2023), 'Concentration tensors preserving elastic symmetry of multiphase composites', *Mechanics of Materials*, Available at: https://doi.org/10.1016/j.mechmat.2023.104555
+.. [Advani1987] Advani, S.G. and Tucker III, C.L. (1987), 'The Use of Tensors to Describe and Predict Fiber Orientation in Short Fiber Composites', *Journal of Rheology*, pp. 751-784, Available at: https://doi.org/10.1122/1.549945
 
 """
 
@@ -52,44 +53,43 @@ class MoriTanaka(Tensor):
         Initialize the object and call super class initialization.
 
         Parameters:
-            - matrix : class object of the Elasticity class (or any child class)
+            - matrix : *class object of the Elasticity class (or any child class)*
                 Polymer matrix material in normalized Voigt notation.
-            - fiber : class object of the Elasticity class (or any child class) or list of objects of the Elasticity class
+            - fiber : *class object of the Elasticity class (or any child class) (possibly list)*
                 Fiber material in normalized Voigt notation.
-            - v_frac : float (can be list)
+            - v_frac : *float*
                 Volume fraction of the fiber material within the matrix
                 material.
-            - a_ratio : float (can be list)
+            - a_ratio : *float (possibly list)*
                 Aspect ratio of the fiber material.
-            - shape : string, default='ellipsoid'
+            - shape : *string, default='ellipsoid' (possibly list)*
                 Flag to determine which assumptions are taken into consideration
                 for the geometry of the fiber (options: 'ellipsoid', 'sphere', 'needle')
-            - N4 : ndarray of shape (3, 3, 3, 3) (possibly list)
+            - N4 : *ndarray of shape (3, 3, 3, 3) (possibly list)*
                 Orientation tensor(s) of 4th order.
-            - symmetrize : boolean, default='False'
+            - symmetrize : *boolean, default='False'*
                 Flag to determine whether the effective and orientation averaged stiffnesses shall
-                be symmetrized. For this the method in Segura, Pichler and Hellmich (cf. [6]_) is used.
+                be symmetrized. For this the method in [Segura2023]_ is used.
 
         Object variables:
-            - matrix : class object of the Elasticity class (or any child class)
+            - matrix : *class object of the Elasticity class (or any child class)*
                 Polymer matrix material.
-            - fiber : class object of the Elasticity class (or any child class)
-                Fiber material.
-            - Cm : ndarray of shape (6, 6)
+            - fiber : *list of class object of the Elasticity class (or any child class)*
+                Fiber (or other inclusion) materials.
+            - Cm : *ndarray of shape (6, 6)*
                 Stiffness of matrix material in normalized Voigt notation in Pa.
-            - eye : ndarray of shape (6, 6)
+            - eye : *ndarray of shape (6, 6)*
                 Identity tensor in normalized Voigt notation.
-            - N2 : ndarray of shape (3, 3) (possibly list)
+            - N2 : *list of ndarray of shape (3, 3)*
                 Orientation tensor(s) of 2nd order.
-            - N4 : ndarray of shape (3, 3, 3, 3) (possibly list)
+            - N4 : *list of ndarray of shape (3, 3, 3, 3)*
                 Orientation tensor(s) of 4th order.
-            - stiffness3333 : ndarray of shape (3, 3, 3, 3)
+            - stiffness3333 : *ndarray of shape (3, 3, 3, 3)*
                 Holds the stiffness values in the regular tensor notation in Pa.
                 When orientations are given, these are included directly.
-            - stiffness66 : ndarray of shape (6, 6)
+            - stiffness66 : *ndarray of shape (6, 6)*
                 Holds the stiffness values in the normalized Voigt notation in Pa.
                 When orientations are given, these are included directly.
-
 
         Returns:
             - None
@@ -166,17 +166,17 @@ class MoriTanaka(Tensor):
         Return the Eshelby tensor according to the fiber type.
 
         Parameters:
-            - a_ratio : float
+            - a_ratio : *float*
                 Aspect ratio of fiber (dimensionless).
-            - return_dim : string, default='66'
+            - return_dim : *string, default='66'*
                 Flag to determine whether the tensor should be returned in
                 normalized Voigt or regular tensor notation (options: '66', '3333')
-            - shape : string, default='ellipsoid'
+            - shape : *string, default='ellipsoid'*
                 Flag to determine which assumptions are taken into consideration
                 for the geometry of the fiber (options: 'ellipsoid', 'sphere', 'needle')
 
         Returns:
-            - S : ndarray of shape (6, 6) or (3, 3, 3, 3)
+            - S : *ndarray of shape (6, 6) or (3, 3, 3, 3)*
                 Eshelby inclusion tensor.
         """
 
@@ -280,13 +280,13 @@ class MoriTanaka(Tensor):
 
     def get_effective_stiffness(self):
         """
-        Return the effective stiffness of the composite material, based on Eq. xy in Benveniste 1973.
+        Return the effective stiffness of the composite material, based on Eq. 14a in [Benveniste1987]_.
 
         Parameters:
             - None
 
         Returns:
-            - C_eff : ndarray of shape (6, 6)
+            - C_eff : *ndarray of shape (6, 6)*
                 Homogenized stiffness tensor in the normalized Voigt notation in Pa.
         """
 
@@ -334,16 +334,14 @@ class MoriTanaka(Tensor):
         object variables self.effective_stiffness66 and self.effective_stiffness3333.
 
         Parameters:
-            - C_eff : ndarray of shape (6, 6) or (3, 3, 3, 3)
-                Effective stiffness in normalized Voigt or regular tensor notation in Pa.
-            - N4 : ndarray of shape (3, 3, 3, 3)
+            - N4 : *ndarray of shape (3, 3, 3, 3) (possibly list)*
                 Orientation tensor of 4th order.
-            - return_dim : string, default='66'
+            - return_dim : *string, default='66'*
                 Flag to determine whether the tensor should be returned in
                 normalized Voigt or regular tensor notation (options: '66', '3333')
 
         Returns:
-            - ... : ndarray of shape (6, 6) or (3, 3, 3, 3)
+            - ... : *ndarray of shape (6, 6) or (3, 3, 3, 3)*
                 Averaged stiffness tensor in normalized Voigt or regular tensor notation in Pa.
         """
 
@@ -372,14 +370,14 @@ class MoriTanaka(Tensor):
     @staticmethod
     def get_orientation_average(tensor, N2, N4):
         """
-        Return the orientation average of a tensor after Advani and Tucker (cf. [7]_), Eq. 29.
+        Return the orientation average of a tensor after [Advani1987]_, Eq. 29.
 
         Parameters:
-            - tensor : ndarray of shape (3, 3, 3, 3)
+            - tensor : *ndarray of shape (3, 3, 3, 3)*
                 Tensor to be averaged (must be transversely isotropic).
-            - N2 : ndarray of shape (3, 3)
+            - N2 : *ndarray of shape (3, 3)*
                 Orientation tensor of 2nd order.
-            - N4 : ndarray of shape (3, 3, 3, 3)
+            - N4 : *ndarray of shape (3, 3, 3, 3)*
                 Orientation tensor of 4th order.
         Returns:
             - ave_tensor : ndarray of shape (3, 3, 3, 3)
@@ -445,7 +443,7 @@ class MoriTanaka(Tensor):
         else:
             print("Left minor symmetry: failed")
             print(
-                "The rel. residuum was: res = {}".format(
+                "The rel. residuum for left minor sym. is: res = {}".format(
                     np.linalg.norm(self.effective_stiffness3333 - left_minor)
                     / np.linalg.norm(self.effective_stiffness3333)
                 )
@@ -455,7 +453,7 @@ class MoriTanaka(Tensor):
         else:
             print("Right minor symmetry: failed")
             print(
-                "The rel. residuum was: res = {}".format(
+                "The rel. residuum for right minor sym. is: res = {}".format(
                     np.linalg.norm(self.effective_stiffness3333 - right_minor)
                     / np.linalg.norm(self.effective_stiffness3333)
                 )
@@ -465,7 +463,7 @@ class MoriTanaka(Tensor):
         else:
             print("Major symmetry: failed")
             print(
-                "The rel. residuum was: res = {}".format(
+                "The rel. residuum for major sym. is: res = {}".format(
                     np.linalg.norm(self.effective_stiffness3333 - major)
                     / np.linalg.norm(self.effective_stiffness3333)
                 )
@@ -484,26 +482,26 @@ class HalpinTsai:
         Class to perform the Halpin-Tsai homogenization.
 
         Parameters:
-            - E_f : float
+            - E_f : *float*
                 Young's modulus of fiber in Pa.
-            - E_m : float
+            - E_m : *float*
                 Young's modulus of matrix in Pa.
-            - G_f : float
+            - G_f : *float*
                 Shear modulus of fiber in Pa.
-            - G_m : float
+            - G_m : *float*
                 Shear modulus of matrix in Pa.
-            - nu_f : float
+            - nu_f : *float*
                 Poisson ratio of fiber (dimensionless).
-            - nu_m : float
+            - nu_m : *float*
                 Poisson ratio of matrix (dimensionless).
-            - l_f : float
+            - l_f : *float*
                 Average length of fiber in m.
-            - r_f : float
+            - r_f : *float*
                 Average radius of fiber in m.
-            - vol_f : float
+            - vol_f : *float*
                 Poisson ratio of matrix (dimensionless).
-            - package : string (default: hex), other options: square
-                Package structure of fibers in composite.
+            - package : *string (default: hex)*
+                Package structure of fibers in composite (options: 'hex', 'square').
 
         Returns:
             - None
@@ -565,7 +563,7 @@ class HalpinTsai:
             - None
 
         Returns:
-            - C : ndarray of shape (3,3)
+            - C : *ndarray of shape (3, 3)*
                 Planar stiffness of lamina.
         """
 
@@ -589,11 +587,11 @@ class Laminate:
         Initialize the object.
 
         Parameters:
-            - lamina_stiffnesses : array of shape (n,)
+            - lamina_stiffnesses : *array of shape (n,)*
                 Individual stiffness of n laminas in Pa.
-            - angles : array of shape (n,)
+            - angles : *array of shape (n,)*
                 Individual angle of ith lamina in radians.
-            - vol_fracs : array of shape (n,)
+            - vol_fracs : *array of shape (n,)*
                 Volume fraction of ith lamina (must sum to 1). If None is given,
                 each lamina is averaged equally.
 
@@ -621,7 +619,7 @@ class Laminate:
             - None
 
         Returns:
-            - C_eff : ndarray of shape (3,3)
+            - C_eff : *ndarray of shape (3, 3)*
                 Effective stiffness of laminate in Pa.
         """
         C_eff_temp = np.zeros(6)
@@ -644,13 +642,13 @@ class Laminate:
         Return planarly rotated stiffness matrix.
 
         Parameters:
-            - lamina_stiffness : ndarray of shape (3, 3)
+            - lamina_stiffness : *ndarray of shape (3, 3)*
                 Stiffness matrix of lamina in Pa.
-            - angle : float
+            - angle : *float*
                 Planar angle to rotate the stiffness matrix about in radiants.
 
         Returns:
-            - rot_stiffness : ndarray of shape (3, 3)
+            - rot_stiffness : *ndarray of shape (3, 3)*
                 Rotated stiffness matrix in Pa.
         """
         m = cos(angle)

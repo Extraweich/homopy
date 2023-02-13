@@ -2,6 +2,8 @@ Jupyter Notebooks
 =================
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
-   examples/MT_HT_plot
+   examples/Introduction
+   examples/Mori_Tanaka_explained
+   examples/Interactive_hybrid

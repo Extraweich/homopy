@@ -99,9 +99,9 @@
 <span class="sd">            - None</span>
 
 <span class="sd">        Object variables:</span>
-<span class="sd">            - stiffness3333 : ndarray of shape (3, 3, 3, 3)</span>
+<span class="sd">            - stiffness3333 : *ndarray of shape (3, 3, 3, 3)*</span>
 <span class="sd">                Holds the stiffness values in the regular tensor notation in Pa.</span>
-<span class="sd">            - stiffness66 : ndarray of shape (6, 6)</span>
+<span class="sd">            - stiffness66 : *ndarray of shape (6, 6)*</span>
 <span class="sd">                Holds the stiffness values in the normalized Voigt notation in Pa.</span>
 
 <span class="sd">        Returns:</span>
@@ -123,29 +123,29 @@
 <span class="sd">        Initialize the object and call super class initialization.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            - E1 : float</span>
+<span class="sd">            - E1 : *float*</span>
 <span class="sd">                Young&#39;s modulus in longitudinal direction in Pa.</span>
-<span class="sd">            - E2 : float</span>
+<span class="sd">            - E2 : *float*</span>
 <span class="sd">                Young&#39;s modulus in transverse direction in Pa.</span>
-<span class="sd">            - G12 : float</span>
+<span class="sd">            - G12 : *float*</span>
 <span class="sd">                Shear modulus in the longitudinal-transverse plane in Pa.</span>
-<span class="sd">            - G23 : float</span>
+<span class="sd">            - G23 : *float*</span>
 <span class="sd">                Shear modulus in the transverse-transverse plane in Pa.</span>
-<span class="sd">            - nu12 : float</span>
+<span class="sd">            - nu12 : *float*</span>
 <span class="sd">                Poisson&#39;s ratio in longitudinal direction (dimensionless).</span>
 
 <span class="sd">        Object variables:</span>
-<span class="sd">            - E1 : float</span>
+<span class="sd">            - E1 : *float*</span>
 <span class="sd">                Young&#39;s modulus in longitudinal direction in Pa.</span>
-<span class="sd">            - E2 : float</span>
+<span class="sd">            - E2 : *float*</span>
 <span class="sd">                Young&#39;s modulus in transverse direction in Pa.</span>
-<span class="sd">            - G12 : float</span>
+<span class="sd">            - G12 : *float*</span>
 <span class="sd">                Shear modulus in the longitudinal-transverse plane in Pa.</span>
-<span class="sd">            - G23 : float</span>
+<span class="sd">            - G23 : *float*</span>
 <span class="sd">                Shear modulus in the transverse-transverse plane in Pa.</span>
-<span class="sd">            - nu12 : float</span>
+<span class="sd">            - nu12 : *float*</span>
 <span class="sd">                Poisson&#39;s ratio in longitudinal direction (dimensionless).</span>
-<span class="sd">            - nu23 : float</span>
+<span class="sd">            - nu23 : *float*</span>
 <span class="sd">                Poisson&#39;s ratio in transverse direction (dimensionless).</span>
 
 <span class="sd">        Returns:</span>
@@ -209,19 +209,19 @@
 <span class="sd">        Initialize the object and call super class initialization.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            - E : float</span>
+<span class="sd">            - E : *float*</span>
 <span class="sd">                Young&#39;s modulus in Pa.</span>
-<span class="sd">            - nu : float</span>
+<span class="sd">            - nu : *float*</span>
 <span class="sd">                Poisson&#39;s ratio (dimensionless).</span>
 
 <span class="sd">        Object variables:</span>
-<span class="sd">            - E : float</span>
+<span class="sd">            - E : *float*</span>
 <span class="sd">                Young&#39;s modulus in Pa.</span>
-<span class="sd">            - nu : float</span>
+<span class="sd">            - nu : *float*</span>
 <span class="sd">                Poisson&#39;s ratio (dimensionless).</span>
-<span class="sd">            - lam : float</span>
+<span class="sd">            - lam : *float*</span>
 <span class="sd">                First Lamé constant in Pa.</span>
-<span class="sd">            - mu : float</span>
+<span class="sd">            - mu : *float*</span>
 <span class="sd">                Second Lamé constant in Pa.</span>
 
 <span class="sd">        Returns:</span>
@@ -241,7 +241,7 @@
 <span class="sd">            - None</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            - ... : float</span>
+<span class="sd">            - ... : *float*</span>
 <span class="sd">                First Lamé constant in Pa.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">E</span>
@@ -254,7 +254,7 @@
 <span class="sd">            - None</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            - ... : float</span>
+<span class="sd">            - ... : *float*</span>
 <span class="sd">                Second Lamé constant in Pa.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">E</span></div>

@@ -25,9 +25,9 @@ class Elasticity(Tensor):
             - None
 
         Object variables:
-            - stiffness3333 : ndarray of shape (3, 3, 3, 3)
+            - stiffness3333 : *ndarray of shape (3, 3, 3, 3)*
                 Holds the stiffness values in the regular tensor notation in Pa.
-            - stiffness66 : ndarray of shape (6, 6)
+            - stiffness66 : *ndarray of shape (6, 6)*
                 Holds the stiffness values in the normalized Voigt notation in Pa.
 
         Returns:
@@ -49,29 +49,29 @@ class TransverseIsotropy(Elasticity):
         Initialize the object and call super class initialization.
 
         Parameters:
-            - E1 : float
+            - E1 : *float*
                 Young's modulus in longitudinal direction in Pa.
-            - E2 : float
+            - E2 : *float*
                 Young's modulus in transverse direction in Pa.
-            - G12 : float
+            - G12 : *float*
                 Shear modulus in the longitudinal-transverse plane in Pa.
-            - G23 : float
+            - G23 : *float*
                 Shear modulus in the transverse-transverse plane in Pa.
-            - nu12 : float
+            - nu12 : *float*
                 Poisson's ratio in longitudinal direction (dimensionless).
 
         Object variables:
-            - E1 : float
+            - E1 : *float*
                 Young's modulus in longitudinal direction in Pa.
-            - E2 : float
+            - E2 : *float*
                 Young's modulus in transverse direction in Pa.
-            - G12 : float
+            - G12 : *float*
                 Shear modulus in the longitudinal-transverse plane in Pa.
-            - G23 : float
+            - G23 : *float*
                 Shear modulus in the transverse-transverse plane in Pa.
-            - nu12 : float
+            - nu12 : *float*
                 Poisson's ratio in longitudinal direction (dimensionless).
-            - nu23 : float
+            - nu23 : *float*
                 Poisson's ratio in transverse direction (dimensionless).
 
         Returns:
@@ -135,19 +135,19 @@ class Isotropy(TransverseIsotropy):
         Initialize the object and call super class initialization.
 
         Parameters:
-            - E : float
+            - E : *float*
                 Young's modulus in Pa.
-            - nu : float
+            - nu : *float*
                 Poisson's ratio (dimensionless).
 
         Object variables:
-            - E : float
+            - E : *float*
                 Young's modulus in Pa.
-            - nu : float
+            - nu : *float*
                 Poisson's ratio (dimensionless).
-            - lam : float
+            - lam : *float*
                 First Lamé constant in Pa.
-            - mu : float
+            - mu : *float*
                 Second Lamé constant in Pa.
 
         Returns:
@@ -167,7 +167,7 @@ class Isotropy(TransverseIsotropy):
             - None
 
         Returns:
-            - ... : float
+            - ... : *float*
                 First Lamé constant in Pa.
         """
         return self.nu / (1 - 2 * self.nu) * 1 / (1 + self.nu) * self.E
@@ -180,7 +180,7 @@ class Isotropy(TransverseIsotropy):
             - None
 
         Returns:
-            - ... : float
+            - ... : *float*
                 Second Lamé constant in Pa.
         """
         return 1 / 2 * 1 / (1 + self.nu) * self.E

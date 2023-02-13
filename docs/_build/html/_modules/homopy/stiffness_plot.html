@@ -78,9 +78,9 @@
 
 <span class="sd">@author: nicolas.christ@kit.edu</span>
 
-<span class="sd">3D and Polar plot of Young&#39;s modulus body based on Böhlke and Brüggemann (cf. [1]_).</span>
+<span class="sd">3D and Polar plot of Young&#39;s modulus body based on [Boehlke2001]_.</span>
 
-<span class="sd">.. [1] Böhlke, T. and Brüggemann, C. (2001), &#39;Graphical representation of the generalized Hooke&#39;s law&#39;, *Technische Mechanik*, 21 (2), pp. 145-158</span>
+<span class="sd">.. [Boehlke2001] Böhlke, T. and Brüggemann, C. (2001), &#39;Graphical representation of the generalized Hooke&#39;s law&#39;, *Technische Mechanik*, 21 (2), pp. 145-158</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -101,7 +101,7 @@
 <span class="sd">        Initialize the object.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            - USEVOIGT : boolean</span>
+<span class="sd">            - USEVOIGT : *boolean*</span>
 <span class="sd">                Flag which determines the usage of Voigt (USEVOIGT=True),</span>
 <span class="sd">                or Normalized Voigt / Mandel (USEVOIGT=False).</span>
 
@@ -118,11 +118,11 @@
 <span class="sd">        on which one is ought to be used.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            - matrix : ndarray of shape (3, 3)</span>
+<span class="sd">            - matrix : *ndarray of shape (3, 3)*</span>
 <span class="sd">                Tensor in regular tensor notation.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            - ... : ndarray of shape (6, 1)</span>
+<span class="sd">            - ... : *ndarray of shape (6,)*</span>
 <span class="sd">                Tensor in Voigt or normalized Voigt notation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -137,14 +137,14 @@
 <span class="sd">        the direction of di.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            - didi : ndarray of shape (6, 1)</span>
+<span class="sd">            - didi : *ndarray of shape (6,)*</span>
 <span class="sd">                Directional tensor.</span>
-<span class="sd">            - S : ndarray of shape (6, 6)</span>
+<span class="sd">            - S : *ndarray of shape (6, 6)*</span>
 <span class="sd">                Compliance tensor in Voigt or normalized Voigt</span>
 <span class="sd">                notation.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            - ... : float</span>
+<span class="sd">            - ... : *float*</span>
 <span class="sd">                Scalar compliance value in direction of di.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -155,14 +155,14 @@
 <span class="sd">        Return Young&#39;s modulus in the direction of di.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            - di : ndarray of shape (3, 1)</span>
+<span class="sd">            - di : *ndarray of shape (3,)*</span>
 <span class="sd">                Directional vector.</span>
-<span class="sd">            - S : ndarray of shape (6, 6)</span>
+<span class="sd">            - S : *ndarray of shape (6, 6)*</span>
 <span class="sd">                Compliance tensor in Voigt or normalized Voigt</span>
 <span class="sd">                notation.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            - ... : float</span>
+<span class="sd">            - ... : *float*</span>
 <span class="sd">                Scalar stiffness value in direction of didi.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -174,13 +174,13 @@
 <span class="sd">        Return directional vector based on angular parametrization.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            - phi : float</span>
+<span class="sd">            - phi : *float*</span>
 <span class="sd">                First angle in [0, 2*pi].</span>
-<span class="sd">            - theta : float</span>
+<span class="sd">            - theta : *float*</span>
 <span class="sd">                Second angle in [0, pi].</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            - ... : ndarray of shape (3,)</span>
+<span class="sd">            - ... : *ndarray of shape (3,)*</span>
 <span class="sd">                Directional vector.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -191,17 +191,17 @@
 <span class="sd">        Plot stiffness body.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            - S : ndarray of shape (6, 6)</span>
+<span class="sd">            - S : *ndarray of shape (6, 6)*</span>
 <span class="sd">                Compliance tensor in Voigt or normalized Voigt</span>
 <span class="sd">                notation.</span>
-<span class="sd">            - o : int</span>
+<span class="sd">            - o : *int*</span>
 <span class="sd">                Number of discretization steps for first angle.</span>
-<span class="sd">            - p : int</span>
+<span class="sd">            - p : *int*</span>
 <span class="sd">                Number of discretization steps for second angle.</span>
-<span class="sd">            - bound : array of shape (3,), default=[0,0,0]</span>
+<span class="sd">            - bound : *array of shape (3,), default=[0,0,0]*</span>
 <span class="sd">                Boundaries for the 3 axis for the visualization.</span>
 <span class="sd">                If [0,0,0], boundaries are set automatically.</span>
-<span class="sd">            - rcount, ccount : int</span>
+<span class="sd">            - rcount, ccount : *int*</span>
 <span class="sd">                Maximum number of samples used in each direction.</span>
 <span class="sd">                If the input data is larger, it will be downsampled</span>
 <span class="sd">                (by slicing) to these numbers of points. Defaults to 200.</span>
@@ -259,22 +259,22 @@
 <span class="sd">        Plot slice of stiffness body.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            - S : ndarray of shape (6, 6)</span>
+<span class="sd">            - S : *ndarray of shape (6, 6)*</span>
 <span class="sd">                Compliance tensor in Voigt or normalized Voigt</span>
 <span class="sd">                notation.</span>
-<span class="sd">            - o : int</span>
+<span class="sd">            - o : *int*</span>
 <span class="sd">                Number of discretization steps for first angle.</span>
-<span class="sd">            - angle : float</span>
+<span class="sd">            - angle : *float*</span>
 <span class="sd">                Angle to determine the angular orientation of the slice.</span>
 <span class="sd">                Does not work yet.</span>
-<span class="sd">            - plot : boolean</span>
+<span class="sd">            - plot : *boolean*</span>
 <span class="sd">                Determines whether the plot will be displayed. If False,</span>
 <span class="sd">                the metadata of the plot will be returned instead.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            - rad : ndarray of shape (n+1,)</span>
+<span class="sd">            - rad : *ndarray of shape (n+1,)*</span>
 <span class="sd">                Angular positions for polar plot.</span>
-<span class="sd">            - E : ndarray of shape (n+1,)</span>
+<span class="sd">            - E : *ndarray of shape (n+1,)*</span>
 <span class="sd">                Sitffness at corresponding angle.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -312,7 +312,7 @@
 <span class="sd">        with plot=False.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            - data: list</span>
+<span class="sd">            - data: *list*</span>
 <span class="sd">                Data to be plotted with angluar position, stiffness and</span>
 <span class="sd">                an optional string for the label in the plot.</span>
 
@@ -339,21 +339,21 @@
 <span class="sd">        for laminate results for the Halpin-Tsai homogenization.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            - laminate_stiffness : ndarray of shape (3, 3)</span>
+<span class="sd">            - laminate_stiffness : *ndarray of shape (3, 3)*</span>
 <span class="sd">                Planar stiffness matrix in Voigt or normalized Voigt</span>
 <span class="sd">                notation.</span>
-<span class="sd">            - o : int</span>
+<span class="sd">            - o : *int*</span>
 <span class="sd">                Number of discretization steps for first angle.</span>
-<span class="sd">            - limit : float</span>
+<span class="sd">            - limit : *float*</span>
 <span class="sd">                Limit of radial axis in polar plot.</span>
-<span class="sd">            - plot : boolean</span>
+<span class="sd">            - plot : *boolean*</span>
 <span class="sd">                Determines whether the plot will be displayed. If False,</span>
 <span class="sd">                the metadata of the plot will be returned instead.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            - rad : ndarray of shape (n+1,)</span>
+<span class="sd">            - rad : *ndarray of shape (n+1,)*</span>
 <span class="sd">                Angular positions for polar plot.</span>
-<span class="sd">            - E : ndarray of shape (n+1,)</span>
+<span class="sd">            - E : *ndarray of shape (n+1,)*</span>
 <span class="sd">                Sitffness at corresponding angle.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -388,13 +388,13 @@
 <span class="sd">        Return Young&#39;s modulus of laminate as a function of angle omega.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            - C : ndarray of shape (3, 3)</span>
+<span class="sd">            - C : *ndarray of shape (3, 3)*</span>
 <span class="sd">                Stiffness of laminate in default (orthonormal) coordinate system.</span>
-<span class="sd">            - phi : float</span>
+<span class="sd">            - phi : *float*</span>
 <span class="sd">                Angle of orientation in radians.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            - E : float</span>
+<span class="sd">            - E : *float*</span>
 <span class="sd">                Young&#39;s modulus in angle direction</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 

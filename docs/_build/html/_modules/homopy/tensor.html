@@ -78,9 +78,9 @@
 
 <span class="sd">@author: nicolas.christ@kit.edu</span>
 
-<span class="sd">Tensor class for basic arithmetic operations. More information on tensor representation in Voigt and Mandel notations are given in Brannon (cf. [1]_).</span>
+<span class="sd">Tensor class for basic arithmetic operations. More information on tensor representation in Voigt and Mandel notations are given in [Brannon2018]_.</span>
 
-<span class="sd">.. [1] Brannon, R. M. (2018), &#39;Voigt and Mandel components&#39;, in *Rotation, Reflection, and Frame Changes*, IOP Publishing</span>
+<span class="sd">.. [Brannon2018] Brannon, R. M. (2018), &#39;Voigt and Mandel components&#39;, in *Rotation, Reflection, and Frame Changes*, IOP Publishing</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -99,9 +99,9 @@
 <span class="sd">            - None</span>
 
 <span class="sd">        Object variables:</span>
-<span class="sd">            - e1, e2, e3 : ndarray of shape (3,)</span>
+<span class="sd">            - e1, e2, e3 : *ndarray of shape (3,)*</span>
 <span class="sd">                Orthonormalbasis of 1st order tensors (vectors)</span>
-<span class="sd">            - B : ndarray of shape (3, 3, 6)</span>
+<span class="sd">            - B : *ndarray of shape (3, 3, 6)*</span>
 <span class="sd">                Orthonormalbasis of 4th order tensors in normalized Voigt</span>
 <span class="sd">                notation.</span>
 
@@ -138,14 +138,19 @@
 <span class="sd">        Return diadic product of two directional vectors. This is used to</span>
 <span class="sd">        calculate the basis tensors in the normalized Voigt notation.</span>
 
+<span class="sd">        :param di: Directional vector #1</span>
+<span class="sd">        :type di: *ndarray of shape (3,)*</span>
+<span class="sd">        :param dj: Directional vector #2</span>
+<span class="sd">        :type dj: *ndarray of shape (3,)*</span>
+
 <span class="sd">        Parameters:</span>
-<span class="sd">            - di : ndarray of shape (3,)</span>
+<span class="sd">            - di : *ndarray of shape (3,)*</span>
 <span class="sd">                Directional vector #1.</span>
-<span class="sd">            - dj : ndarray of shape (3,)</span>
+<span class="sd">            - dj : *ndarray of shape (3,)*</span>
 <span class="sd">                Directional vector #2.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            - ... : ndarray of shape (3, 3)</span>
+<span class="sd">            - ... : *ndarray of shape (3, 3)*</span>
 <span class="sd">                Tensor of 2nd order in tensor notation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;i,j-&gt;ij&quot;</span><span class="p">,</span> <span class="n">di</span><span class="p">,</span> <span class="n">dj</span><span class="p">)</span>
@@ -157,13 +162,13 @@
 <span class="sd">        notation.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            - bi : ndarray of shape (3, 3)</span>
+<span class="sd">            - bi : *ndarray of shape (3, 3)*</span>
 <span class="sd">                Orthonormal basis tensor #1.</span>
-<span class="sd">            - bj : ndarray of shape (3, 3)</span>
+<span class="sd">            - bj : *ndarray of shape (3, 3)*</span>
 <span class="sd">                Orthonormal basis tensor #2.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            - ... : ndarray of shape (3, 3, 3, 3)</span>
+<span class="sd">            - ... : *ndarray of shape (3, 3, 3, 3)*</span>
 <span class="sd">                Tensor of 4th order in tensor notation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ij,kl-&gt;ijkl&quot;</span><span class="p">,</span> <span class="n">bi</span><span class="p">,</span> <span class="n">bj</span><span class="p">)</span>
@@ -173,15 +178,12 @@
 <span class="sd">        Return the mapping of one tensor of 4th order to another in the</span>
 <span class="sd">        normalized Voigt notation.</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            - tensor_a : ndarray of shape (6, 6)</span>
-<span class="sd">                Tensor #1.</span>
-<span class="sd">            - tensor_b : ndarray of shape (6, 6)</span>
-<span class="sd">                Tensor #2.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            - ... : ndarray of shape (6,6)</span>
-<span class="sd">                Resulting mapping.</span>
+<span class="sd">        :param tensor_a: Tensor #1</span>
+<span class="sd">        :type tensor_a: *ndarray of shape (6, 6)*</span>
+<span class="sd">        :param tensor_b: Tensor #2</span>
+<span class="sd">        :type tensor_b: *ndarray of shape (6, 6)*</span>
+<span class="sd">        :return: Resulting mapping</span>
+<span class="sd">        :rtype: ndarray of shape (6,6)*</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ij,jk-&gt;ik&quot;</span><span class="p">,</span> <span class="n">tensor_a</span><span class="p">,</span> <span class="n">tensor_b</span><span class="p">)</span></div>
 
@@ -191,11 +193,11 @@
 <span class="sd">        calculated from the regular tensor notation.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            - matrix : ndarray of shape (3, 3)</span>
+<span class="sd">            - matrix : *ndarray of shape (3, 3)*</span>
 <span class="sd">                Tensor in regular tensor notation.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            - ... : ndarray of shape (6, 1)</span>
+<span class="sd">            - ... : *ndarray of shape (6,)*</span>
 <span class="sd">                Tensor in Voigt notation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
@@ -215,11 +217,11 @@
 <span class="sd">        calculated from the regular tensor notation.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            - matrix : ndarray of shape (3, 3)</span>
+<span class="sd">            - matrix : *ndarray of shape (3, 3)*</span>
 <span class="sd">                Tensor in regular tensor notation.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            - ... : ndarray of shape (6, 1)</span>
+<span class="sd">            - ... : *ndarray of shape (6,)*</span>
 <span class="sd">                Tensor in normalized Voigt notation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
@@ -240,11 +242,11 @@
 <span class="sd">        order calculated fromthe regular tensor notation.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            - tensor : ndarray of shape (3, 3, 3, 3)</span>
+<span class="sd">            - tensor : *ndarray of shape (3, 3, 3, 3)*</span>
 <span class="sd">                Tensor in regular tensor notation.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            - ... : ndarray of shape (6, 6)</span>
+<span class="sd">            - ... : *ndarray of shape (6, 6)*</span>
 <span class="sd">                Tensor in normalized Voigt notation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
@@ -308,11 +310,11 @@
 <span class="sd">        the normalized Voigt (Mandel) notation.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            - mandel : ndarray of shape (6, 6)</span>
+<span class="sd">            - mandel : *ndarray of shape (6, 6)*</span>
 <span class="sd">                Tensor in normalized Voigt notation.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            - tensor : ndarray of shape (3, 3, 3, 3)</span>
+<span class="sd">            - tensor : *ndarray of shape (3, 3, 3, 3)*</span>
 <span class="sd">                Tensor in regular tensor notation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">tensor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>

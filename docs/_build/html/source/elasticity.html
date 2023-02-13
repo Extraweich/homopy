@@ -134,19 +134,19 @@ inherits from the Tensor class.</p>
 <dt class="sig sig-object py" id="homopy.elasticity.Elasticity.__init__">
 <span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/elasticity.html#Elasticity.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.elasticity.Elasticity.__init__" title="Permalink to this definition"></a></dt>
 <dd><p>Initialize the object and call super class initialization.</p>
-<dl class="simple">
+<dl>
 <dt>Parameters:</dt><dd><ul class="simple">
 <li><p>None</p></li>
 </ul>
 </dd>
-<dt>Object variables:</dt><dd><ul class="simple">
-<li><dl class="simple">
-<dt>stiffness3333<span class="classifier">ndarray of shape (3, 3, 3, 3)</span></dt><dd><p>Holds the stiffness values in the regular tensor notation in Pa.</p>
+<dt>Object variables:</dt><dd><ul>
+<li><dl>
+<dt>stiffness3333<span class="classifier"><em>ndarray of shape (3, 3, 3, 3)</em></span></dt><dd><p>Holds the stiffness values in the regular tensor notation in Pa.</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt>stiffness66<span class="classifier">ndarray of shape (6, 6)</span></dt><dd><p>Holds the stiffness values in the normalized Voigt notation in Pa.</p>
+<li><dl>
+<dt>stiffness66<span class="classifier"><em>ndarray of shape (6, 6)</em></span></dt><dd><p>Holds the stiffness values in the normalized Voigt notation in Pa.</p>
 </dd>
 </dl>
 </li>
@@ -171,63 +171,63 @@ The class inherits from the Elasticity class.</p>
 <dt class="sig sig-object py" id="homopy.elasticity.TransverseIsotropy.__init__">
 <span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">E1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">E2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G23</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nu12</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/elasticity.html#TransverseIsotropy.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.elasticity.TransverseIsotropy.__init__" title="Permalink to this definition"></a></dt>
 <dd><p>Initialize the object and call super class initialization.</p>
-<dl class="simple">
-<dt>Parameters:</dt><dd><ul class="simple">
-<li><dl class="simple">
-<dt>E1<span class="classifier">float</span></dt><dd><p>Young’s modulus in longitudinal direction in Pa.</p>
+<dl>
+<dt>Parameters:</dt><dd><ul>
+<li><dl>
+<dt>E1<span class="classifier"><em>float</em></span></dt><dd><p>Young’s modulus in longitudinal direction in Pa.</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt>E2<span class="classifier">float</span></dt><dd><p>Young’s modulus in transverse direction in Pa.</p>
+<li><dl>
+<dt>E2<span class="classifier"><em>float</em></span></dt><dd><p>Young’s modulus in transverse direction in Pa.</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt>G12<span class="classifier">float</span></dt><dd><p>Shear modulus in the longitudinal-transverse plane in Pa.</p>
+<li><dl>
+<dt>G12<span class="classifier"><em>float</em></span></dt><dd><p>Shear modulus in the longitudinal-transverse plane in Pa.</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt>G23<span class="classifier">float</span></dt><dd><p>Shear modulus in the transverse-transverse plane in Pa.</p>
+<li><dl>
+<dt>G23<span class="classifier"><em>float</em></span></dt><dd><p>Shear modulus in the transverse-transverse plane in Pa.</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt>nu12<span class="classifier">float</span></dt><dd><p>Poisson’s ratio in longitudinal direction (dimensionless).</p>
+<li><dl>
+<dt>nu12<span class="classifier"><em>float</em></span></dt><dd><p>Poisson’s ratio in longitudinal direction (dimensionless).</p>
 </dd>
 </dl>
 </li>
 </ul>
 </dd>
-<dt>Object variables:</dt><dd><ul class="simple">
-<li><dl class="simple">
-<dt>E1<span class="classifier">float</span></dt><dd><p>Young’s modulus in longitudinal direction in Pa.</p>
+<dt>Object variables:</dt><dd><ul>
+<li><dl>
+<dt>E1<span class="classifier"><em>float</em></span></dt><dd><p>Young’s modulus in longitudinal direction in Pa.</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt>E2<span class="classifier">float</span></dt><dd><p>Young’s modulus in transverse direction in Pa.</p>
+<li><dl>
+<dt>E2<span class="classifier"><em>float</em></span></dt><dd><p>Young’s modulus in transverse direction in Pa.</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt>G12<span class="classifier">float</span></dt><dd><p>Shear modulus in the longitudinal-transverse plane in Pa.</p>
+<li><dl>
+<dt>G12<span class="classifier"><em>float</em></span></dt><dd><p>Shear modulus in the longitudinal-transverse plane in Pa.</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt>G23<span class="classifier">float</span></dt><dd><p>Shear modulus in the transverse-transverse plane in Pa.</p>
+<li><dl>
+<dt>G23<span class="classifier"><em>float</em></span></dt><dd><p>Shear modulus in the transverse-transverse plane in Pa.</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt>nu12<span class="classifier">float</span></dt><dd><p>Poisson’s ratio in longitudinal direction (dimensionless).</p>
+<li><dl>
+<dt>nu12<span class="classifier"><em>float</em></span></dt><dd><p>Poisson’s ratio in longitudinal direction (dimensionless).</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt>nu23<span class="classifier">float</span></dt><dd><p>Poisson’s ratio in transverse direction (dimensionless).</p>
+<li><dl>
+<dt>nu23<span class="classifier"><em>float</em></span></dt><dd><p>Poisson’s ratio in transverse direction (dimensionless).</p>
 </dd>
 </dl>
 </li>
@@ -252,38 +252,38 @@ The class inherits from the Transverse Isotropy class.</p>
 <dt class="sig sig-object py" id="homopy.elasticity.Isotropy.__init__">
 <span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">E</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nu</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/elasticity.html#Isotropy.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.elasticity.Isotropy.__init__" title="Permalink to this definition"></a></dt>
 <dd><p>Initialize the object and call super class initialization.</p>
-<dl class="simple">
-<dt>Parameters:</dt><dd><ul class="simple">
-<li><dl class="simple">
-<dt>E<span class="classifier">float</span></dt><dd><p>Young’s modulus in Pa.</p>
+<dl>
+<dt>Parameters:</dt><dd><ul>
+<li><dl>
+<dt>E<span class="classifier"><em>float</em></span></dt><dd><p>Young’s modulus in Pa.</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt>nu<span class="classifier">float</span></dt><dd><p>Poisson’s ratio (dimensionless).</p>
+<li><dl>
+<dt>nu<span class="classifier"><em>float</em></span></dt><dd><p>Poisson’s ratio (dimensionless).</p>
 </dd>
 </dl>
 </li>
 </ul>
 </dd>
-<dt>Object variables:</dt><dd><ul class="simple">
-<li><dl class="simple">
-<dt>E<span class="classifier">float</span></dt><dd><p>Young’s modulus in Pa.</p>
+<dt>Object variables:</dt><dd><ul>
+<li><dl>
+<dt>E<span class="classifier"><em>float</em></span></dt><dd><p>Young’s modulus in Pa.</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt>nu<span class="classifier">float</span></dt><dd><p>Poisson’s ratio (dimensionless).</p>
+<li><dl>
+<dt>nu<span class="classifier"><em>float</em></span></dt><dd><p>Poisson’s ratio (dimensionless).</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt>lam<span class="classifier">float</span></dt><dd><p>First Lamé constant in Pa.</p>
+<li><dl>
+<dt>lam<span class="classifier"><em>float</em></span></dt><dd><p>First Lamé constant in Pa.</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt>mu<span class="classifier">float</span></dt><dd><p>Second Lamé constant in Pa.</p>
+<li><dl>
+<dt>mu<span class="classifier"><em>float</em></span></dt><dd><p>Second Lamé constant in Pa.</p>
 </dd>
 </dl>
 </li>

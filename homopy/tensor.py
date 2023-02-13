@@ -4,9 +4,9 @@ Created on Wed Apr 27 21:09:24 2022
 
 @author: nicolas.christ@kit.edu
 
-Tensor class for basic arithmetic operations. More information on tensor representation in Voigt and Mandel notations are given in Brannon (cf. [1]_).
+Tensor class for basic arithmetic operations. More information on tensor representation in Voigt and Mandel notations are given in [Brannon2018]_.
 
-.. [1] Brannon, R. M. (2018), 'Voigt and Mandel components', in *Rotation, Reflection, and Frame Changes*, IOP Publishing
+.. [Brannon2018] Brannon, R. M. (2018), 'Voigt and Mandel components', in *Rotation, Reflection, and Frame Changes*, IOP Publishing
 """
 
 import numpy as np
@@ -25,9 +25,9 @@ class Tensor:
             - None
 
         Object variables:
-            - e1, e2, e3 : ndarray of shape (3,)
+            - e1, e2, e3 : *ndarray of shape (3,)*
                 Orthonormalbasis of 1st order tensors (vectors)
-            - B : ndarray of shape (3, 3, 6)
+            - B : *ndarray of shape (3, 3, 6)*
                 Orthonormalbasis of 4th order tensors in normalized Voigt
                 notation.
 
@@ -64,14 +64,19 @@ class Tensor:
         Return diadic product of two directional vectors. This is used to
         calculate the basis tensors in the normalized Voigt notation.
 
+        :param di: Directional vector #1
+        :type di: *ndarray of shape (3,)*
+        :param dj: Directional vector #2
+        :type dj: *ndarray of shape (3,)*
+
         Parameters:
-            - di : ndarray of shape (3,)
+            - di : *ndarray of shape (3,)*
                 Directional vector #1.
-            - dj : ndarray of shape (3,)
+            - dj : *ndarray of shape (3,)*
                 Directional vector #2.
 
         Returns:
-            - ... : ndarray of shape (3, 3)
+            - ... : *ndarray of shape (3, 3)*
                 Tensor of 2nd order in tensor notation.
         """
         return np.einsum("i,j->ij", di, dj)
@@ -83,13 +88,13 @@ class Tensor:
         notation.
 
         Parameters:
-            - bi : ndarray of shape (3, 3)
+            - bi : *ndarray of shape (3, 3)*
                 Orthonormal basis tensor #1.
-            - bj : ndarray of shape (3, 3)
+            - bj : *ndarray of shape (3, 3)*
                 Orthonormal basis tensor #2.
 
         Returns:
-            - ... : ndarray of shape (3, 3, 3, 3)
+            - ... : *ndarray of shape (3, 3, 3, 3)*
                 Tensor of 4th order in tensor notation.
         """
         return np.einsum("ij,kl->ijkl", bi, bj)
@@ -99,15 +104,12 @@ class Tensor:
         Return the mapping of one tensor of 4th order to another in the
         normalized Voigt notation.
 
-        Parameters:
-            - tensor_a : ndarray of shape (6, 6)
-                Tensor #1.
-            - tensor_b : ndarray of shape (6, 6)
-                Tensor #2.
-
-        Returns:
-            - ... : ndarray of shape (6,6)
-                Resulting mapping.
+        :param tensor_a: Tensor #1
+        :type tensor_a: *ndarray of shape (6, 6)*
+        :param tensor_b: Tensor #2
+        :type tensor_b: *ndarray of shape (6, 6)*
+        :return: Resulting mapping
+        :rtype: ndarray of shape (6,6)*
         """
         return np.einsum("ij,jk->ik", tensor_a, tensor_b)
 
@@ -117,11 +119,11 @@ class Tensor:
         calculated from the regular tensor notation.
 
         Parameters:
-            - matrix : ndarray of shape (3, 3)
+            - matrix : *ndarray of shape (3, 3)*
                 Tensor in regular tensor notation.
 
         Returns:
-            - ... : ndarray of shape (6, 1)
+            - ... : *ndarray of shape (6,)*
                 Tensor in Voigt notation.
         """
         return np.array(
@@ -141,11 +143,11 @@ class Tensor:
         calculated from the regular tensor notation.
 
         Parameters:
-            - matrix : ndarray of shape (3, 3)
+            - matrix : *ndarray of shape (3, 3)*
                 Tensor in regular tensor notation.
 
         Returns:
-            - ... : ndarray of shape (6, 1)
+            - ... : *ndarray of shape (6,)*
                 Tensor in normalized Voigt notation.
         """
         b = np.sqrt(2)
@@ -166,11 +168,11 @@ class Tensor:
         order calculated fromthe regular tensor notation.
 
         Parameters:
-            - tensor : ndarray of shape (3, 3, 3, 3)
+            - tensor : *ndarray of shape (3, 3, 3, 3)*
                 Tensor in regular tensor notation.
 
         Returns:
-            - ... : ndarray of shape (6, 6)
+            - ... : *ndarray of shape (6, 6)*
                 Tensor in normalized Voigt notation.
         """
         b = np.sqrt(2)
@@ -234,11 +236,11 @@ class Tensor:
         the normalized Voigt (Mandel) notation.
 
         Parameters:
-            - mandel : ndarray of shape (6, 6)
+            - mandel : *ndarray of shape (6, 6)*
                 Tensor in normalized Voigt notation.
 
         Returns:
-            - tensor : ndarray of shape (3, 3, 3, 3)
+            - tensor : *ndarray of shape (3, 3, 3, 3)*
                 Tensor in regular tensor notation.
         """
         tensor = np.zeros((3, 3, 3, 3))
