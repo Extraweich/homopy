@@ -125,7 +125,7 @@ class MoriTanaka(Tensor):
         for i in range(self.nr_constituents):
             if N4 is None:
                 N4_tmp = np.zeros((3, 3, 3, 3))
-                N4_tmp[0, 0] = 1
+                N4_tmp[0, 0, 0, 0] = 1
             else:
                 N4 = N4 if isinstance(N4, list) else [N4]
                 assert len(self.fiber) == len(
