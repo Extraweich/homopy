@@ -314,6 +314,13 @@ class MoriTanaka(Tensor):
                 self.stiff_diff[i], ave_A_f_alpha
             )
 
+        X = (1 - self.c_f) * np.linalg.inv(pol_A_ave)
+        Y = self.c_f * self.tensor_product(A_ave, np.linalg.inv(pol_A_ave))
+
+        test = self.Cm + self.c_f * np.linalg.inv(X + Y)
+        print("test:")
+        print(test)
+
         C_eff = self.Cm + self.tensor_product(
             self.c_f * pol_A_ave,
             np.linalg.inv(self.c_f * A_ave + (1 - self.c_f) * self.eye),
