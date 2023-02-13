@@ -131,7 +131,7 @@
 <p>Created on Wed Apr 27 21:09:24 2022</p>
 <p>&#64;author: <a class="reference external" href="mailto:nicolas&#46;christ&#37;&#52;&#48;kit&#46;edu">nicolas<span>&#46;</span>christ<span>&#64;</span>kit<span>&#46;</span>edu</a></p>
 <p>Mori-Tanaka Homogenization after Gross and Seelig (cf. <a class="footnote-reference brackets" href="#id6" id="id1">1</a>). Multi-inclusion implementation after Brylka (cf. <a class="footnote-reference brackets" href="#id7" id="id2">2</a>).
-Eshelby’s tensor is taken from Tandon and Weng (cf. <a class="footnote-reference brackets" href="#id8" id="id3">3</a>) but can also be found in Groos and Seelig. Thoroughly literature
+Eshelby’s tensor is taken from Tandon and Weng (cf. <a class="footnote-reference brackets" href="#id8" id="id3">3</a>) but can also be found in Gross and Seelig. Thoroughly literature
 on Eshelby’s tensor can also be found in Mura (cf. <a class="footnote-reference brackets" href="#id9" id="id4">4</a>, pp. 74 ff.).
 Halpin-Tsai homogenization after Fu, Lauke, and Mai (cf. <a class="footnote-reference brackets" href="#id10" id="id5">5</a>, pp. 143 ff.). Also, the effective planar stiffness 
 matrix for the Halpin-Tsai homogenization is based on the laminate analogy approach after Fu, Lauke and Mai
@@ -152,17 +152,20 @@ matrix for the Halpin-Tsai homogenization is based on the laminate analogy appro
 <dt class="label" id="id10"><span class="brackets"><a class="fn-backref" href="#id5">5</a></span></dt>
 <dd><p>Fu, S.-Y., Lauke, B. and Mai, Y. W. (2019), <em>Science and engineering of short fibre-reinforced polymer composites</em>, Woodhead Publishing</p>
 </dd>
+<dt class="label" id="id11"><span class="brackets"><a class="fn-backref" href="#id12">6</a></span></dt>
+<dd><p>Segura, N. J., Pichler, B. L.A., Hellmich, C. (2023), ‘Concentration tensors preserving elastic symmetry of multiphase composites’, <em>Mechanics of Materials</em>, Available at: <a class="reference external" href="https://doi.org/10.1016/j.mechmat.2023.104555">https://doi.org/10.1016/j.mechmat.2023.104555</a></p>
+</dd>
 </dl>
 <dl class="py class">
 <dt class="sig sig-object py" id="homopy.methods.MoriTanaka">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">homopy.methods.</span></span><span class="sig-name descname"><span class="pre">MoriTanaka</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fiber</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_frac</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a_ratio</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ellipsoid'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/methods.html#MoriTanaka"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.methods.MoriTanaka" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">homopy.methods.</span></span><span class="sig-name descname"><span class="pre">MoriTanaka</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fiber</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_frac</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a_ratio</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ellipsoid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">symmetrize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/methods.html#MoriTanaka"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.methods.MoriTanaka" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="tensor.html#homopy.tensor.Tensor" title="homopy.tensor.Tensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></p>
 <p>Mori Tanaka class to calculate the homogenized stiffness for fiber reinforced
 polymers with possibly different types of inclusions. The class inherits from
 the Tensor class.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="homopy.methods.MoriTanaka.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fiber</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_frac</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a_ratio</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ellipsoid'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/methods.html#MoriTanaka.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.methods.MoriTanaka.__init__" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fiber</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_frac</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a_ratio</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ellipsoid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">symmetrize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/methods.html#MoriTanaka.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.methods.MoriTanaka.__init__" title="Permalink to this definition"></a></dt>
 <dd><p>Initialize the object and call super class initialization.</p>
 <dl class="simple">
 <dt>Parameters:</dt><dd><ul class="simple">
@@ -190,6 +193,12 @@ material.</p>
 <li><dl class="simple">
 <dt>shape<span class="classifier">string, default=’ellipsoid’</span></dt><dd><p>Flag to determine which assumptions are taken into consideration
 for the geometry of the fiber (options: ‘ellipsoid’, ‘sphere’, ‘needle’)</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>symmetrize<span class="classifier">boolean, default=’False’</span></dt><dd><p>Flag to determine whether the effective and orientation averaged stiffnesses shall
+be symmetrized. For this the method in Segura, Pichler and Hellmich (cf. <a class="footnote-reference brackets" href="#id11" id="id12">6</a>) is used.</p>
 </dd>
 </dl>
 </li>

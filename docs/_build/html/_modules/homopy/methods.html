@@ -79,7 +79,7 @@
 <span class="sd">@author: nicolas.christ@kit.edu</span>
 
 <span class="sd">Mori-Tanaka Homogenization after Gross and Seelig (cf. [1]_). Multi-inclusion implementation after Brylka (cf. [2]_).</span>
-<span class="sd">Eshelby&#39;s tensor is taken from Tandon and Weng (cf. [3]_) but can also be found in Groos and Seelig. Thoroughly literature</span>
+<span class="sd">Eshelby&#39;s tensor is taken from Tandon and Weng (cf. [3]_) but can also be found in Gross and Seelig. Thoroughly literature</span>
 <span class="sd">on Eshelby&#39;s tensor can also be found in Mura (cf. [4]_, pp. 74 ff.).</span>
 <span class="sd">Halpin-Tsai homogenization after Fu, Lauke, and Mai (cf. [5]_, pp. 143 ff.). Also, the effective planar stiffness </span>
 <span class="sd">matrix for the Halpin-Tsai homogenization is based on the laminate analogy approach after Fu, Lauke and Mai</span>
@@ -90,6 +90,7 @@
 <span class="sd">.. [3] Tandon, G. P. and Weng, G. J. (1984), &#39;The effect of aspect ratio of inclusions on the elastic properties of unidirectionally aligned composites&#39;, *Polymer Composites*, pp. 327-333, Available at: https://doi.org/10.1002/pc.750050413</span>
 <span class="sd">.. [4] Mura, T (1987), *Micromechanics of defects in solids*, Springer Dordrecht</span>
 <span class="sd">.. [5] Fu, S.-Y., Lauke, B. and Mai, Y. W. (2019), *Science and engineering of short fibre-reinforced polymer composites*, Woodhead Publishing</span>
+<span class="sd">.. [6] Segura, N. J., Pichler, B. L.A., Hellmich, C. (2023), &#39;Concentration tensors preserving elastic symmetry of multiphase composites&#39;, *Mechanics of Materials*, Available at: https://doi.org/10.1016/j.mechmat.2023.104555</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 
@@ -110,7 +111,9 @@
 <span class="sd">    the Tensor class.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="MoriTanaka.__init__"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.MoriTanaka.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">matrix</span><span class="p">,</span> <span class="n">fiber</span><span class="p">,</span> <span class="n">v_frac</span><span class="p">,</span> <span class="n">a_ratio</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s2">&quot;ellipsoid&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="MoriTanaka.__init__"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.MoriTanaka.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">matrix</span><span class="p">,</span> <span class="n">fiber</span><span class="p">,</span> <span class="n">v_frac</span><span class="p">,</span> <span class="n">a_ratio</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s2">&quot;ellipsoid&quot;</span><span class="p">,</span> <span class="n">symmetrize</span><span class="o">=</span><span class="kc">False</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize the object and call super class initialization.</span>
 
@@ -127,6 +130,9 @@
 <span class="sd">            - shape : string, default=&#39;ellipsoid&#39;</span>
 <span class="sd">                Flag to determine which assumptions are taken into consideration</span>
 <span class="sd">                for the geometry of the fiber (options: &#39;ellipsoid&#39;, &#39;sphere&#39;, &#39;needle&#39;)</span>
+<span class="sd">            - symmetrize : boolean, default=&#39;False&#39;</span>
+<span class="sd">                Flag to determine whether the effective and orientation averaged stiffnesses shall</span>
+<span class="sd">                be symmetrized. For this the method in Segura, Pichler and Hellmich (cf. [6]_) is used.</span>
 
 <span class="sd">        Object variables:</span>
 <span class="sd">            - matrix : class object of the Elasticity class (or any child class)</span>
@@ -395,7 +401,7 @@
 
     <span class="k">def</span> <span class="nf">_get_average_stiffness_trailing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">N2</span><span class="p">,</span> <span class="n">N4</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Calculate the average stiffness in accordance to Advani and Tucker</span>
+<span class="sd">        Calculate the average stiffness in accordance to Advani and Tucker, 1987 (Eq. 29).</span>
 
 <span class="sd">        Parameters:</span>
 <span class="sd">            - N2 : ndarray of shape (3, 3)</span>
@@ -411,7 +417,8 @@
 
     <span class="k">def</span> <span class="nf">_get_average_stiffness_benveniste</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">N2</span><span class="p">,</span> <span class="n">N4</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Calculate the average stiffness in accordance to Benveniste</span>
+<span class="sd">        Calculate the average stiffness in accordance to Benveniste (1987) and</span>
+<span class="sd">        Bauer and Böhlke, 2022 (Eq. 57).</span>
 
 <span class="sd">        Parameters:</span>
 <span class="sd">            - N2 : ndarray of shape (3, 3)</span>
@@ -423,9 +430,10 @@
 <span class="sd">            - ... : ndarray of shape (3, 3, 3, 3)</span>
 <span class="sd">                Orientation average of given tensor.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">assert</span> <span class="p">(</span>
-            <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fiber</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">N2</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">N4</span><span class="p">)</span>
-        <span class="p">),</span> <span class="s2">&quot;Amount of stiffnesses and orientation tensors do not match!&quot;</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">N4</span><span class="p">)</span> <span class="o">==</span> <span class="nb">list</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="p">(</span>
+                <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fiber</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">N2</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">N4</span><span class="p">)</span>
+            <span class="p">),</span> <span class="s2">&quot;Amount of stiffnesses and orientation tensors do not match!&quot;</span>
 
         <span class="c1"># need to perform MT again</span>
         <span class="n">pol_A_ave</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
