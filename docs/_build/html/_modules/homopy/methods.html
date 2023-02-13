@@ -113,7 +113,7 @@
 <span class="sd">    the Tensor class.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="MoriTanaka.__init__"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.MoriTanaka.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">matrix</span><span class="p">,</span>
         <span class="n">fiber</span><span class="p">,</span>
@@ -233,7 +233,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">c_alpha</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v_frac</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">c_f</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">effective_stiffness66</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_effective_stiffness</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">effective_stiffness3333</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mandel2tensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">effective_stiffness66</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">effective_stiffness3333</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mandel2tensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">effective_stiffness66</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_eshelby</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a_ratio</span><span class="p">,</span> <span class="n">return_dim</span><span class="o">=</span><span class="s2">&quot;66&quot;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s2">&quot;ellipsoid&quot;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -551,7 +551,7 @@
 <span class="sd">    polymers as laminas. This is then used as input for the Laminate class.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="HalpinTsai.__init__"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.HalpinTsai.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">E_f</span><span class="p">,</span> <span class="n">E_m</span><span class="p">,</span> <span class="n">G_f</span><span class="p">,</span> <span class="n">G_m</span><span class="p">,</span> <span class="n">nu_f</span><span class="p">,</span> <span class="n">nu_m</span><span class="p">,</span> <span class="n">l_f</span><span class="p">,</span> <span class="n">r_f</span><span class="p">,</span> <span class="n">vol_f</span><span class="p">,</span> <span class="n">package</span><span class="o">=</span><span class="s2">&quot;hex&quot;</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">E_f</span><span class="p">,</span> <span class="n">E_m</span><span class="p">,</span> <span class="n">G_f</span><span class="p">,</span> <span class="n">G_m</span><span class="p">,</span> <span class="n">nu_f</span><span class="p">,</span> <span class="n">nu_m</span><span class="p">,</span> <span class="n">l_f</span><span class="p">,</span> <span class="n">r_f</span><span class="p">,</span> <span class="n">vol_f</span><span class="p">,</span> <span class="n">package</span><span class="o">=</span><span class="s2">&quot;hex&quot;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Class to perform the Halpin-Tsai homogenization.</span>
 
@@ -592,7 +592,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">vol_f</span> <span class="o">=</span> <span class="n">vol_f</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">package</span> <span class="o">=</span> <span class="n">package</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_get_effective_parameters</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">effective_stiffness33</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_effective_stiffness</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">effective_stiffness33</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_effective_stiffness</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_get_effective_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -656,7 +656,7 @@
 <span class="sd">    Class to average over n laminas from Halpin-Tsai homogenization.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="Laminate.__init__"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.Laminate.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lamina_stiffnesses</span><span class="p">,</span> <span class="n">angles</span><span class="p">,</span> <span class="n">vol_fracs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lamina_stiffnesses</span><span class="p">,</span> <span class="n">angles</span><span class="p">,</span> <span class="n">vol_fracs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize the object.</span>
 
@@ -683,7 +683,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">vol_fracs</span> <span class="o">=</span> <span class="p">(</span>
                 <span class="mi">1</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">lamina_stiffnesses</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">lamina_stiffnesses</span><span class="p">))</span>
             <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">effective_stiffness33</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_effective_stiffness</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">effective_stiffness33</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_effective_stiffness</span><span class="p">()</span>
 
 <div class="viewcode-block" id="Laminate.get_effective_stiffness"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.Laminate.get_effective_stiffness">[docs]</a>    <span class="k">def</span> <span class="nf">get_effective_stiffness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>

@@ -89,25 +89,20 @@
 <div class="viewcode-block" id="Tensor"><a class="viewcode-back" href="../../source/tensor.html#homopy.tensor.Tensor">[docs]</a><span class="k">class</span> <span class="nc">Tensor</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Tensor class to help with basic arithmetic operations on tensor space.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    e1 : ndarray of shape (3,)</span>
+<span class="sd">        Orthonormalbasis of 1st order tensors.</span>
+<span class="sd">    e2 : ndarray of shape (3,)</span>
+<span class="sd">        Orthonormalbasis of 1st order tensors.</span>
+<span class="sd">    e3 : ndarray of shape (3,)</span>
+<span class="sd">        Orthonormalbasis of 1st order tensors.</span>
+<span class="sd">    B : ndarray of shape (3, 3, 6)</span>
+<span class="sd">        Orthonormalbasis of 4th order tensors in normalized Voigt notation.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="Tensor.__init__"><a class="viewcode-back" href="../../source/tensor.html#homopy.tensor.Tensor.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Initialize the object.</span>
-
-<span class="sd">        Parameters:</span>
-<span class="sd">            - None</span>
-
-<span class="sd">        Object variables:</span>
-<span class="sd">            - e1, e2, e3 : *ndarray of shape (3,)*</span>
-<span class="sd">                Orthonormalbasis of 1st order tensors (vectors)</span>
-<span class="sd">            - B : *ndarray of shape (3, 3, 6)*</span>
-<span class="sd">                Orthonormalbasis of 4th order tensors in normalized Voigt</span>
-<span class="sd">                notation.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            - None</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">e1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">e2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">e3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
@@ -131,7 +126,7 @@
             <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
             <span class="o">/</span> <span class="mi">2</span>
             <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_diade</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">e1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">e2</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_diade</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">e2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">e1</span><span class="p">))</span>
-        <span class="p">)</span></div>
+        <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_diade</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">di</span><span class="p">,</span> <span class="n">dj</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -178,12 +173,17 @@
 <span class="sd">        Return the mapping of one tensor of 4th order to another in the</span>
 <span class="sd">        normalized Voigt notation.</span>
 
-<span class="sd">        :param tensor_a: Tensor #1</span>
-<span class="sd">        :type tensor_a: *ndarray of shape (6, 6)*</span>
-<span class="sd">        :param tensor_b: Tensor #2</span>
-<span class="sd">        :type tensor_b: *ndarray of shape (6, 6)*</span>
-<span class="sd">        :return: Resulting mapping</span>
-<span class="sd">        :rtype: ndarray of shape (6,6)*</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        tensor_a : ndarray of shape (6, 6)</span>
+<span class="sd">            Tensor #1.</span>
+<span class="sd">        tensor_b : ndarray of shape (6, 6)</span>
+<span class="sd">            Tensor #2.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ndarray of shape (6, 6)</span>
+<span class="sd">            Resulting mapping.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ij,jk-&gt;ik&quot;</span><span class="p">,</span> <span class="n">tensor_a</span><span class="p">,</span> <span class="n">tensor_b</span><span class="p">)</span></div>
 
@@ -193,11 +193,11 @@
 <span class="sd">        calculated from the regular tensor notation.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            - matrix : *ndarray of shape (3, 3)*</span>
+<span class="sd">            - matrix : ndarray of shape (3, 3)</span>
 <span class="sd">                Tensor in regular tensor notation.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            - ... : *ndarray of shape (6,)*</span>
+<span class="sd">            - ... : ndarray of shape (6,)</span>
 <span class="sd">                Tensor in Voigt notation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>

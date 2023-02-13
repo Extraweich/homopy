@@ -1,5 +1,5 @@
-tensor
-======
+homopy.tensor module
+====================
 
 .. automodule:: homopy.tensor
    :show-inheritance:

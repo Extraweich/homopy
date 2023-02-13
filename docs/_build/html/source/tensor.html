@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>tensor &mdash; HomoPy  documentation</title>
+  <title>homopy.tensor module &mdash; HomoPy  documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -21,7 +21,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="elasticity" href="elasticity.html" />
+    <link rel="next" title="homopy.elasticity module" href="elasticity.html" />
     <link rel="prev" title="Modules" href="code.html" /> 
 </head>
 
@@ -48,9 +48,8 @@
 </ul>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="code.html">Modules</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">tensor</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">homopy.tensor module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#homopy.tensor.Tensor"><code class="docutils literal notranslate"><span class="pre">Tensor</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#homopy.tensor.Tensor.__init__"><code class="docutils literal notranslate"><span class="pre">Tensor.__init__()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#homopy.tensor.Tensor.tensor_product"><code class="docutils literal notranslate"><span class="pre">Tensor.tensor_product()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#homopy.tensor.Tensor.matrix2voigt"><code class="docutils literal notranslate"><span class="pre">Tensor.matrix2voigt()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#homopy.tensor.Tensor.matrix2mandel"><code class="docutils literal notranslate"><span class="pre">Tensor.matrix2mandel()</span></code></a></li>
@@ -60,9 +59,9 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="elasticity.html">elasticity</a></li>
-<li class="toctree-l2"><a class="reference internal" href="methods.html">methods</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stiffness_plot.html">stiffness_plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="elasticity.html">homopy.elasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="methods.html">homopy.methods module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stiffness_plot.html">homopy.stiffness_plot module</a></li>
 </ul>
 </li>
 </ul>
@@ -82,7 +81,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a></li>
           <li class="breadcrumb-item"><a href="code.html">Modules</a></li>
-      <li class="breadcrumb-item active">tensor</li>
+      <li class="breadcrumb-item active">homopy.tensor module</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/source/tensor.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -117,7 +116,7 @@
 }
 </style>
 <section id="module-homopy.tensor">
-<span id="tensor"></span><h1>tensor<a class="headerlink" href="#module-homopy.tensor" title="Permalink to this heading"></a></h1>
+<span id="homopy-tensor-module"></span><h1>homopy.tensor module<a class="headerlink" href="#module-homopy.tensor" title="Permalink to this heading"></a></h1>
 <p>Created on Wed Apr 27 21:09:24 2022</p>
 <p>&#64;author: <a class="reference external" href="mailto:nicolas&#46;christ&#37;&#52;&#48;kit&#46;edu">nicolas<span>&#46;</span>christ<span>&#64;</span>kit<span>&#46;</span>edu</a></p>
 <p>Tensor class for basic arithmetic operations. More information on tensor representation in Voigt and Mandel notations are given in <a class="reference internal" href="#brannon2018" id="id1"><span>[Brannon2018]</span></a>.</p>
@@ -131,36 +130,16 @@
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">homopy.tensor.</span></span><span class="sig-name descname"><span class="pre">Tensor</span></span><a class="reference internal" href="../_modules/homopy/tensor.html#Tensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.tensor.Tensor" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Tensor class to help with basic arithmetic operations on tensor space.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="homopy.tensor.Tensor.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/tensor.html#Tensor.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.tensor.Tensor.__init__" title="Permalink to this definition"></a></dt>
-<dd><p>Initialize the object.</p>
-<dl>
-<dt>Parameters:</dt><dd><ul class="simple">
-<li><p>None</p></li>
-</ul>
-</dd>
-<dt>Object variables:</dt><dd><ul>
-<li><dl>
-<dt>e1, e2, e3<span class="classifier"><em>ndarray of shape (3,)</em></span></dt><dd><p>Orthonormalbasis of 1st order tensors (vectors)</p>
-</dd>
-</dl>
-</li>
-<li><dl>
-<dt>B<span class="classifier"><em>ndarray of shape (3, 3, 6)</em></span></dt><dd><p>Orthonormalbasis of 4th order tensors in normalized Voigt
-notation.</p>
-</dd>
-</dl>
-</li>
-</ul>
-</dd>
-<dt>Returns:</dt><dd><ul class="simple">
-<li><p>None</p></li>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>~Tensor.e1</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>3</em><em>,</em><em>)</em>) – Orthonormalbasis of 1st order tensors.</p></li>
+<li><p><strong>~Tensor.e2</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>3</em><em>,</em><em>)</em>) – Orthonormalbasis of 1st order tensors.</p></li>
+<li><p><strong>~Tensor.e3</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>3</em><em>,</em><em>)</em>) – Orthonormalbasis of 1st order tensors.</p></li>
+<li><p><strong>~Tensor.B</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>3</em><em>, </em><em>3</em><em>, </em><em>6</em><em>)</em>) – Orthonormalbasis of 4th order tensors in normalized Voigt notation.</p></li>
 </ul>
 </dd>
 </dl>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="homopy.tensor.Tensor.tensor_product">
 <span class="sig-name descname"><span class="pre">tensor_product</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tensor_a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tensor_b</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/tensor.html#Tensor.tensor_product"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.tensor.Tensor.tensor_product" title="Permalink to this definition"></a></dt>
@@ -169,15 +148,12 @@ normalized Voigt notation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>tensor_a</strong> (<em>ndarray of shape (6, 6)</em>) – Tensor #1</p></li>
-<li><p><strong>tensor_b</strong> (<em>ndarray of shape (6, 6)</em>) – Tensor #2</p></li>
+<li><p><strong>tensor_a</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>6</em><em>, </em><em>6</em><em>)</em>) – Tensor #1.</p></li>
+<li><p><strong>tensor_b</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>6</em><em>, </em><em>6</em><em>)</em>) – Tensor #2.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Resulting mapping</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>ndarray of shape (6,6)*</p>
+<dd class="field-even"><p><em>ndarray of shape (6, 6)</em> – Resulting mapping.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -187,22 +163,18 @@ normalized Voigt notation.</p>
 <span class="sig-name descname"><span class="pre">matrix2voigt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/tensor.html#Tensor.matrix2voigt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.tensor.Tensor.matrix2voigt" title="Permalink to this definition"></a></dt>
 <dd><p>Return the Voigt notation of a tensor of 2nd order
 calculated from the regular tensor notation.</p>
-<dl>
-<dt>Parameters:</dt><dd><ul>
-<li><dl>
-<dt>matrix<span class="classifier"><em>ndarray of shape (3, 3)</em></span></dt><dd><p>Tensor in regular tensor notation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>matrix</strong> (<em>-</em>) – ndarray of shape (3, 3)
+Tensor in regular tensor notation.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p><em>- …</em> –</p>
+<dl class="simple">
+<dt>ndarray of shape (6,)</dt><dd><p>Tensor in Voigt notation.</p>
 </dd>
 </dl>
-</li>
-</ul>
-</dd>
-<dt>Returns:</dt><dd><ul>
-<li><dl>
-<dt>…<span class="classifier"><em>ndarray of shape (6,)</em></span></dt><dd><p>Tensor in Voigt notation.</p>
-</dd>
-</dl>
-</li>
-</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -212,22 +184,18 @@ calculated from the regular tensor notation.</p>
 <span class="sig-name descname"><span class="pre">matrix2mandel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/tensor.html#Tensor.matrix2mandel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.tensor.Tensor.matrix2mandel" title="Permalink to this definition"></a></dt>
 <dd><p>Return the normalized Voigt notation of a tensor of 2nd order
 calculated from the regular tensor notation.</p>
-<dl>
-<dt>Parameters:</dt><dd><ul>
-<li><dl>
-<dt>matrix<span class="classifier"><em>ndarray of shape (3, 3)</em></span></dt><dd><p>Tensor in regular tensor notation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>matrix</strong> (<em>-</em>) – <em>ndarray of shape (3, 3)</em>
+Tensor in regular tensor notation.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p><em>- …</em> –</p>
+<dl class="simple">
+<dt><em>ndarray of shape (6,)</em></dt><dd><p>Tensor in normalized Voigt notation.</p>
 </dd>
 </dl>
-</li>
-</ul>
-</dd>
-<dt>Returns:</dt><dd><ul>
-<li><dl>
-<dt>…<span class="classifier"><em>ndarray of shape (6,)</em></span></dt><dd><p>Tensor in normalized Voigt notation.</p>
-</dd>
-</dl>
-</li>
-</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -237,22 +205,18 @@ calculated from the regular tensor notation.</p>
 <span class="sig-name descname"><span class="pre">tensor2mandel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tensor</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/tensor.html#Tensor.tensor2mandel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.tensor.Tensor.tensor2mandel" title="Permalink to this definition"></a></dt>
 <dd><p>Return the normalized Voigt (Mandel) notation of a tensor of 4th
 order calculated fromthe regular tensor notation.</p>
-<dl>
-<dt>Parameters:</dt><dd><ul>
-<li><dl>
-<dt>tensor<span class="classifier"><em>ndarray of shape (3, 3, 3, 3)</em></span></dt><dd><p>Tensor in regular tensor notation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>tensor</strong> (<em>-</em>) – <em>ndarray of shape (3, 3, 3, 3)</em>
+Tensor in regular tensor notation.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p><em>- …</em> –</p>
+<dl class="simple">
+<dt><em>ndarray of shape (6, 6)</em></dt><dd><p>Tensor in normalized Voigt notation.</p>
 </dd>
 </dl>
-</li>
-</ul>
-</dd>
-<dt>Returns:</dt><dd><ul>
-<li><dl>
-<dt>…<span class="classifier"><em>ndarray of shape (6, 6)</em></span></dt><dd><p>Tensor in normalized Voigt notation.</p>
-</dd>
-</dl>
-</li>
-</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -262,22 +226,18 @@ order calculated fromthe regular tensor notation.</p>
 <span class="sig-name descname"><span class="pre">mandel2tensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mandel</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/tensor.html#Tensor.mandel2tensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.tensor.Tensor.mandel2tensor" title="Permalink to this definition"></a></dt>
 <dd><p>Return the regular tensor notation of a tensor calculated from
 the normalized Voigt (Mandel) notation.</p>
-<dl>
-<dt>Parameters:</dt><dd><ul>
-<li><dl>
-<dt>mandel<span class="classifier"><em>ndarray of shape (6, 6)</em></span></dt><dd><p>Tensor in normalized Voigt notation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>mandel</strong> (<em>-</em>) – <em>ndarray of shape (6, 6)</em>
+Tensor in normalized Voigt notation.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p><em>- tensor</em> –</p>
+<dl class="simple">
+<dt><em>ndarray of shape (3, 3, 3, 3)</em></dt><dd><p>Tensor in regular tensor notation.</p>
 </dd>
 </dl>
-</li>
-</ul>
-</dd>
-<dt>Returns:</dt><dd><ul>
-<li><dl>
-<dt>tensor<span class="classifier"><em>ndarray of shape (3, 3, 3, 3)</em></span></dt><dd><p>Tensor in regular tensor notation.</p>
-</dd>
-</dl>
-</li>
-</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -291,7 +251,7 @@ the normalized Voigt (Mandel) notation.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="code.html" class="btn btn-neutral float-left" title="Modules" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="elasticity.html" class="btn btn-neutral float-right" title="elasticity" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="elasticity.html" class="btn btn-neutral float-right" title="homopy.elasticity module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

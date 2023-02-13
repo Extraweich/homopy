@@ -15,25 +15,20 @@ import numpy as np
 class Tensor:
     """
     Tensor class to help with basic arithmetic operations on tensor space.
+
+    Attributes
+    ----------
+    e1 : ndarray of shape (3,)
+        Vector 1 of orthonormalbasis of 1st order tensors.
+    e2 : ndarray of shape (3,)
+        Vector 2 of orthonormalbasis of 1st order tensors.
+    e3 : ndarray of shape (3,)
+        Vector 3 of orthonormalbasis of 1st order tensors.
+    B : ndarray of shape (3, 3, 6)
+        Orthonormalbasis of 4th order tensors in normalized Voigt notation.
     """
 
     def __init__(self):
-        """
-        Initialize the object.
-
-        Parameters:
-            - None
-
-        Object variables:
-            - e1, e2, e3 : *ndarray of shape (3,)*
-                Orthonormalbasis of 1st order tensors (vectors)
-            - B : *ndarray of shape (3, 3, 6)*
-                Orthonormalbasis of 4th order tensors in normalized Voigt
-                notation.
-
-        Returns:
-            - None
-        """
         self.e1 = np.array([1, 0, 0])
         self.e2 = np.array([0, 1, 0])
         self.e3 = np.array([0, 0, 1])
@@ -104,12 +99,17 @@ class Tensor:
         Return the mapping of one tensor of 4th order to another in the
         normalized Voigt notation.
 
-        :param tensor_a: Tensor #1
-        :type tensor_a: *ndarray of shape (6, 6)*
-        :param tensor_b: Tensor #2
-        :type tensor_b: *ndarray of shape (6, 6)*
-        :return: Resulting mapping
-        :rtype: ndarray of shape (6,6)*
+        Parameters
+        ----------
+        tensor_a : ndarray of shape (6, 6)
+            Tensor #1.
+        tensor_b : ndarray of shape (6, 6)
+            Tensor #2.
+
+        Returns
+        -------
+        ndarray of shape (6, 6)
+            Resulting mapping.
         """
         return np.einsum("ij,jk->ik", tensor_a, tensor_b)
 
@@ -119,11 +119,11 @@ class Tensor:
         calculated from the regular tensor notation.
 
         Parameters:
-            - matrix : *ndarray of shape (3, 3)*
+            - matrix : ndarray of shape (3, 3)
                 Tensor in regular tensor notation.
 
         Returns:
-            - ... : *ndarray of shape (6,)*
+            - ... : ndarray of shape (6,)
                 Tensor in Voigt notation.
         """
         return np.array(

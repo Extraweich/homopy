@@ -91,7 +91,7 @@
 <span class="sd">    inherits from the Tensor class.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="Elasticity.__init__"><a class="viewcode-back" href="../../source/elasticity.html#homopy.elasticity.Elasticity.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize the object and call super class initialization.</span>
 
@@ -109,7 +109,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stiffness3333</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">stiffness66</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stiffness66</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="TransverseIsotropy"><a class="viewcode-back" href="../../source/elasticity.html#homopy.elasticity.TransverseIsotropy">[docs]</a><span class="k">class</span> <span class="nc">TransverseIsotropy</span><span class="p">(</span><span class="n">Elasticity</span><span class="p">):</span>
@@ -118,7 +118,7 @@
 <span class="sd">    The class inherits from the Elasticity class.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="TransverseIsotropy.__init__"><a class="viewcode-back" href="../../source/elasticity.html#homopy.elasticity.TransverseIsotropy.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">E1</span><span class="p">,</span> <span class="n">E2</span><span class="p">,</span> <span class="n">G12</span><span class="p">,</span> <span class="n">G23</span><span class="p">,</span> <span class="n">nu12</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">E1</span><span class="p">,</span> <span class="n">E2</span><span class="p">,</span> <span class="n">G12</span><span class="p">,</span> <span class="n">G23</span><span class="p">,</span> <span class="n">nu12</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize the object and call super class initialization.</span>
 
@@ -159,7 +159,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">nu12</span> <span class="o">=</span> <span class="n">nu12</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">nu21</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">E2</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">E1</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu12</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">nu23</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">E2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">G23</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_get_stiffness</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_get_stiffness</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_get_stiffness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -204,7 +204,7 @@
 <span class="sd">    The class inherits from the Transverse Isotropy class.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="Isotropy.__init__"><a class="viewcode-back" href="../../source/elasticity.html#homopy.elasticity.Isotropy.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">nu</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">nu</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize the object and call super class initialization.</span>
 
@@ -231,7 +231,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">nu</span> <span class="o">=</span> <span class="n">nu</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lam</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_lambda</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_mu</span><span class="p">()</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">E</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">E</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mu</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mu</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu</span><span class="p">)</span></div>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">E</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">E</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mu</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mu</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_lambda</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>

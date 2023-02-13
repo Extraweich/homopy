@@ -1,5 +1,5 @@
-elasticity
-==========
+homopy.elasticity module
+========================
 
 .. automodule:: homopy.elasticity
    :show-inheritance:

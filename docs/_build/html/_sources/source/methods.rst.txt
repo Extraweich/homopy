@@ -1,5 +1,5 @@
-methods
-=======
+homopy.methods module
+=====================
 
 .. automodule:: homopy.methods
    :show-inheritance:

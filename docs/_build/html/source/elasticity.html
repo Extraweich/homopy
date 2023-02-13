@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>elasticity &mdash; HomoPy  documentation</title>
+  <title>homopy.elasticity module &mdash; HomoPy  documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -21,8 +21,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="methods" href="methods.html" />
-    <link rel="prev" title="tensor" href="tensor.html" /> 
+    <link rel="next" title="homopy.methods module" href="methods.html" />
+    <link rel="prev" title="homopy.tensor module" href="tensor.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -48,24 +48,15 @@
 </ul>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="code.html">Modules</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="tensor.html">tensor</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">elasticity</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#homopy.elasticity.Elasticity"><code class="docutils literal notranslate"><span class="pre">Elasticity</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#homopy.elasticity.Elasticity.__init__"><code class="docutils literal notranslate"><span class="pre">Elasticity.__init__()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensor.html">homopy.tensor module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">homopy.elasticity module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#homopy.elasticity.Elasticity"><code class="docutils literal notranslate"><span class="pre">Elasticity</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#homopy.elasticity.TransverseIsotropy"><code class="docutils literal notranslate"><span class="pre">TransverseIsotropy</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#homopy.elasticity.Isotropy"><code class="docutils literal notranslate"><span class="pre">Isotropy</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#homopy.elasticity.TransverseIsotropy"><code class="docutils literal notranslate"><span class="pre">TransverseIsotropy</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#homopy.elasticity.TransverseIsotropy.__init__"><code class="docutils literal notranslate"><span class="pre">TransverseIsotropy.__init__()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#homopy.elasticity.Isotropy"><code class="docutils literal notranslate"><span class="pre">Isotropy</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#homopy.elasticity.Isotropy.__init__"><code class="docutils literal notranslate"><span class="pre">Isotropy.__init__()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="methods.html">methods</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stiffness_plot.html">stiffness_plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="methods.html">homopy.methods module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stiffness_plot.html">homopy.stiffness_plot module</a></li>
 </ul>
 </li>
 </ul>
@@ -85,7 +76,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a></li>
           <li class="breadcrumb-item"><a href="code.html">Modules</a></li>
-      <li class="breadcrumb-item active">elasticity</li>
+      <li class="breadcrumb-item active">homopy.elasticity module</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/source/elasticity.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -120,7 +111,7 @@
 }
 </style>
 <section id="module-homopy.elasticity">
-<span id="elasticity"></span><h1>elasticity<a class="headerlink" href="#module-homopy.elasticity" title="Permalink to this heading"></a></h1>
+<span id="homopy-elasticity-module"></span><h1>homopy.elasticity module<a class="headerlink" href="#module-homopy.elasticity" title="Permalink to this heading"></a></h1>
 <p>Created on Wed Apr 27 21:09:24 2022</p>
 <p>&#64;author: <a class="reference external" href="mailto:nicolas&#46;christ&#37;&#52;&#48;kit&#46;edu">nicolas<span>&#46;</span>christ<span>&#64;</span>kit<span>&#46;</span>edu</a></p>
 <p>Module that contains the linear elastic stiffness classes of Isotropy and Transverse Isotropy.</p>
@@ -130,35 +121,6 @@
 <dd><p>Bases: <a class="reference internal" href="tensor.html#homopy.tensor.Tensor" title="homopy.tensor.Tensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></p>
 <p>Elasticity class to express generic elasitc stiffness tensors. The class
 inherits from the Tensor class.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="homopy.elasticity.Elasticity.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/elasticity.html#Elasticity.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.elasticity.Elasticity.__init__" title="Permalink to this definition"></a></dt>
-<dd><p>Initialize the object and call super class initialization.</p>
-<dl>
-<dt>Parameters:</dt><dd><ul class="simple">
-<li><p>None</p></li>
-</ul>
-</dd>
-<dt>Object variables:</dt><dd><ul>
-<li><dl>
-<dt>stiffness3333<span class="classifier"><em>ndarray of shape (3, 3, 3, 3)</em></span></dt><dd><p>Holds the stiffness values in the regular tensor notation in Pa.</p>
-</dd>
-</dl>
-</li>
-<li><dl>
-<dt>stiffness66<span class="classifier"><em>ndarray of shape (6, 6)</em></span></dt><dd><p>Holds the stiffness values in the normalized Voigt notation in Pa.</p>
-</dd>
-</dl>
-</li>
-</ul>
-</dd>
-<dt>Returns:</dt><dd><ul class="simple">
-<li><p>None</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
@@ -167,79 +129,6 @@ inherits from the Tensor class.</p>
 <dd><p>Bases: <a class="reference internal" href="#homopy.elasticity.Elasticity" title="homopy.elasticity.Elasticity"><code class="xref py py-class docutils literal notranslate"><span class="pre">Elasticity</span></code></a></p>
 <p>Transverse Isotropy class to express transverse-isotropic elasitc stiffness tensors.
 The class inherits from the Elasticity class.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="homopy.elasticity.TransverseIsotropy.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">E1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">E2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G23</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nu12</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/elasticity.html#TransverseIsotropy.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.elasticity.TransverseIsotropy.__init__" title="Permalink to this definition"></a></dt>
-<dd><p>Initialize the object and call super class initialization.</p>
-<dl>
-<dt>Parameters:</dt><dd><ul>
-<li><dl>
-<dt>E1<span class="classifier"><em>float</em></span></dt><dd><p>Young’s modulus in longitudinal direction in Pa.</p>
-</dd>
-</dl>
-</li>
-<li><dl>
-<dt>E2<span class="classifier"><em>float</em></span></dt><dd><p>Young’s modulus in transverse direction in Pa.</p>
-</dd>
-</dl>
-</li>
-<li><dl>
-<dt>G12<span class="classifier"><em>float</em></span></dt><dd><p>Shear modulus in the longitudinal-transverse plane in Pa.</p>
-</dd>
-</dl>
-</li>
-<li><dl>
-<dt>G23<span class="classifier"><em>float</em></span></dt><dd><p>Shear modulus in the transverse-transverse plane in Pa.</p>
-</dd>
-</dl>
-</li>
-<li><dl>
-<dt>nu12<span class="classifier"><em>float</em></span></dt><dd><p>Poisson’s ratio in longitudinal direction (dimensionless).</p>
-</dd>
-</dl>
-</li>
-</ul>
-</dd>
-<dt>Object variables:</dt><dd><ul>
-<li><dl>
-<dt>E1<span class="classifier"><em>float</em></span></dt><dd><p>Young’s modulus in longitudinal direction in Pa.</p>
-</dd>
-</dl>
-</li>
-<li><dl>
-<dt>E2<span class="classifier"><em>float</em></span></dt><dd><p>Young’s modulus in transverse direction in Pa.</p>
-</dd>
-</dl>
-</li>
-<li><dl>
-<dt>G12<span class="classifier"><em>float</em></span></dt><dd><p>Shear modulus in the longitudinal-transverse plane in Pa.</p>
-</dd>
-</dl>
-</li>
-<li><dl>
-<dt>G23<span class="classifier"><em>float</em></span></dt><dd><p>Shear modulus in the transverse-transverse plane in Pa.</p>
-</dd>
-</dl>
-</li>
-<li><dl>
-<dt>nu12<span class="classifier"><em>float</em></span></dt><dd><p>Poisson’s ratio in longitudinal direction (dimensionless).</p>
-</dd>
-</dl>
-</li>
-<li><dl>
-<dt>nu23<span class="classifier"><em>float</em></span></dt><dd><p>Poisson’s ratio in transverse direction (dimensionless).</p>
-</dd>
-</dl>
-</li>
-</ul>
-</dd>
-<dt>Returns:</dt><dd><ul class="simple">
-<li><p>None</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
@@ -248,54 +137,6 @@ The class inherits from the Elasticity class.</p>
 <dd><p>Bases: <a class="reference internal" href="#homopy.elasticity.TransverseIsotropy" title="homopy.elasticity.TransverseIsotropy"><code class="xref py py-class docutils literal notranslate"><span class="pre">TransverseIsotropy</span></code></a></p>
 <p>Isotropy class to express isotropic elasitc stiffness tensors.
 The class inherits from the Transverse Isotropy class.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="homopy.elasticity.Isotropy.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">E</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nu</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/elasticity.html#Isotropy.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.elasticity.Isotropy.__init__" title="Permalink to this definition"></a></dt>
-<dd><p>Initialize the object and call super class initialization.</p>
-<dl>
-<dt>Parameters:</dt><dd><ul>
-<li><dl>
-<dt>E<span class="classifier"><em>float</em></span></dt><dd><p>Young’s modulus in Pa.</p>
-</dd>
-</dl>
-</li>
-<li><dl>
-<dt>nu<span class="classifier"><em>float</em></span></dt><dd><p>Poisson’s ratio (dimensionless).</p>
-</dd>
-</dl>
-</li>
-</ul>
-</dd>
-<dt>Object variables:</dt><dd><ul>
-<li><dl>
-<dt>E<span class="classifier"><em>float</em></span></dt><dd><p>Young’s modulus in Pa.</p>
-</dd>
-</dl>
-</li>
-<li><dl>
-<dt>nu<span class="classifier"><em>float</em></span></dt><dd><p>Poisson’s ratio (dimensionless).</p>
-</dd>
-</dl>
-</li>
-<li><dl>
-<dt>lam<span class="classifier"><em>float</em></span></dt><dd><p>First Lamé constant in Pa.</p>
-</dd>
-</dl>
-</li>
-<li><dl>
-<dt>mu<span class="classifier"><em>float</em></span></dt><dd><p>Second Lamé constant in Pa.</p>
-</dd>
-</dl>
-</li>
-</ul>
-</dd>
-<dt>Returns:</dt><dd><ul class="simple">
-<li><p>None</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
 </dd></dl>
 
 </section>
@@ -304,8 +145,8 @@ The class inherits from the Transverse Isotropy class.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="tensor.html" class="btn btn-neutral float-left" title="tensor" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="methods.html" class="btn btn-neutral float-right" title="methods" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="tensor.html" class="btn btn-neutral float-left" title="homopy.tensor module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="methods.html" class="btn btn-neutral float-right" title="homopy.methods module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

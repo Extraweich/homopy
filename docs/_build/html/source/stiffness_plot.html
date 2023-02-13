@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>stiffness_plot &mdash; HomoPy  documentation</title>
+  <title>homopy.stiffness_plot module &mdash; HomoPy  documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -21,7 +21,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="methods" href="methods.html" /> 
+    <link rel="prev" title="homopy.methods module" href="methods.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -47,12 +47,11 @@
 </ul>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="code.html">Modules</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="tensor.html">tensor</a></li>
-<li class="toctree-l2"><a class="reference internal" href="elasticity.html">elasticity</a></li>
-<li class="toctree-l2"><a class="reference internal" href="methods.html">methods</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">stiffness_plot</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tensor.html">homopy.tensor module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="elasticity.html">homopy.elasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="methods.html">homopy.methods module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">homopy.stiffness_plot module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#homopy.stiffness_plot.ElasticPlot"><code class="docutils literal notranslate"><span class="pre">ElasticPlot</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#homopy.stiffness_plot.ElasticPlot.__init__"><code class="docutils literal notranslate"><span class="pre">ElasticPlot.__init__()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#homopy.stiffness_plot.ElasticPlot.matrix_reduction"><code class="docutils literal notranslate"><span class="pre">ElasticPlot.matrix_reduction()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#homopy.stiffness_plot.ElasticPlot.plot_E_body"><code class="docutils literal notranslate"><span class="pre">ElasticPlot.plot_E_body()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#homopy.stiffness_plot.ElasticPlot.polar_plot_E_body"><code class="docutils literal notranslate"><span class="pre">ElasticPlot.polar_plot_E_body()</span></code></a></li>
@@ -82,7 +81,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a></li>
           <li class="breadcrumb-item"><a href="code.html">Modules</a></li>
-      <li class="breadcrumb-item active">stiffness_plot</li>
+      <li class="breadcrumb-item active">homopy.stiffness_plot module</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/source/stiffness_plot.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -117,7 +116,7 @@
 }
 </style>
 <section id="module-homopy.stiffness_plot">
-<span id="stiffness-plot"></span><h1>stiffness_plot<a class="headerlink" href="#module-homopy.stiffness_plot" title="Permalink to this heading"></a></h1>
+<span id="homopy-stiffness-plot-module"></span><h1>homopy.stiffness_plot module<a class="headerlink" href="#module-homopy.stiffness_plot" title="Permalink to this heading"></a></h1>
 <p>Created on Thu Apr 28 16:24:54 2022</p>
 <p>&#64;author: <a class="reference external" href="mailto:nicolas&#46;christ&#37;&#52;&#48;kit&#46;edu">nicolas<span>&#46;</span>christ<span>&#64;</span>kit<span>&#46;</span>edu</a></p>
 <p>3D and Polar plot of Young’s modulus body based on <a class="reference internal" href="#boehlke2001" id="id1"><span>[Boehlke2001]</span></a>.</p>
@@ -132,47 +131,22 @@
 <dd><p>Bases: <a class="reference internal" href="tensor.html#homopy.tensor.Tensor" title="homopy.tensor.Tensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></p>
 <p>Plot class to visualize tensorial results.</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="homopy.stiffness_plot.ElasticPlot.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">USEVOIGT</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/stiffness_plot.html#ElasticPlot.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.stiffness_plot.ElasticPlot.__init__" title="Permalink to this definition"></a></dt>
-<dd><p>Initialize the object.</p>
-<dl>
-<dt>Parameters:</dt><dd><ul>
-<li><dl>
-<dt>USEVOIGT<span class="classifier"><em>boolean</em></span></dt><dd><p>Flag which determines the usage of Voigt (USEVOIGT=True),
-or Normalized Voigt / Mandel (USEVOIGT=False).</p>
-</dd>
-</dl>
-</li>
-</ul>
-</dd>
-<dt>Returns:</dt><dd><ul class="simple">
-<li><p>None</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="homopy.stiffness_plot.ElasticPlot.matrix_reduction">
 <span class="sig-name descname"><span class="pre">matrix_reduction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/stiffness_plot.html#ElasticPlot.matrix_reduction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.stiffness_plot.ElasticPlot.matrix_reduction" title="Permalink to this definition"></a></dt>
 <dd><p>Return the reduced notation (Voigt or normalized Voigt) depending
 on which one is ought to be used.</p>
-<dl>
-<dt>Parameters:</dt><dd><ul>
-<li><dl>
-<dt>matrix<span class="classifier"><em>ndarray of shape (3, 3)</em></span></dt><dd><p>Tensor in regular tensor notation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>matrix</strong> (<em>-</em>) – <em>ndarray of shape (3, 3)</em>
+Tensor in regular tensor notation.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p><em>- …</em> –</p>
+<dl class="simple">
+<dt><em>ndarray of shape (6,)</em></dt><dd><p>Tensor in Voigt or normalized Voigt notation.</p>
 </dd>
 </dl>
-</li>
-</ul>
-</dd>
-<dt>Returns:</dt><dd><ul>
-<li><dl>
-<dt>…<span class="classifier"><em>ndarray of shape (6,)</em></span></dt><dd><p>Tensor in Voigt or normalized Voigt notation.</p>
-</dd>
-</dl>
-</li>
-</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -181,42 +155,30 @@ on which one is ought to be used.</p>
 <dt class="sig sig-object py" id="homopy.stiffness_plot.ElasticPlot.plot_E_body">
 <span class="sig-name descname"><span class="pre">plot_E_body</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">S</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">o</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bound</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0,</span> <span class="pre">0,</span> <span class="pre">0]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rcount</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ccount</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/stiffness_plot.html#ElasticPlot.plot_E_body"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.stiffness_plot.ElasticPlot.plot_E_body" title="Permalink to this definition"></a></dt>
 <dd><p>Plot stiffness body.</p>
-<dl>
-<dt>Parameters:</dt><dd><ul>
-<li><dl>
-<dt>S<span class="classifier"><em>ndarray of shape (6, 6)</em></span></dt><dd><p>Compliance tensor in Voigt or normalized Voigt
-notation.</p>
-</dd>
-</dl>
-</li>
-<li><dl>
-<dt>o<span class="classifier"><em>int</em></span></dt><dd><p>Number of discretization steps for first angle.</p>
-</dd>
-</dl>
-</li>
-<li><dl>
-<dt>p<span class="classifier"><em>int</em></span></dt><dd><p>Number of discretization steps for second angle.</p>
-</dd>
-</dl>
-</li>
-<li><dl>
-<dt>bound<span class="classifier"><em>array of shape (3,), default=[0,0,0]</em></span></dt><dd><p>Boundaries for the 3 axis for the visualization.
-If [0,0,0], boundaries are set automatically.</p>
-</dd>
-</dl>
-</li>
-<li><dl>
-<dt>rcount, ccount<span class="classifier"><em>int</em></span></dt><dd><p>Maximum number of samples used in each direction.
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>S</strong> (<em>-</em>) – <em>ndarray of shape (6, 6)</em>
+Compliance tensor in Voigt or normalized Voigt
+notation.</p></li>
+<li><p><strong>o</strong> (<em>-</em>) – <em>int</em>
+Number of discretization steps for first angle.</p></li>
+<li><p><strong>p</strong> (<em>-</em>) – <em>int</em>
+Number of discretization steps for second angle.</p></li>
+<li><p><strong>bound</strong> (<em>-</em>) – <em>array of shape (3,), default=[0,0,0]</em>
+Boundaries for the 3 axis for the visualization.
+If [0,0,0], boundaries are set automatically.</p></li>
+<li><p><strong>ccount</strong> (<em>- rcount</em><em>,</em>) – <em>int</em>
+Maximum number of samples used in each direction.
 If the input data is larger, it will be downsampled
-(by slicing) to these numbers of points. Defaults to 200.</p>
-</dd>
-</dl>
-</li>
+(by slicing) to these numbers of points. Defaults to 200.</p></li>
 </ul>
 </dd>
-<dt>Returns:</dt><dd><ul class="simple">
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
 <li><p>None</p></li>
 </ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -225,45 +187,36 @@ If the input data is larger, it will be downsampled
 <dt class="sig sig-object py" id="homopy.stiffness_plot.ElasticPlot.polar_plot_E_body">
 <span class="sig-name descname"><span class="pre">polar_plot_E_body</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">S</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">o</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/stiffness_plot.html#ElasticPlot.polar_plot_E_body"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.stiffness_plot.ElasticPlot.polar_plot_E_body" title="Permalink to this definition"></a></dt>
 <dd><p>Plot slice of stiffness body.</p>
-<dl>
-<dt>Parameters:</dt><dd><ul>
-<li><dl>
-<dt>S<span class="classifier"><em>ndarray of shape (6, 6)</em></span></dt><dd><p>Compliance tensor in Voigt or normalized Voigt
-notation.</p>
-</dd>
-</dl>
-</li>
-<li><dl>
-<dt>o<span class="classifier"><em>int</em></span></dt><dd><p>Number of discretization steps for first angle.</p>
-</dd>
-</dl>
-</li>
-<li><dl>
-<dt>angle<span class="classifier"><em>float</em></span></dt><dd><p>Angle to determine the angular orientation of the slice.
-Does not work yet.</p>
-</dd>
-</dl>
-</li>
-<li><dl>
-<dt>plot<span class="classifier"><em>boolean</em></span></dt><dd><p>Determines whether the plot will be displayed. If False,
-the metadata of the plot will be returned instead.</p>
-</dd>
-</dl>
-</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>S</strong> (<em>-</em>) – <em>ndarray of shape (6, 6)</em>
+Compliance tensor in Voigt or normalized Voigt
+notation.</p></li>
+<li><p><strong>o</strong> (<em>-</em>) – <em>int</em>
+Number of discretization steps for first angle.</p></li>
+<li><p><strong>angle</strong> (<em>-</em>) – <em>float</em>
+Angle to determine the angular orientation of the slice.
+Does not work yet.</p></li>
+<li><p><strong>plot</strong> (<em>-</em>) – <em>boolean</em>
+Determines whether the plot will be displayed. If False,
+the metadata of the plot will be returned instead.</p></li>
 </ul>
 </dd>
-<dt>Returns:</dt><dd><ul>
-<li><dl>
-<dt>rad<span class="classifier"><em>ndarray of shape (n+1,)</em></span></dt><dd><p>Angular positions for polar plot.</p>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p><em>- rad</em> –</p>
+<dl class="simple">
+<dt><em>ndarray of shape (n+1,)</em></dt><dd><p>Angular positions for polar plot.</p>
 </dd>
 </dl>
-</li>
+<ul>
 <li><dl>
 <dt>E<span class="classifier"><em>ndarray of shape (n+1,)</em></span></dt><dd><p>Sitffness at corresponding angle.</p>
 </dd>
 </dl>
 </li>
 </ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -274,19 +227,17 @@ the metadata of the plot will be returned instead.</p>
 <dd><p>Polar plot of multiple Stiffness bodies in one plot. For this
 use the data generated from polar_plot_E_body or polar_plot_laminate
 with plot=False.</p>
-<dl class="simple">
-<dt>Parameters:</dt><dd><ul class="simple">
-<li><dl class="simple">
-<dt>data: <em>list</em></dt><dd><p>Data to be plotted with angluar position, stiffness and
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>-</em>) – <em>list</em>
+Data to be plotted with angluar position, stiffness and
 an optional string for the label in the plot.</p>
 </dd>
-</dl>
-</li>
-</ul>
-</dd>
-<dt>Returns:</dt><dd><ul class="simple">
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
 <li><p>None</p></li>
 </ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -296,44 +247,35 @@ an optional string for the label in the plot.</p>
 <span class="sig-name descname"><span class="pre">polar_plot_laminate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">laminate_stiffness</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">o</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/stiffness_plot.html#ElasticPlot.polar_plot_laminate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.stiffness_plot.ElasticPlot.polar_plot_laminate" title="Permalink to this definition"></a></dt>
 <dd><p>Polar plot stiffness body of laminate. This method should be used
 for laminate results for the Halpin-Tsai homogenization.</p>
-<dl>
-<dt>Parameters:</dt><dd><ul>
-<li><dl>
-<dt>laminate_stiffness<span class="classifier"><em>ndarray of shape (3, 3)</em></span></dt><dd><p>Planar stiffness matrix in Voigt or normalized Voigt
-notation.</p>
-</dd>
-</dl>
-</li>
-<li><dl>
-<dt>o<span class="classifier"><em>int</em></span></dt><dd><p>Number of discretization steps for first angle.</p>
-</dd>
-</dl>
-</li>
-<li><dl>
-<dt>limit<span class="classifier"><em>float</em></span></dt><dd><p>Limit of radial axis in polar plot.</p>
-</dd>
-</dl>
-</li>
-<li><dl>
-<dt>plot<span class="classifier"><em>boolean</em></span></dt><dd><p>Determines whether the plot will be displayed. If False,
-the metadata of the plot will be returned instead.</p>
-</dd>
-</dl>
-</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>laminate_stiffness</strong> (<em>-</em>) – <em>ndarray of shape (3, 3)</em>
+Planar stiffness matrix in Voigt or normalized Voigt
+notation.</p></li>
+<li><p><strong>o</strong> (<em>-</em>) – <em>int</em>
+Number of discretization steps for first angle.</p></li>
+<li><p><strong>limit</strong> (<em>-</em>) – <em>float</em>
+Limit of radial axis in polar plot.</p></li>
+<li><p><strong>plot</strong> (<em>-</em>) – <em>boolean</em>
+Determines whether the plot will be displayed. If False,
+the metadata of the plot will be returned instead.</p></li>
 </ul>
 </dd>
-<dt>Returns:</dt><dd><ul>
-<li><dl>
-<dt>rad<span class="classifier"><em>ndarray of shape (n+1,)</em></span></dt><dd><p>Angular positions for polar plot.</p>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p><em>- rad</em> –</p>
+<dl class="simple">
+<dt><em>ndarray of shape (n+1,)</em></dt><dd><p>Angular positions for polar plot.</p>
 </dd>
 </dl>
-</li>
+<ul>
 <li><dl>
 <dt>E<span class="classifier"><em>ndarray of shape (n+1,)</em></span></dt><dd><p>Sitffness at corresponding angle.</p>
 </dd>
 </dl>
 </li>
 </ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -342,27 +284,22 @@ the metadata of the plot will be returned instead.</p>
 <dt class="sig sig-object py" id="homopy.stiffness_plot.ElasticPlot.get_E_laminate">
 <span class="sig-name descname"><span class="pre">get_E_laminate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">C</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/stiffness_plot.html#ElasticPlot.get_E_laminate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.stiffness_plot.ElasticPlot.get_E_laminate" title="Permalink to this definition"></a></dt>
 <dd><p>Return Young’s modulus of laminate as a function of angle omega.</p>
-<dl>
-<dt>Parameters:</dt><dd><ul>
-<li><dl>
-<dt>C<span class="classifier"><em>ndarray of shape (3, 3)</em></span></dt><dd><p>Stiffness of laminate in default (orthonormal) coordinate system.</p>
-</dd>
-</dl>
-</li>
-<li><dl>
-<dt>phi<span class="classifier"><em>float</em></span></dt><dd><p>Angle of orientation in radians.</p>
-</dd>
-</dl>
-</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>C</strong> (<em>-</em>) – <em>ndarray of shape (3, 3)</em>
+Stiffness of laminate in default (orthonormal) coordinate system.</p></li>
+<li><p><strong>phi</strong> (<em>-</em>) – <em>float</em>
+Angle of orientation in radians.</p></li>
 </ul>
 </dd>
-<dt>Returns:</dt><dd><ul>
-<li><dl>
-<dt>E<span class="classifier"><em>float</em></span></dt><dd><p>Young’s modulus in angle direction</p>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p><em>- E</em> –</p>
+<dl class="simple">
+<dt><em>float</em></dt><dd><p>Young’s modulus in angle direction</p>
 </dd>
 </dl>
-</li>
-</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -375,7 +312,7 @@ the metadata of the plot will be returned instead.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="methods.html" class="btn btn-neutral float-left" title="methods" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="methods.html" class="btn btn-neutral float-left" title="homopy.methods module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

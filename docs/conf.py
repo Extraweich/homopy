@@ -18,7 +18,11 @@ extensions = [
     "nbsphinx",
     "sphinx.ext.autodoc",
     "sphinx.ext.viewcode",
+    "sphinxcontrib.napoleon",
 ]
+
+napoleon_use_rtype = False
+napoleon_use_ivar = True
 
 templates_path = ["_templates"]
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
@@ -30,7 +34,7 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 html_theme = "sphinx_rtd_theme"
 html_static_path = []
 
-
+"""
 def skip(app, what, name, obj, would_skip, options):
     if name == "__init__":
         return False
@@ -39,4 +43,4 @@ def skip(app, what, name, obj, would_skip, options):
 
 def setup(app):
     app.connect("autodoc-skip-member", skip)
-
+"""

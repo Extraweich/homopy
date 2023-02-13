@@ -1,5 +1,5 @@
-stiffness_plot
-==============
+homopy.stiffness_plot module
+============================
 
 .. automodule:: homopy.stiffness_plot
    :show-inheritance:
