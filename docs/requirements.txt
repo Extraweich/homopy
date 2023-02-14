@@ -1,2 +1,3 @@
 nbsphinx
+sphinxcontrib-napoleon
 homopy
