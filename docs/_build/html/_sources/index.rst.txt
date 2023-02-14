@@ -35,5 +35,12 @@ Install HomoPy by running::
 
    pip install homopy
 
+Acknowledgment
+==============
+
+.. toctree::
+   :maxdepth: 2
+
+   /source/acknowledgement
 
 

@@ -50,6 +50,8 @@
 <li class="toctree-l1 current"><a class="reference internal" href="code.html">Modules</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">homopy.tensor module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#homopy.tensor.Tensor"><code class="docutils literal notranslate"><span class="pre">Tensor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#homopy.tensor.Tensor._diade"><code class="docutils literal notranslate"><span class="pre">Tensor._diade()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#homopy.tensor.Tensor._diade4"><code class="docutils literal notranslate"><span class="pre">Tensor._diade4()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#homopy.tensor.Tensor.tensor_product"><code class="docutils literal notranslate"><span class="pre">Tensor.tensor_product()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#homopy.tensor.Tensor.matrix2voigt"><code class="docutils literal notranslate"><span class="pre">Tensor.matrix2voigt()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#homopy.tensor.Tensor.matrix2mandel"><code class="docutils literal notranslate"><span class="pre">Tensor.matrix2mandel()</span></code></a></li>
@@ -64,6 +66,9 @@
 <li class="toctree-l2"><a class="reference internal" href="stiffness_plot.html">homopy.stiffness_plot module</a></li>
 </ul>
 </li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="acknowledgement.html">Acknowledgment</a></li>
 </ul>
 
         </div>
@@ -133,13 +138,50 @@
 <dl class="field-list simple">
 <dt class="field-odd">Variables</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>~Tensor.e1</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>3</em><em>,</em><em>)</em>) – Orthonormalbasis of 1st order tensors.</p></li>
-<li><p><strong>~Tensor.e2</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>3</em><em>,</em><em>)</em>) – Orthonormalbasis of 1st order tensors.</p></li>
-<li><p><strong>~Tensor.e3</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>3</em><em>,</em><em>)</em>) – Orthonormalbasis of 1st order tensors.</p></li>
+<li><p><strong>~Tensor.e1</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>3</em><em>,</em><em>)</em>) – Vector 1 of orthonormalbasis of 1st order tensors.</p></li>
+<li><p><strong>~Tensor.e2</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>3</em><em>,</em><em>)</em>) – Vector 2 of orthonormalbasis of 1st order tensors.</p></li>
+<li><p><strong>~Tensor.e3</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>3</em><em>,</em><em>)</em>) – Vector 3 of orthonormalbasis of 1st order tensors.</p></li>
 <li><p><strong>~Tensor.B</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>3</em><em>, </em><em>3</em><em>, </em><em>6</em><em>)</em>) – Orthonormalbasis of 4th order tensors in normalized Voigt notation.</p></li>
 </ul>
 </dd>
 </dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="homopy.tensor.Tensor._diade">
+<span class="sig-name descname"><span class="pre">_diade</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">di</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/tensor.html#Tensor._diade"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.tensor.Tensor._diade" title="Permalink to this definition"></a></dt>
+<dd><p>Return diadic product of two directional vectors. This is used to
+calculate the basis tensors in the normalized Voigt notation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>di</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>3</em><em>,</em><em>)</em>) – Directional vector #1.</p></li>
+<li><p><strong>dj</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>3</em><em>,</em><em>)</em>) – Directional vector #2.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>ndarray of shape (3, 3)</em> – Tensor of 2nd order in tensor notation.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="homopy.tensor.Tensor._diade4">
+<span class="sig-name descname"><span class="pre">_diade4</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/tensor.html#Tensor._diade4"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.tensor.Tensor._diade4" title="Permalink to this definition"></a></dt>
+<dd><p>Return diadic product of two tensors. This is used to transfer
+stiffness tensors from normalized Voigt notation to regular tensor
+notation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bi</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>3</em><em>, </em><em>3</em><em>)</em>) – Orthonormal basis tensor #1.</p></li>
+<li><p><strong>bj</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>3</em><em>, </em><em>3</em><em>)</em>) – Orthonormal basis tensor #2.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>ndarray of shape (3, 3, 3, 3)</em> – Tensor of 4th order in tensor notation.</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="homopy.tensor.Tensor.tensor_product">
 <span class="sig-name descname"><span class="pre">tensor_product</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tensor_a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tensor_b</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/tensor.html#Tensor.tensor_product"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.tensor.Tensor.tensor_product" title="Permalink to this definition"></a></dt>
@@ -165,16 +207,10 @@ normalized Voigt notation.</p>
 calculated from the regular tensor notation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>matrix</strong> (<em>-</em>) – ndarray of shape (3, 3)
-Tensor in regular tensor notation.</p>
+<dd class="field-odd"><p><strong>matrix</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>3</em><em>, </em><em>3</em><em>)</em>) – Tensor of 2nd order in regular tensor notation.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><p><em>- …</em> –</p>
-<dl class="simple">
-<dt>ndarray of shape (6,)</dt><dd><p>Tensor in Voigt notation.</p>
-</dd>
-</dl>
-</p>
+<dd class="field-even"><p><em>ndarray of shape (6,)</em> – Tensor in Voigt notation.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -186,16 +222,10 @@ Tensor in regular tensor notation.</p>
 calculated from the regular tensor notation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>matrix</strong> (<em>-</em>) – <em>ndarray of shape (3, 3)</em>
-Tensor in regular tensor notation.</p>
+<dd class="field-odd"><p><strong>matrix</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>3</em><em>, </em><em>3</em><em>)</em>) – Tensor of 2nd order in regular tensor notation.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><p><em>- …</em> –</p>
-<dl class="simple">
-<dt><em>ndarray of shape (6,)</em></dt><dd><p>Tensor in normalized Voigt notation.</p>
-</dd>
-</dl>
-</p>
+<dd class="field-even"><p><em>ndarray of shape (6,)</em> – Tensor in normalized Voigt notation.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -207,16 +237,10 @@ Tensor in regular tensor notation.</p>
 order calculated fromthe regular tensor notation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>tensor</strong> (<em>-</em>) – <em>ndarray of shape (3, 3, 3, 3)</em>
-Tensor in regular tensor notation.</p>
+<dd class="field-odd"><p><strong>tensor</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>3</em><em>, </em><em>3</em><em>, </em><em>3</em><em>, </em><em>3</em><em>)</em>) – Tensor of 4th order in regular tensor notation.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><p><em>- …</em> –</p>
-<dl class="simple">
-<dt><em>ndarray of shape (6, 6)</em></dt><dd><p>Tensor in normalized Voigt notation.</p>
-</dd>
-</dl>
-</p>
+<dd class="field-even"><p><em>ndarray of shape (6, 6)</em> – Tensor in normalized Voigt notation.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -228,16 +252,10 @@ Tensor in regular tensor notation.</p>
 the normalized Voigt (Mandel) notation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>mandel</strong> (<em>-</em>) – <em>ndarray of shape (6, 6)</em>
-Tensor in normalized Voigt notation.</p>
+<dd class="field-odd"><p><strong>mandel</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>6</em><em>, </em><em>6</em><em>)</em>) – Tensor of 4th order in normalized Voigt notation.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><p><em>- tensor</em> –</p>
-<dl class="simple">
-<dt><em>ndarray of shape (3, 3, 3, 3)</em></dt><dd><p>Tensor in regular tensor notation.</p>
-</dd>
-</dl>
-</p>
+<dd class="field-even"><p><strong>tensor</strong> (<em>ndarray of shape (3, 3, 3, 3)</em>) – Tensor in regular tensor notation.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -257,7 +275,7 @@ Tensor in normalized Voigt notation.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022, Nicolas Christ.</p>
+    <p>&#169; Copyright 2023, Nicolas Christ.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

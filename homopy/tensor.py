@@ -59,20 +59,18 @@ class Tensor:
         Return diadic product of two directional vectors. This is used to
         calculate the basis tensors in the normalized Voigt notation.
 
-        :param di: Directional vector #1
-        :type di: *ndarray of shape (3,)*
-        :param dj: Directional vector #2
-        :type dj: *ndarray of shape (3,)*
+        Parameters
+        ----------
+        di :  ndarray of shape (3,)
+            Directional vector #1.
+        dj :  ndarray of shape (3,)
+            Directional vector #2.
 
-        Parameters:
-            - di : *ndarray of shape (3,)*
-                Directional vector #1.
-            - dj : *ndarray of shape (3,)*
-                Directional vector #2.
 
-        Returns:
-            - ... : *ndarray of shape (3, 3)*
-                Tensor of 2nd order in tensor notation.
+        Returns
+        -------
+        ndarray of shape (3, 3)
+            Tensor of 2nd order in tensor notation.
         """
         return np.einsum("i,j->ij", di, dj)
 
@@ -82,15 +80,17 @@ class Tensor:
         stiffness tensors from normalized Voigt notation to regular tensor
         notation.
 
-        Parameters:
-            - bi : *ndarray of shape (3, 3)*
-                Orthonormal basis tensor #1.
-            - bj : *ndarray of shape (3, 3)*
-                Orthonormal basis tensor #2.
+        Parameters
+        ----------
+        bi : ndarray of shape (3, 3)
+            Orthonormal basis tensor #1.
+        bj : ndarray of shape (3, 3)
+            Orthonormal basis tensor #2.
 
-        Returns:
-            - ... : *ndarray of shape (3, 3, 3, 3)*
-                Tensor of 4th order in tensor notation.
+        Returns
+        -------
+        ndarray of shape (3, 3, 3, 3)
+            Tensor of 4th order in tensor notation.
         """
         return np.einsum("ij,kl->ijkl", bi, bj)
 
@@ -118,13 +118,15 @@ class Tensor:
         Return the Voigt notation of a tensor of 2nd order
         calculated from the regular tensor notation.
 
-        Parameters:
-            - matrix : ndarray of shape (3, 3)
-                Tensor in regular tensor notation.
+        Parameters
+        ----------
+        matrix : ndarray of shape (3, 3)
+            Tensor of 2nd order in regular tensor notation.
 
-        Returns:
-            - ... : ndarray of shape (6,)
-                Tensor in Voigt notation.
+        Returns
+        -------
+        ndarray of shape (6,)
+            Tensor in Voigt notation.
         """
         return np.array(
             [
@@ -142,13 +144,15 @@ class Tensor:
         Return the normalized Voigt notation of a tensor of 2nd order
         calculated from the regular tensor notation.
 
-        Parameters:
-            - matrix : *ndarray of shape (3, 3)*
-                Tensor in regular tensor notation.
+        Parameters
+        ----------
+        matrix : ndarray of shape (3, 3)
+            Tensor of 2nd order in regular tensor notation.
 
-        Returns:
-            - ... : *ndarray of shape (6,)*
-                Tensor in normalized Voigt notation.
+        Returns
+        -------
+        ndarray of shape (6,)
+            Tensor in normalized Voigt notation.
         """
         b = np.sqrt(2)
         return np.array(
@@ -167,13 +171,15 @@ class Tensor:
         Return the normalized Voigt (Mandel) notation of a tensor of 4th
         order calculated fromthe regular tensor notation.
 
-        Parameters:
-            - tensor : *ndarray of shape (3, 3, 3, 3)*
-                Tensor in regular tensor notation.
+        Parameters
+        ----------
+        tensor : ndarray of shape (3, 3, 3, 3)
+            Tensor of 4th order in regular tensor notation.
 
-        Returns:
-            - ... : *ndarray of shape (6, 6)*
-                Tensor in normalized Voigt notation.
+        Returns
+        -------
+        ndarray of shape (6, 6)
+            Tensor in normalized Voigt notation.
         """
         b = np.sqrt(2)
         g = tensor
@@ -235,13 +241,15 @@ class Tensor:
         Return the regular tensor notation of a tensor calculated from
         the normalized Voigt (Mandel) notation.
 
-        Parameters:
-            - mandel : *ndarray of shape (6, 6)*
-                Tensor in normalized Voigt notation.
+        Parameters
+        ----------
+        mandel : ndarray of shape (6, 6)
+            Tensor of 4th order in normalized Voigt notation.
 
-        Returns:
-            - tensor : *ndarray of shape (3, 3, 3, 3)*
-                Tensor in regular tensor notation.
+        Returns
+        -------
+        tensor : ndarray of shape (3, 3, 3, 3)
+            Tensor in regular tensor notation.
         """
         tensor = np.zeros((3, 3, 3, 3))
         for i in range(0, 6):

@@ -7,7 +7,7 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "HomoPy"
-copyright = "2022, Nicolas Christ"
+copyright = "2023, Nicolas Christ"
 author = "Nicolas Christ"
 
 # -- General configuration ---------------------------------------------------
@@ -23,6 +23,21 @@ extensions = [
 
 napoleon_use_rtype = False
 napoleon_use_ivar = True
+
+napoleon_google_docstring = True
+napoleon_numpy_docstring = True
+napoleon_include_init_with_doc = False
+napoleon_include_private_with_doc = True
+napoleon_include_special_with_doc = True
+napoleon_use_admonition_for_examples = True
+napoleon_use_admonition_for_notes = True
+napoleon_use_admonition_for_references = False
+napoleon_use_ivar = True
+napoleon_use_keyword = True
+napoleon_use_param = True
+napoleon_preprocess_types = False
+napoleon_type_aliases = None
+napoleon_attr_annotations = False
 
 templates_path = ["_templates"]
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
