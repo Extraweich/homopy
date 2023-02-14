@@ -10,16 +10,6 @@ on Eshelby's tensor can also be found in [Mura1987]_ (pp. 74 ff.).
 Halpin-Tsai homogenization after [Fu2019]_ (pp. 143 ff.). Also, the effective planar stiffness 
 matrix for the Halpin-Tsai homogenization is based on the laminate analogy approach after [Fu2019]_
 (pp. 155 ff.).
-
-.. [Benveniste1987] Benveniste, Y. (1987), 'A new approach to the application of Mori-Tanaka's theory in composite materials', *Mechanics of Materials*, pp. 147-157, Available at: https://doi.org/10.1016/0167-6636(87)90005-6 
-.. [Brylka2017] Brylka, B. (2017), *Charakterisierung und Modellierung der Steifigkeit von langfaserverstärktem Polypropylen*, KIT Scientific Publishing
-.. [Gross2016] Gross, D. and Seelig, T. (2016), *Bruchmechanik*, Springer Berlin Heidelberg
-.. [Tandon1984] Tandon, G.P. and Weng, G.J. (1984), 'The effect of aspect ratio of inclusions on the elastic properties of unidirectionally aligned composites', *Polymer Composites*, pp. 327-333, Available at: https://doi.org/10.1002/pc.750050413
-.. [Mura1987] Mura, T. (1987), *Micromechanics of defects in solids*, Springer Dordrecht
-.. [Fu2019] Fu, S.Y., Lauke, B. and Mai, Y.W. (2019), *Science and engineering of short fibre-reinforced polymer composites*, Woodhead Publishing
-.. [Segura2023] Segura, N.J., Pichler, B.L.A. and Hellmich, C. (2023), 'Concentration tensors preserving elastic symmetry of multiphase composites', *Mechanics of Materials*, Available at: https://doi.org/10.1016/j.mechmat.2023.104555
-.. [Advani1987] Advani, S.G. and Tucker III, C.L. (1987), 'The Use of Tensors to Describe and Predict Fiber Orientation in Short Fiber Composites', *Journal of Rheology*, pp. 751-784, Available at: https://doi.org/10.1122/1.549945
-
 """
 
 import numpy as np

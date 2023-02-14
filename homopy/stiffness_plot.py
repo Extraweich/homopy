@@ -5,8 +5,6 @@ Created on Thu Apr 28 16:24:54 2022
 @author: nicolas.christ@kit.edu
 
 3D and Polar plot of Young's modulus body based on [Boehlke2001]_.
-
-.. [Boehlke2001] Böhlke, T. and Brüggemann, C. (2001), 'Graphical representation of the generalized Hooke's law', *Technische Mechanik*, 21 (2), pp. 145-158
 """
 
 import numpy as np

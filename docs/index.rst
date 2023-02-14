@@ -43,4 +43,13 @@ Acknowledgment
 
    /source/acknowledgement
 
+References
+==========
+
+.. toctree::
+   :maxdepth: 2
+
+   /source/references
+
+
 

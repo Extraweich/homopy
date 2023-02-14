@@ -52,6 +52,9 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="acknowledgement.html">Acknowledgment</a></li>
 </ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
+</ul>
 
         </div>
       </div>
@@ -104,31 +107,11 @@
 <section id="statement-of-need">
 <h1>Statement of need<a class="headerlink" href="#statement-of-need" title="Permalink to this heading"></a></h1>
 <div class="line-block">
-<div class="line">Current ecological developments call for technical solutions to reduce the ecological footprint of future innovations. Significant opportunities to promote a better eco-balance lie in the development of new material systems, particularly in the area of lightweight construction. Fiber-reinforced polymers (FRP) are a promising class of materials in the field of lightweight construction. The fibers used have high specific strength and stiffness properties, so that less material is required to achieve comparable properties in comparison with conventional materials, e.g. steel. The polymer, hereafter referred to as the matrix, is used to hold the fibers in place and transfer stresses between them. Further literature on FRP can be found in <a class="reference internal" href="#christensen2012" id="id1"><span>[Christensen2012]</span></a> and <a class="reference internal" href="#chawla2019" id="id2"><span>[Chawla2019]</span></a>.</div>
+<div class="line">Current ecological developments call for technical solutions to reduce the ecological footprint of future innovations. Significant opportunities to promote a better eco-balance lie in the development of new material systems, particularly in the area of lightweight construction. Fiber-reinforced polymers (FRP) are a promising class of materials in the field of lightweight construction. The fibers used have high specific strength and stiffness properties, so that less material is required to achieve comparable properties in comparison with conventional materials, e.g. steel. The polymer, hereafter referred to as the matrix, is used to hold the fibers in place and transfer stresses between them. Further literature on FRP can be found in <a class="reference internal" href="references.html#christensen2012" id="id1"><span>[Christensen2012]</span></a> and <a class="reference internal" href="references.html#chawla2019" id="id2"><span>[Chawla2019]</span></a>.</div>
 <div class="line">A general challenge in using FRP in engineering is that prediction simulations rely on robust material models. Since it is a highly inhomogeneous material, the computational cost increases dramatically if all components are modeled directly. To circumvent this, homogenization methods have been developed in the last decades. The goal of a homogenization method is to calculate the material properties of a synthetic homogeneous material, which should then effectively behave like the inhomogeneous material.</div>
-<div class="line">HomoPy was developed to implement two commonly used homogenization methods, namely the <a class="reference internal" href="#mori1973" id="id3"><span>[Mori1973]</span></a> for 3D stiffness predictions and a shear-lag modified Halpin-Tsai method (based on <a class="reference internal" href="#cox1952" id="id4"><span>[Cox1952]</span></a> and <a class="reference internal" href="#halpin1969" id="id5"><span>[Halpin1969]</span></a>) for planar predictions, i.e. laminate predictions. The goal of HomoPy is to provide an open-source implementation of these methods with a particular focus on FRP modeling. Other modules are available, e.g. <a class="reference external" href="https://fiberpy.readthedocs.io/en/latest/index.html">fiberpy</a>, but to the author’s knowledge none of them provides the capability to model hybrid FRPs consisting of different fiber materials and/or geometries. Furthermore, a major advantage in HomoPy is the implementation of the graphical representation of the effective directional stiffnesses according to <a class="reference internal" href="stiffness_plot.html#boehlke2001" id="id6"><span>[Boehlke2001]</span></a>. Comparing different material systems or FRP tape layup orientations is obviously easier with a graphical representation than comparing up to 21 stiffness components each.</div>
+<div class="line">HomoPy was developed to implement two commonly used homogenization methods, namely the <a class="reference internal" href="references.html#mori1973" id="id3"><span>[Mori1973]</span></a> for 3D stiffness predictions and a shear-lag modified Halpin-Tsai method (based on <a class="reference internal" href="references.html#cox1952" id="id4"><span>[Cox1952]</span></a> and <a class="reference internal" href="references.html#halpin1969" id="id5"><span>[Halpin1969]</span></a>) for planar predictions, i.e. laminate predictions. The goal of HomoPy is to provide an open-source implementation of these methods with a particular focus on FRP modeling. Other modules are available, e.g. <a class="reference external" href="https://fiberpy.readthedocs.io/en/latest/index.html">fiberpy</a>, but to the author’s knowledge none of them provides the capability to model hybrid FRPs consisting of different fiber materials and/or geometries. Furthermore, a major advantage in HomoPy is the implementation of the graphical representation of the effective directional stiffnesses according to <a class="reference internal" href="references.html#boehlke2001" id="id6"><span>[Boehlke2001]</span></a>. Comparing different material systems or FRP tape layup orientations is obviously easier with a graphical representation than comparing up to 21 stiffness components each.</div>
 <div class="line">To this point, HomoPy is limited to calculating the effective elastic properties with the two methods mentioned above. Possible extensions for the future include thermal expansion properties and other homogenization methods.</div>
 </div>
-<dl class="citation">
-<dt class="label" id="christensen2012"><span class="brackets"><a class="fn-backref" href="#id1">Christensen2012</a></span></dt>
-<dd><p>Christensen, R. M. (2012), <em>Mechanics of Composite Materials</em>, Dover Publications</p>
-</dd>
-<dt class="label" id="chawla2019"><span class="brackets"><a class="fn-backref" href="#id2">Chawla2019</a></span></dt>
-<dd><p>Chawla, K. K. (2019), <em>Composite Materials</em>, Springer International Publishing</p>
-</dd>
-<dt class="label" id="mori1973"><span class="brackets"><a class="fn-backref" href="#id3">Mori1973</a></span></dt>
-<dd><p>Mori, T. and Tanaka, K. (1973), ‘Average stress in matrix and average elastic energy of materials with misfitting inclusions’, <em>Acta Metallurgica</em>, 21 (5), pp. 571-574, Available at: <a class="reference external" href="https://doi.org/10.1016/0001-6160(73)90064-3">https://doi.org/10.1016/0001-6160(73)90064-3</a></p>
-</dd>
-<dt class="label" id="cox1952"><span class="brackets"><a class="fn-backref" href="#id4">Cox1952</a></span></dt>
-<dd><p>Cox, H. L. (1952), ‘The elasticity and strength of paper and other fibrous materials’, <em>British Journal of Applied Physics</em>, 3 (3), pp. 72–79, Available at: <a class="reference external" href="https://doi.org/10.1088/0508-3443/3/3/302">https://doi.org/10.1088/0508-3443/3/3/302</a></p>
-</dd>
-<dt class="label" id="halpin1969"><span class="brackets"><a class="fn-backref" href="#id5">Halpin1969</a></span></dt>
-<dd><p>Halpin, John C. (1969), ‘Effects of environmental factors on composite materials’, <em>Air Force Materials Laboratory, Air Force Systems Command</em></p>
-</dd>
-<dt class="label" id="boehlke2001"><span class="brackets"><a class="fn-backref" href="#id6">Boehlke2001</a></span></dt>
-<dd><p>Böhlke, T. and Brüggemann, C. (2001), ‘Graphical representation of the generalized Hooke’s law’, <em>Technische Mechanik</em>, 21 (2), pp. 145-158</p>
-</dd>
-</dl>
 </section>
 
 

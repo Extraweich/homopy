@@ -5,8 +5,6 @@ Created on Wed Apr 27 21:09:24 2022
 @author: nicolas.christ@kit.edu
 
 Tensor class for basic arithmetic operations. More information on tensor representation in Voigt and Mandel notations are given in [Brannon2018]_.
-
-.. [Brannon2018] Brannon, R. M. (2018), 'Voigt and Mandel components', in *Rotation, Reflection, and Frame Changes*, IOP Publishing
 """
 
 import numpy as np
