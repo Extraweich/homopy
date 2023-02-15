@@ -1,9 +1,13 @@
+<p align="center">
+  <img src="./docs/images/Homopy_mit_w.svg" width="400">
+</p>
+
+***
 [![PyPI version](https://badge.fury.io/py/homopy.svg)](https://badge.fury.io/py/homopy)
 [![Documentation status](https://readthedocs.org/projects/homopy/badge/?version=latest)](https://homopy.readthedocs.io/en/latest/?badge=latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Extraweich/homopy/main?labpath=%2Fexamples%2FHybrid.ipynb)
 
-# HomoPy
 *Your solution for stiffness problems*
 
 HomoPy is a Python package to perform calculations of effective stiffness properties in homogenized materials, with an emphasize on fiber reinforced polymers. Furthermore, the package offers visualisation tools for elastic stiffness tensors, so called Young's modulus' bodies. These allow a comparison of angle dependent stiffnesses of different materials.
