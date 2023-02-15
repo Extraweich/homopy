@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./docs/source/images/Homopy_Yellow.svg" width="400">
+  <img src="https://github.com/Extraweich/homopy/blob/main/docs/source/images/Homopy_Yellow.svg?raw=true", width="400">
 </p>
 
 ***
