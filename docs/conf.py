@@ -52,11 +52,15 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
 html_theme = "sphinx_rtd_theme"
 html_static_path = ["source/_static"]
-html_logo = "source/images/Homopy_Yellow.png"
+html_logo = "source/images/Homopy_Yellow.svg"
 html_theme_options = {
     "logo_only": True,
     "display_version": False,
 }
+
+html_css_files = [
+    "custom.css",
+]
 
 """
 def skip(app, what, name, obj, would_skip, options):
