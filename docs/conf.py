@@ -51,11 +51,11 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = "sphinx_rtd_theme"
-html_static_path = ["_static"]
-html_logo = "source\images\Homopy_Yellow.png"
+html_static_path = ["source/_static"]
+html_logo = "source/images/Homopy_Yellow.png"
 html_theme_options = {
-    'logo_only': True,
-    'display_version': False,
+    "logo_only": True,
+    "display_version": False,
 }
 
 """
