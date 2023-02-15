@@ -31,7 +31,6 @@ An interactive example to intuitively see the effects of fiber distributions on 
 Further topic related methods:
 - Closures to calculate orientation tensors of forth order from an orientation tensor of second order are available in [fiberoripy](https://github.com/nilsmeyerkit/fiberoripy)
 - Further tensor operations and output formats are available in [mechkit](https://github.com/JulianKarlBauer/mechkit)
-- Determining fiber orientation tensors from micrographs is possible by the implemented method of ellipses
 
 ***
 <a id="1">[1]</a>  John C. Halpin, *Effects of environmental factors on composite materials*, 1969. \
