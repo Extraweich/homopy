@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./docs/images/Homopy_mit_w.svg" width="400">
+  <img src="./docs/images/Homopy_Yellow.svg" width="400">
 </p>
 
 ***
