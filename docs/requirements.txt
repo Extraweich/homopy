@@ -1,3 +1,3 @@
 nbsphinx
 sphinxcontrib-napoleon
-homopy==1.0.7
+homopy
