@@ -3,6 +3,7 @@
 </p>
 
 ***
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/f2c8343e7b2e47bb877296d8556df2e4)](https://app.codacy.com/gh/Extraweich/homopy?utm_source=github.com&utm_medium=referral&utm_content=Extraweich/homopy&utm_campaign=Badge_Grade_Settings)
 [![PyPI version](https://badge.fury.io/py/homopy.svg)](https://badge.fury.io/py/homopy)
 [![Documentation status](https://readthedocs.org/projects/homopy/badge/?version=latest)](https://homopy.readthedocs.io/en/latest/?badge=latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
