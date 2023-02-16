@@ -7,16 +7,12 @@ from homopy import tensor
 
 @pytest.fixture()
 def random_hooke_sym():
-    return mechkit.operators.Sym_Fourth_Order_Special(label="inner")(
-        np.random.rand(3, 3, 3, 3)
-    )
+    return Sym_Fourth_Order_Special(label="inner")(np.random.rand(3, 3, 3, 3))
 
 
 @pytest.fixture()
 def random_complete_sym():
-    return mechkit.operators.Sym_Fourth_Order_Special(label="complete")(
-        np.random.rand(3, 3, 3, 3)
-    )
+    return Sym_Fourth_Order_Special(label="complete")(np.random.rand(3, 3, 3, 3))
 
 
 @pytest.fixture()
