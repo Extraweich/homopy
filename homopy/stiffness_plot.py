@@ -9,7 +9,6 @@ Created on Thu Apr 28 16:24:54 2022
 
 import numpy as np
 from .tensor import Tensor
-from .methods import Laminate
 
 sin = np.sin
 cos = np.cos
@@ -57,7 +56,8 @@ class ElasticPlot(Tensor):
         else:
             return self.matrix2mandel(matrix)
 
-    def _get_reciprocal_E(self, didi, S):
+    @staticmethod
+    def _get_reciprocal_E(didi, S):
         """
         Return the reciprocal of Young's modulus (compliance) in
         the direction of di.
@@ -99,7 +99,8 @@ class ElasticPlot(Tensor):
         didi = self.matrix_reduction(self._diade(di, di))
         return self._get_reciprocal_E(didi, S) ** (-1)
 
-    def _dir_vec(self, phi, theta):
+    @staticmethod
+    def _dir_vec(phi, theta):
         """
         Return directional vector based on angular parametrization.
 
@@ -118,7 +119,7 @@ class ElasticPlot(Tensor):
 
         return np.array([cos(phi) * sin(theta), sin(phi) * sin(theta), cos(theta)])
 
-    def plot_E_body(self, S, o, p, bound=[0, 0, 0], rcount=200, ccount=200):
+    def plot_E_body(self, S, o, p, bound=None, rcount=200, ccount=200):
         """
         Plot stiffness body.
 
@@ -131,9 +132,9 @@ class ElasticPlot(Tensor):
             Number of discretization steps for first angle.
         p : int
             Number of discretization steps for second angle.
-        bound : array of shape (3,), default=[0,0,0]
+        bound : array of shape (3,), default=None
             Boundaries for the 3 axis for the visualization.
-            If [0,0,0], boundaries are set automatically.
+            If None, boundaries are set automatically.
         rcount : int
             Maximum number of samples used in first angle direction.
             If the input data is larger, it will be downsampled
@@ -159,7 +160,7 @@ class ElasticPlot(Tensor):
                 E_y[i, j] = E * vec[1]
                 E_z[i, j] = E * vec[2]
 
-        from mpl_toolkits.mplot3d import Axes3D
+        # from mpl_toolkits.mplot3d import Axes3D
         import matplotlib.pyplot as plt
         from matplotlib import cm
 
@@ -179,11 +180,9 @@ class ElasticPlot(Tensor):
             x, y, z, cmap=cm.viridis, antialiased=True, rcount=rcount, ccount=ccount
         )
 
-        if not bound[0] == 0:
+        if not bound is None:
             ax.set_xlim(-bound[0], bound[0])
-        if not bound[1] == 0:
             ax.set_ylim(-bound[1], bound[1])
-        if not bound[2] == 0:
             ax.set_zlim(-bound[2], bound[2])
 
         plt.show()
@@ -229,7 +228,7 @@ class ElasticPlot(Tensor):
         if plot == True:
             import matplotlib.pyplot as plt
 
-            fig, ax = plt.subplots(subplot_kw={"projection": "polar"})
+            _, ax = plt.subplots(subplot_kw={"projection": "polar"})
             ax.plot(rad, E)
             # ax.set_rmax(2)
             # ax.set_rticks([0.5*1e10, 1*1e10, 1.5*1e10, 2*1e10])  # Less radial ticks
@@ -241,7 +240,8 @@ class ElasticPlot(Tensor):
 
         return rad, E
 
-    def polar_plot(self, data):
+    @staticmethod
+    def polar_plot(data):
         """
         Polar plot of multiple Stiffness bodies in one plot. For this
         use the data generated from polar_plot_E_body or polar_plot_laminate
@@ -260,8 +260,11 @@ class ElasticPlot(Tensor):
         for datum in data:
             try:
                 ax.plot(datum[0], datum[1], label=datum[2])
-            except:
+            except Exception as ex:
                 ax.plot(datum[0], datum[1])
+                template = "An exception of type {0} occurred. Arguments:\n{1!r}"
+                message = template.format(type(ex).__name__, ex.args)
+                print(message)
         ax.grid(True)
         ax.set_title("Young's modulus over angle", va="bottom")
         ax.legend()
