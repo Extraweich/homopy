@@ -220,6 +220,7 @@ class MoriTanaka(Tensor):
             )
         elif shape == "sphere":
             fac1 = 15 * (1 - nu)
+            """
             S[0, 0, 0, 0] = S[1, 1, 1, 1] = S[2, 2, 2, 2] = (7 - 5 * nu) / fac1
             S[0, 0, 1, 1] = S[1, 1, 2, 2] = S[2, 2, 0, 0] = S[0, 0, 2, 2] = S[
                 1, 1, 0, 0
@@ -235,6 +236,21 @@ class MoriTanaka(Tensor):
             ] = (
                 4 - 5 * nu
             ) / fac1
+            """
+            eye3 = np.eye(3)
+
+            S = (
+                1
+                / fac1
+                * (
+                    (5 * nu - 1) * np.einsum("ij,kl->ijkl", eye3, eye3)
+                    + (4 - 5 * nu)
+                    * (
+                        np.einsum("ik,jl->ijkl", eye3, eye3)
+                        + np.einsum("il,jk->ijkl", eye3, eye3)
+                    )
+                )
+            )
 
         elif shape == "needle":
             # Here the aspect ratio a describes the relation between the two minor axes
