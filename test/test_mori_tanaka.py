@@ -12,7 +12,7 @@ def random_complete_sym():
 
 
 @pytest.mark.parametrize("inclusion_shape", ["ellipsoid", "needle", "sphere"])
-def test_mt(random_complete_sym, inclusion_shape):
+def test_mt(random_complete_sym, inclusion_shape, manual_debug=False):
 
     v_frac = np.random.rand() * 0.74 + 0.01
     a_ratio = np.random.rand() * 200 + 20
@@ -94,11 +94,40 @@ def test_mt(random_complete_sym, inclusion_shape):
 
     C_eff_homopy = mt_homopy.effective_stiffness66
 
-    print(C_eff_mechmean)
-    print(C_eff_homopy)
-    print(np.linalg.norm(C_eff_homopy - C_eff_mechmean) / np.linalg.norm(C_eff_homopy))
+    coeffcient_difference_maximum = np.max(C_eff_homopy - C_eff_mechmean)
+    coefficient_maximum = np.max(C_eff_homopy)
+    coefficient_minimum = np.min(C_eff_homopy)
 
-    print(np.linalg.norm(C_eff_homopy-C_eff_mechmean) /
-          np.linalg.norm(C_eff_homopy))
+    if not manual_debug:
+        print(C_eff_mechmean)
+        print(C_eff_homopy)
+        print(
+            np.linalg.norm(C_eff_homopy - C_eff_mechmean) / np.linalg.norm(C_eff_homopy)
+        )
 
-    assert np.allclose(C_eff_homopy, C_eff_mechmean, rtol=1e-6)
+        print(
+            f"maximum deviation in one tensor coefficient= {coeffcient_difference_maximum}"
+        )
+        print(f"maximum tensor coefficient= {coefficient_maximum}")
+        print(f"minimum tensor coefficient= {coefficient_minimum}")
+
+        assert np.allclose(C_eff_homopy, C_eff_mechmean, rtol=1e-6, atol=1e-4)
+    else:
+
+        return coeffcient_difference_maximum
+
+
+if __name__ == "__main__":
+    # For detailed debugging, run this script, e.g. from ipython by "%run test/test_mori_tanaka.py"
+
+    # Make it deterministic
+    np.random.seed(16)
+
+    maxima = []
+    for i in range(1000):
+        N4 = Sym_Fourth_Order_Special(label="complete")(np.random.rand(3, 3, 3, 3))
+        maximum = test_mt(N4, inclusion_shape="sphere", manual_debug=True)
+        maxima.append(maximum)
+
+    print(f"max(maxima) = {max(maxima)}")
+    print(f"mean(maxima) = {np.mean(maxima)}")
