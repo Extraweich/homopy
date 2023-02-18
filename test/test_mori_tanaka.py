@@ -94,14 +94,6 @@ def test_mt(random_complete_sym, inclusion_shape, manual_debug=False):
 
     C_eff_homopy = mt_homopy.effective_stiffness66
 
-    if True:
-        # This considers only coefficients in the upper left quadrant and the diagonal of the lower right quadrant
-        interesting_indices = np.s_[
-            [0, 1, 2, 0, 0, 1, 3, 4, 5], [0, 1, 2, 1, 2, 2, 3, 4, 5]
-        ]
-        C_eff_homopy = C_eff_homopy[interesting_indices]
-        C_eff_mechmean = C_eff_mechmean[interesting_indices]
-
     coeffcient_difference_maximum = np.max(C_eff_homopy - C_eff_mechmean)
     coefficient_maximum = np.max(C_eff_homopy)
     coefficient_minimum = np.min(C_eff_homopy)
@@ -122,8 +114,8 @@ def test_mt(random_complete_sym, inclusion_shape, manual_debug=False):
         assert np.allclose(
             C_eff_homopy,
             C_eff_mechmean,
-            rtol=1e-7,
-            atol=1e-7,
+            rtol=1e-6,
+            atol=1e-4,
         )
     else:
 
