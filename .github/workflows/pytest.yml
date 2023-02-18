@@ -22,6 +22,7 @@ jobs:
         pip install pytest
         python setup.py install
         pip install mechkit
+        pip install mechmean
     - name: Test with pytest
       run: |
         pytest
