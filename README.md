@@ -16,7 +16,9 @@ Currently, HomoPy offers two types of homogenization procedures:
 -   Halpin-Tsai with a Shear-Lag modification
 -   Mori-Tanaka
 
-![example_image](https://github.com/Extraweich/homopy/blob/main/docs/source/images/MTvsHT.png?raw=true)
+<p align="center">
+  <img src="https://github.com/Extraweich/homopy/blob/main/docs/source/images/Homopy_Yellow.svg?raw=true", width="400">
+</p>
 
 ## Halpin-Tsai
 The Halpin-Tsai method is an empirical approach to homogenize two isotropic materials (cf. [[Halpin1969]](#Halpin1969)). Our approach is modified with the Shear-Lag model after Cox (cf. [[Cox1952]](#Cox1952)), which is also used in [[Fu2002]](#Fu2002) and [[Lauke2019]](#Lauke2019). Being a scalar homogenization scheme, it allows to calculate the effective stiffness in the plane which is orthogonal to the isotropic plane within transverse isotropic materials, as it is the case for unidirectional reinforced polymers. The effective stiffness, or Young's modulus, is then a function of the angle to the reinforcing direction. A fiber distrubtion within the plane is recognized by volume averaging of imaginary plies of individual orientations in analogy to the laminate theory.
