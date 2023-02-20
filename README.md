@@ -17,7 +17,7 @@ Currently, HomoPy offers two types of homogenization procedures:
 -   Mori-Tanaka
 
 <p align="center">
-  <img src="https://github.com/Extraweich/homopy/blob/main/docs/source/images/Homopy_Yellow.svg?raw=true", width="400">
+  <img src="https://github.com/Extraweich/homopy/blob/main/docs/source/images/MTvsHT.svg?raw=true", width="800">
 </p>
 
 ## Halpin-Tsai
