@@ -5,6 +5,7 @@ tags:
 -   Mechanics
 -   Homogenization
 -   Fiber Reinforced Polymers
+-   Hybrid materials
 -   Mori-Tanaka
 -   Halpin-Tsai
 authors:
@@ -25,7 +26,7 @@ bibliography: paper.bib
 
 The Python package `HomoPy` is a numerical software tool which provides computational methods in the field of continuum mechanics with a specific emphasize on fiber reinforced composites. The key element of `HomoPy` is the calculation and visualization of effective elastic stiffness properties of hybrid materials, i.e. multi-inclusion composites, using homogenization procedures. The current homogenization implementations are the conventional, three-dimensional Mori-Tanaka approach (cf. [@Mori1973]) in the formulation of [@Benveniste1987] with a possible orientation averaging scheme after Advani and Tucker (cf. [@Advani1987]). To circumvent effective stiffness tensors, which are not major-symmetric and therefore violate thermodynamical principles, the algorithm in [@Segura2023] was implemented and can be activated by a flag parameter to ensure symmetric stiffnesses. Alternatively, the shear-lag modified Halpin-Tsai approach (cf. [@Fu2019]) for purely planar information, for which the laminate theory is used to calculate effective stiffness properties, is available. The use field of these tools is academic research. An illustration of these schemes procedures is given in Fig. xy.
 
-Experimental research has shown that hybridization effects for multi-inclusion composites exist (source), which raises the demand to have numerical methods at hand to predict the effective properties of such composites. With a multi-inclusion Mori-Tanaka approach and the laminate theory incorporating the shear-lag modified Halpin-Tsai approach, `HomoPy` provides a solution to this demand.
+Experimental research has shown that hybridization effects for multi-inclusion composites exist (cf. [@Summerscales1978], [@Fu1998] and [@Swolfs2014]), which raises the demand to have numerical methods at hand to predict the effective properties of such composites. With a multi-inclusion Mori-Tanaka approach and the laminate theory incorporating the shear-lag modified Halpin-Tsai approach, `HomoPy` provides a solution to this demand.
 
 Furthermore, `HomoPy` has the functionality to visualize the effective stiffness properties following [@Boehlke2001], which allows for an intuitive comparison of different composites. The resulting effective properties can then used in consequent numerical simulations.
 
