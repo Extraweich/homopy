@@ -37,9 +37,14 @@ The documentation can be found in [the docs](https://homopy.readthedocs.io/en/la
 
 An interactive example to intuitively see the effects of fiber distributions on the effective properties of hybrid materials can be found in [Binder](https://mybinder.org/v2/gh/Extraweich/homopy/main?labpath=%2Fexamples%2FHybrid.ipynb).
 
+
 <p align="center">
-  <img src="https://github.com/Extraweich/homopy/blob/main/docs/source/images/MTvsHT.svg?raw=true", width="800">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://github.com/Extraweich/homopy/blob/main/docs/source/images/MTvsHT_dark.svg?raw=true"">
+    <img alt="Hybrid polar plot" src="https://github.com/Extraweich/homopy/blob/main/docs/source/images/MTvsHT_light.svg?raw=true"">
+  </picture>
 </p>
+
 
 ***
 Further topic related methods:
