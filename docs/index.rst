@@ -7,6 +7,14 @@ Welcome to HomoPy's documentation!
 ==================================
 *Your solution for stiffness problems!*
 
+.. figure:: /source/images/Schematic_light.svg
+   :alt: Schematic of implemented homogenization methods
+   
+   **Figure 1:** Schematic of implemented homogenization methods.
+
+Statement of need
+=================
+
 .. toctree::
    :maxdepth: 2
 
