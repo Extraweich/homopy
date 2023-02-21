@@ -56,7 +56,7 @@ Further topic related methods:
 ***
 <a id="Halpin1969">[Halpin1969]</a>  John C. Halpin, *Effects of environmental factors on composite materials*, 1969. \
 <a id="Cox1952">[Cox1952]</a> H. L. Cox, *The elasticity and strength of paper and other fibrous materials*, British Journal of Applied Physics 3 (3) (1952) 72–79. doi:10.1088/05083443/3/3/302. \
-<a id="Fu1998">[Fu1998]</a> S.-Y. Fu, B. Lauke, *The elastic modulus of misaligned short-fiber-reinforced polymers*, omposites Science and Technology 58 (3) (1998) 389-40. doi:10.1016/S0266-3538(97)00129-2. \
+<a id="Fu1998">[Fu1998]</a> S.-Y. Fu, B. Lauke, *The elastic modulus of misaligned short-fiber-reinforced polymers*, Composites Science and Technology 58 (3) (1998) 389-40. doi:10.1016/S0266-3538(97)00129-2. \
 <a id="Fu2002">[Fu2002]</a> S.-Y. Fu, G. Xu, Y.-W. Mai, *On the elastic modulus of hybrid particle/short-fiber/polymer composites*, Composites Part B: Engineering 33 (4) (2002) 291–299. doi:10.1016/S1359-8368(02)00013-6. \
 <a id="Lauke2019">[Lauke2019]</a> S.-Y. Fu, B. Lauke, Y.-W. Mai, *Science and engineering of short fibre-reinforced polymer composites*, Woodhead Publishing (2019). \
 <a id="Mori1973">[Mori1973]</a> T. Mori, K. Tanaka, *Average stress in matrix and average elastic energy of materials with misfitting inclusions*, Acta Metallurgica 21 (5) (1973), 571-574. \
