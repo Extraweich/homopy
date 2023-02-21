@@ -1,6 +1,7 @@
 References
 ==========
 
+.. [Fu1998] Fu, S.Y. and Lauke, B. (1998), 'The elastic modulus of misaligned short-fiber-reinforced polymers', *Composites Science and Technology*, 58 (3), pp. 389-400, Available at: https://doi.org/10.1016/S0266-3538(97)00129-2
 .. [Christensen2012] Christensen, R. M. (2012), *Mechanics of Composite Materials*, Dover Publications
 .. [Chawla2019] Chawla, K. K. (2019), *Composite Materials*, Springer International Publishing
 .. [Mori1973] Mori, T. and Tanaka, K. (1973), 'Average stress in matrix and average elastic energy of materials with misfitting inclusions', *Acta Metallurgica*, 21 (5), pp. 571-574, Available at: https://doi.org/10.1016/0001-6160(73)90064-3

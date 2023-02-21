@@ -10,7 +10,7 @@ Welcome to HomoPy's documentation!
 .. figure:: /source/images/Schematic_light.svg
    :alt: Schematic of implemented homogenization methods
    
-   **Figure 1:** Schematic of implemented homogenization methods.
+   **Figure 1:** Schematic of implemented homogenization methods. Inspired by [Fu1998]_.
 
 Statement of need
 =================
