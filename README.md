@@ -17,7 +17,10 @@ Currently, HomoPy offers two types of homogenization procedures:
 -   Mori-Tanaka
 
 <p align="center">
-  <img src="https://github.com/Extraweich/homopy/blob/main/docs/source/images/MTvsHT.svg?raw=true", width="800">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://github.com/Extraweich/homopy/blob/main/docs/source/images/Schematic_dark.svg?raw=true">
+    <img alt="Schematic of implemented homogenization procedures" src="https://github.com/Extraweich/homopy/blob/main/docs/source/images/Schematic_light.svg?raw=true">
+  </picture>
 </p>
 
 ## Halpin-Tsai
@@ -33,6 +36,10 @@ The documentation can be found in [the docs](https://homopy.readthedocs.io/en/la
 ### Interactive example
 
 An interactive example to intuitively see the effects of fiber distributions on the effective properties of hybrid materials can be found in [Binder](https://mybinder.org/v2/gh/Extraweich/homopy/main?labpath=%2Fexamples%2FHybrid.ipynb).
+
+<p align="center">
+  <img src="https://github.com/Extraweich/homopy/blob/main/docs/source/images/MTvsHT.svg?raw=true", width="800">
+</p>
 
 ***
 Further topic related methods:
