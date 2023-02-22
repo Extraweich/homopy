@@ -1,3 +1,4 @@
 nbsphinx
 sphinxcontrib-napoleon
+sphinxcontrib-svg2pdfconverter
 homopy
