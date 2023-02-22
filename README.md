@@ -17,10 +17,7 @@ Currently, HomoPy offers two types of homogenization procedures:
 -   Mori-Tanaka
 
 <p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://github.com/Extraweich/homopy/blob/main/docs/source/images/Schematic_dark.svg?raw=true">
-    <img alt="Schematic of implemented homogenization procedures" src="https://github.com/Extraweich/homopy/blob/main/docs/source/images/Schematic_light.svg?raw=true">
-  </picture>
+  <img src="https://github.com/Extraweich/homopy/blob/main/docs/source/images/Schematic_light.svg?raw=true">
 </p>
 
 **Figure 1:** Schematic of implemented homogenization methods. Inspired by [[Fu1998]](#Fu1998).
@@ -39,12 +36,8 @@ The documentation can be found in [the docs](https://homopy.readthedocs.io/en/la
 
 An interactive example to intuitively see the effects of fiber distributions on the effective properties of hybrid materials can be found in [Binder](https://mybinder.org/v2/gh/Extraweich/homopy/main?labpath=%2Fexamples%2FHybrid.ipynb).
 
-
 <p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://github.com/Extraweich/homopy/blob/main/docs/source/images/MTvsHT_dark.svg?raw=true"">
-    <img alt="Hybrid polar plot" src="https://github.com/Extraweich/homopy/blob/main/docs/source/images/MTvsHT_light.svg?raw=true"">
-  </picture>
+  <img src="https://github.com/Extraweich/homopy/blob/main/docs/source/images/MTvsHT_light.svg?raw=true">
 </p>
 
 ### Acknowledgement
