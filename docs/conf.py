@@ -23,7 +23,7 @@ extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.viewcode",
     "sphinxcontrib.napoleon",
-    "sphinxcontrib.inkscapeconverter"
+    "sphinxcontrib.cairosvgconverter"
 ]
 # when in doubt, remove sphinxcontrib.inkscapeconverter and maybe also uninstall perl
 
