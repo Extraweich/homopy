@@ -23,7 +23,9 @@ extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.viewcode",
     "sphinxcontrib.napoleon",
+    "sphinxcontrib.inkscapeconverter"
 ]
+# when in doubt, remove sphinxcontrib.inkscapeconverter and maybe also uninstall perl
 
 napoleon_use_rtype = False
 napoleon_use_ivar = True
