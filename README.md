@@ -47,6 +47,9 @@ An interactive example to intuitively see the effects of fiber distributions on 
   </picture>
 </p>
 
+### Acknowledgement
+
+The research documented in this repository has been funded by the German Research Foundation ([DFG, Deutsche Forschungsgemeinschaft](https://www.dfg.de)) - project number [255730231](https://gepris.dfg.de/gepris/projekt/255730231). The support by the German Research Foundation within the International Research Training Group “Integrated engineering of continuous-discontinuous long fiber reinforced polymer structures“ ([GRK 2078](https://www.grk2078.kit.edu)) is gratefully acknowledged.
 
 ***
 Further topic related methods:
