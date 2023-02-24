@@ -17,3 +17,5 @@ References
 .. [Fu2019] Fu, S.Y., Lauke, B. and Mai, Y.W. (2019), *Science and engineering of short fibre-reinforced polymer composites*, Woodhead Publishing
 .. [Segura2023] Segura, N.J., Pichler, B.L.A. and Hellmich, C. (2023), 'Concentration tensors preserving elastic symmetry of multiphase composites', *Mechanics of Materials*, Available at: https://doi.org/10.1016/j.mechmat.2023.104555
 .. [Advani1987] Advani, S.G. and Tucker III, C.L. (1987), 'The Use of Tensors to Describe and Predict Fiber Orientation in Short Fiber Composites', *Journal of Rheology*, pp. 751-784, Available at: https://doi.org/10.1122/1.549945
+.. [Slawinksi2010] Slawinski, M.A. (2010), *Waves and rays in elastic continua*, World Scientific
+.. [Daniel2006] Daniel, I.M. and Ishai, O. (2006), *Engineering mechanics of composite materials*, Oxford Univ. Press

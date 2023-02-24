@@ -21,6 +21,7 @@ extensions = [
     "sphinx_rtd_theme",
     "nbsphinx",
     "sphinx.ext.autodoc",
+    "sphinx.ext.mathjax",
     "sphinx.ext.viewcode",
     "sphinxcontrib.napoleon",
     "sphinxcontrib.cairosvgconverter"
