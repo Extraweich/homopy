@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>homopy.tensor module &mdash; HomoPy  documentation</title>
@@ -17,9 +17,7 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -32,12 +30,16 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html">
-            <img src="../_static/Homopy_Yellow.svg" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/Homopy_Yellow.svg" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -51,19 +53,7 @@
 </ul>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="code.html">Modules</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">homopy.tensor module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#homopy.tensor.Tensor"><code class="docutils literal notranslate"><span class="pre">Tensor</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#homopy.tensor.Tensor._diade"><code class="docutils literal notranslate"><span class="pre">Tensor._diade()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#homopy.tensor.Tensor._diade4"><code class="docutils literal notranslate"><span class="pre">Tensor._diade4()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#homopy.tensor.Tensor.tensor_product"><code class="docutils literal notranslate"><span class="pre">Tensor.tensor_product()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#homopy.tensor.Tensor.matrix2voigt"><code class="docutils literal notranslate"><span class="pre">Tensor.matrix2voigt()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#homopy.tensor.Tensor.matrix2mandel"><code class="docutils literal notranslate"><span class="pre">Tensor.matrix2mandel()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#homopy.tensor.Tensor.tensor2mandel"><code class="docutils literal notranslate"><span class="pre">Tensor.tensor2mandel()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#homopy.tensor.Tensor.mandel2tensor"><code class="docutils literal notranslate"><span class="pre">Tensor.mandel2tensor()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">homopy.tensor module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="elasticity.html">homopy.elasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="methods.html">homopy.methods module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stiffness_plot.html">homopy.stiffness_plot module</a></li>
@@ -90,7 +80,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a></li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="code.html">Modules</a></li>
       <li class="breadcrumb-item active">homopy.tensor module</li>
       <li class="wy-breadcrumbs-aside">
@@ -137,12 +127,12 @@
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Tensor class to help with basic arithmetic operations on tensor space.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Variables</dt>
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>~Tensor.e1</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>3</em><em>,</em><em>)</em>) – Vector 1 of orthonormalbasis of 1st order tensors.</p></li>
-<li><p><strong>~Tensor.e2</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>3</em><em>,</em><em>)</em>) – Vector 2 of orthonormalbasis of 1st order tensors.</p></li>
-<li><p><strong>~Tensor.e3</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>3</em><em>,</em><em>)</em>) – Vector 3 of orthonormalbasis of 1st order tensors.</p></li>
-<li><p><strong>~Tensor.B</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>3</em><em>, </em><em>3</em><em>, </em><em>6</em><em>)</em>) – Orthonormalbasis of 4th order tensors in normalized Voigt notation.</p></li>
+<li><p><strong>~Tensor.e1</strong> (<em>ndarray of shape</em><em> (</em><em>3</em><em>,</em><em>)</em>) – Vector 1 of orthonormalbasis of 1st order tensors.</p></li>
+<li><p><strong>~Tensor.e2</strong> (<em>ndarray of shape</em><em> (</em><em>3</em><em>,</em><em>)</em>) – Vector 2 of orthonormalbasis of 1st order tensors.</p></li>
+<li><p><strong>~Tensor.e3</strong> (<em>ndarray of shape</em><em> (</em><em>3</em><em>,</em><em>)</em>) – Vector 3 of orthonormalbasis of 1st order tensors.</p></li>
+<li><p><strong>~Tensor.B</strong> (<em>ndarray of shape</em><em> (</em><em>3</em><em>, </em><em>3</em><em>, </em><em>6</em><em>)</em>) – Orthonormalbasis of 4th order tensors in normalized Voigt notation.</p></li>
 </ul>
 </dd>
 </dl>
@@ -152,13 +142,13 @@
 <dd><p>Return diadic product of two directional vectors. This is used to
 calculate the basis tensors in the normalized Voigt notation.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>di</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>3</em><em>,</em><em>)</em>) – Directional vector #1.</p></li>
-<li><p><strong>dj</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>3</em><em>,</em><em>)</em>) – Directional vector #2.</p></li>
+<li><p><strong>di</strong> (<em>ndarray of shape</em><em> (</em><em>3</em><em>,</em><em>)</em>) – Directional vector #1.</p></li>
+<li><p><strong>dj</strong> (<em>ndarray of shape</em><em> (</em><em>3</em><em>,</em><em>)</em>) – Directional vector #2.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><em>ndarray of shape (3, 3)</em> – Tensor of 2nd order in tensor notation.</p>
 </dd>
 </dl>
@@ -171,13 +161,13 @@ calculate the basis tensors in the normalized Voigt notation.</p>
 stiffness tensors from normalized Voigt notation to regular tensor
 notation.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>bi</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>3</em><em>, </em><em>3</em><em>)</em>) – Orthonormal basis tensor #1.</p></li>
-<li><p><strong>bj</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>3</em><em>, </em><em>3</em><em>)</em>) – Orthonormal basis tensor #2.</p></li>
+<li><p><strong>bi</strong> (<em>ndarray of shape</em><em> (</em><em>3</em><em>, </em><em>3</em><em>)</em>) – Orthonormal basis tensor #1.</p></li>
+<li><p><strong>bj</strong> (<em>ndarray of shape</em><em> (</em><em>3</em><em>, </em><em>3</em><em>)</em>) – Orthonormal basis tensor #2.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><em>ndarray of shape (3, 3, 3, 3)</em> – Tensor of 4th order in tensor notation.</p>
 </dd>
 </dl>
@@ -189,13 +179,13 @@ notation.</p>
 <dd><p>Return the mapping of one tensor of 4th order to another in the
 normalized Voigt notation.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>tensor_a</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>6</em><em>, </em><em>6</em><em>)</em>) – Tensor #1.</p></li>
-<li><p><strong>tensor_b</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>6</em><em>, </em><em>6</em><em>)</em>) – Tensor #2.</p></li>
+<li><p><strong>tensor_a</strong> (<em>ndarray of shape</em><em> (</em><em>6</em><em>, </em><em>6</em><em>)</em>) – Tensor #1.</p></li>
+<li><p><strong>tensor_b</strong> (<em>ndarray of shape</em><em> (</em><em>6</em><em>, </em><em>6</em><em>)</em>) – Tensor #2.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><em>ndarray of shape (6, 6)</em> – Resulting mapping.</p>
 </dd>
 </dl>
@@ -207,10 +197,10 @@ normalized Voigt notation.</p>
 <dd><p>Return the Voigt notation of a tensor of 2nd order
 calculated from the regular tensor notation.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>matrix</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>3</em><em>, </em><em>3</em><em>)</em>) – Tensor of 2nd order in regular tensor notation.</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>matrix</strong> (<em>ndarray of shape</em><em> (</em><em>3</em><em>, </em><em>3</em><em>)</em>) – Tensor of 2nd order in regular tensor notation.</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><em>ndarray of shape (6,)</em> – Tensor in Voigt notation.</p>
 </dd>
 </dl>
@@ -222,10 +212,10 @@ calculated from the regular tensor notation.</p>
 <dd><p>Return the normalized Voigt notation of a tensor of 2nd order
 calculated from the regular tensor notation.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>matrix</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>3</em><em>, </em><em>3</em><em>)</em>) – Tensor of 2nd order in regular tensor notation.</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>matrix</strong> (<em>ndarray of shape</em><em> (</em><em>3</em><em>, </em><em>3</em><em>)</em>) – Tensor of 2nd order in regular tensor notation.</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><em>ndarray of shape (6,)</em> – Tensor in normalized Voigt notation.</p>
 </dd>
 </dl>
@@ -237,10 +227,10 @@ calculated from the regular tensor notation.</p>
 <dd><p>Return the normalized Voigt (Mandel) notation of a tensor of 4th
 order calculated fromthe regular tensor notation.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>tensor</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>3</em><em>, </em><em>3</em><em>, </em><em>3</em><em>, </em><em>3</em><em>)</em>) – Tensor of 4th order in regular tensor notation.</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tensor</strong> (<em>ndarray of shape</em><em> (</em><em>3</em><em>, </em><em>3</em><em>, </em><em>3</em><em>, </em><em>3</em><em>)</em>) – Tensor of 4th order in regular tensor notation.</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><em>ndarray of shape (6, 6)</em> – Tensor in normalized Voigt notation.</p>
 </dd>
 </dl>
@@ -252,10 +242,10 @@ order calculated fromthe regular tensor notation.</p>
 <dd><p>Return the regular tensor notation of a tensor calculated from
 the normalized Voigt (Mandel) notation.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>mandel</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>6</em><em>, </em><em>6</em><em>)</em>) – Tensor of 4th order in normalized Voigt notation.</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>mandel</strong> (<em>ndarray of shape</em><em> (</em><em>6</em><em>, </em><em>6</em><em>)</em>) – Tensor of 4th order in normalized Voigt notation.</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>tensor</strong> (<em>ndarray of shape (3, 3, 3, 3)</em>) – Tensor in regular tensor notation.</p>
 </dd>
 </dl>
