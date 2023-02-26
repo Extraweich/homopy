@@ -347,12 +347,7 @@ class ElasticPlot(Tensor):
         didi = self._diade(vec, vec)
         didi_flat = self.matrix_reduction(didi)
 
-        if self.USEVOIGT == False:
-            b = 1 / np.sqrt(2)
-        else:
-            b = 1
-
-        didi_reduced = np.array([didi_flat[0], didi_flat[1], b * didi_flat[5]])
+        didi_reduced = np.array([didi_flat[0], didi_flat[1], didi_flat[5]])
 
         E = np.einsum("i,ij,j->", didi_reduced, C_inv, didi_reduced) ** (-1)
 
