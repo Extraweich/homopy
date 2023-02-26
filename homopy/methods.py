@@ -62,10 +62,10 @@ class MoriTanaka(Tensor):
         Orientation tensor(s) of 2nd order.
     N4 : ndarray or list of ndarrays of shape (3, 3, 3, 3)
         Orientation tensor(s) of 4th order.
-    stiffness3333 : ndarray of shape (3, 3, 3, 3)
+    effective_stiffness3333 : ndarray of shape (3, 3, 3, 3)
         Holds the stiffness values in the regular tensor notation in Pa.
         When orientations are given, these are included directly.
-    stiffness66 : ndarray of shape (6, 6)
+    effective_stiffness66 : ndarray of shape (6, 6)
         Holds the stiffness values in the normalized Voigt notation in Pa.
         When orientations are given, these are included directly.
     """
@@ -135,8 +135,7 @@ class MoriTanaka(Tensor):
                 self.shape
             ), "When `shape` is a list, it must have the same length as `fiber`!"
 
-            S = self._get_eshelby(
-                self.a_ratio[i], return_dim="66", shape=self.shape[i])
+            S = self._get_eshelby(self.a_ratio[i], return_dim="66", shape=self.shape[i])
 
             A_inv = self.eye + self.tensor_product(
                 S, self.tensor_product(Cm_inv, self.stiff_diff[i])
@@ -146,8 +145,7 @@ class MoriTanaka(Tensor):
             self.c_alpha.append(self.v_frac[i] / self.c_f)
 
         self.effective_stiffness66 = self.get_effective_stiffness()
-        self.effective_stiffness3333 = self.mandel2tensor(
-            self.effective_stiffness66)
+        self.effective_stiffness3333 = self.mandel2tensor(self.effective_stiffness66)
 
     def _get_eshelby(self, a_ratio, return_dim="66", shape="ellipsoid"):
         """
@@ -175,8 +173,7 @@ class MoriTanaka(Tensor):
         a2 = a**2
         S = np.zeros((3, 3, 3, 3))
         if shape == "ellipsoid":
-            g = a / (a2 - 1) ** (3 / 2) * \
-                (a * (a2 - 1) ** (1 / 2) - np.arccosh(a))
+            g = a / (a2 - 1) ** (3 / 2) * (a * (a2 - 1) ** (1 / 2) - np.arccosh(a))
             S[0, 0, 0, 0] = (
                 1
                 / (2 * (1 - nu))
@@ -255,10 +252,8 @@ class MoriTanaka(Tensor):
             S[2, 1, 2, 1] = S[1, 2, 1, 2] = S[1, 2, 2, 1] = S[2, 1, 1, 2] = pre_fac * (
                 (a2 + 1) / (2 * fac4) + fac3 / 2
             )
-            S[2, 0, 2, 0] = S[0, 2, 0, 2] = S[0, 2,
-                                              2, 0] = S[2, 0, 0, 2] = 1 / 2 * fac2
-            S[0, 1, 0, 1] = S[1, 0, 1, 0] = S[1, 0,
-                                              0, 1] = S[0, 1, 1, 0] = 1 / 2 * fac1
+            S[2, 0, 2, 0] = S[0, 2, 0, 2] = S[0, 2, 2, 0] = S[2, 0, 0, 2] = 1 / 2 * fac2
+            S[0, 1, 0, 1] = S[1, 0, 1, 0] = S[1, 0, 0, 1] = S[0, 1, 1, 0] = 1 / 2 * fac1
         else:
             raise ValueError(
                 "Please chose a valid 'shape' option. "
@@ -295,8 +290,7 @@ class MoriTanaka(Tensor):
             ave_weighted_A_f_alpha_3333 = self.get_orientation_average(
                 weighted_A_f_alpha_3333, self.N2[i], self.N4[i]
             )
-            ave_weighted_A_f_alpha_66 = self.tensor2mandel(
-                ave_weighted_A_f_alpha_3333)
+            ave_weighted_A_f_alpha_66 = self.tensor2mandel(ave_weighted_A_f_alpha_3333)
             # remove weight by inverse...
             ave_A_f_alpha = self.tensor_product(
                 np.linalg.inv(self.stiff_diff[i]), ave_weighted_A_f_alpha_66
@@ -353,8 +347,7 @@ class MoriTanaka(Tensor):
             self.N4.append(N4_tmp)
 
         self.effective_stiffness66 = self.get_effective_stiffness()
-        self.effective_stiffness3333 = self.mandel2tensor(
-            self.effective_stiffness66)
+        self.effective_stiffness3333 = self.mandel2tensor(self.effective_stiffness66)
 
         if return_dim == "66":
             return self.effective_stiffness66
@@ -391,8 +384,7 @@ class MoriTanaka(Tensor):
             - 4 * tensor[0, 1, 0, 1]
         )
         b2 = tensor[0, 0, 1, 1] - tensor[1, 1, 2, 2]
-        b3 = tensor[0, 1, 0, 1] + 1 / 2 * \
-            (tensor[1, 1, 2, 2] - tensor[1, 1, 1, 1])
+        b3 = tensor[0, 1, 0, 1] + 1 / 2 * (tensor[1, 1, 2, 2] - tensor[1, 1, 1, 1])
         b4 = tensor[1, 1, 2, 2]
         b5 = 1 / 2 * (tensor[1, 1, 1, 1] - tensor[1, 1, 2, 2])
 
@@ -490,6 +482,31 @@ class HalpinTsai:
         Poisson ratio of matrix (dimensionless).
     package : string, default: hex
         Package structure of fibers in composite (options: 'hex', 'square').
+
+    Attributes
+    ----------
+    E_f : float
+        Young's modulus of fiber in Pa.
+    E_m : float
+        Young's modulus of matrix in Pa.
+    G_f : float
+        Shear modulus of fiber in Pa.
+    G_m : float
+        Shear modulus of matrix in Pa.
+    nu_f : float
+        Poisson ratio of fiber (dimensionless).
+    nu_m : float
+        Poisson ratio of matrix (dimensionless).
+    l_f : float
+        Average length of fiber in m.
+    r_f : float
+        Average radius of fiber in m.
+    vol_f : float
+        Poisson ratio of matrix (dimensionless).
+    package : string, default: hex
+        Package structure of fibers in composite (options: 'hex', 'square').
+    effective_stiffness33 : ndarray of shape (3, 3)
+        Holds the stiffness values in the reduced, normalized Voigt notation in Pa.
     """
 
     def __init__(self, E_f, E_m, G_f, G_m, nu_f, nu_m, l_f, r_f, vol_f, package="hex"):
@@ -525,18 +542,15 @@ class HalpinTsai:
         else:
             p = 1 / 2 * np.log(np.pi / self.vol_f)
 
-        beta = np.sqrt(2 * np.pi * self.G_m /
-                       (self.E_f * (np.pi * self.r_f**2) * p))
+        beta = np.sqrt(2 * np.pi * self.G_m / (self.E_f * (np.pi * self.r_f**2) * p))
         nu1 = (self.E_f / self.E_m - 1) / (self.E_f / self.E_m + 2)
         nu2 = (self.G_f / self.G_m - 1) / (self.G_f / self.G_m + 1)
 
         self.E11 = self.E_f * (
             1 - tanh(beta * self.l_f / 2) / (beta * self.l_f / 2)
         ) * self.vol_f + self.E_m * (1 - self.vol_f)
-        self.E22 = self.E_m * (1 + 2 * nu1 * self.vol_f) / \
-            (1 - nu1 * self.vol_f)
-        self.G12 = self.G_m * (1 + 2 * nu2 * self.vol_f) / \
-            (1 - nu2 * self.vol_f)
+        self.E22 = self.E_m * (1 + 2 * nu1 * self.vol_f) / (1 - nu1 * self.vol_f)
+        self.G12 = self.G_m * (1 + 2 * nu2 * self.vol_f) / (1 - nu2 * self.vol_f)
         self.nu12 = self.nu_f * self.vol_f + self.nu_m * (1 - self.vol_f)
         self.nu21 = self.nu12 * self.E22 / self.E11
 
@@ -556,7 +570,7 @@ class HalpinTsai:
         Q16 = 0
         Q22 = self.E22 / (1 - self.nu12 * self.nu21)
         Q26 = 0
-        Q66 = fac*self.G12
+        Q66 = fac * self.G12
         C = np.array([[Q11, Q12, Q16], [Q12, Q22, Q26], [Q16, Q26, Q66]])
         return C
 
@@ -574,6 +588,11 @@ class Laminate:
     vol_fracs : array of shape (n,)
         Volume fraction of ith lamina (must sum to 1). If None is given,
         each lamina is averaged equally.
+
+    Attributes
+    ----------
+    effective_stiffness33 : ndarray of shape (3, 3)
+        Holds the stiffness values in the reduced, normalized Voigt notation in Pa.
     """
 
     def __init__(self, lamina_stiffnesses, angles, vol_fracs=None):
@@ -603,13 +622,12 @@ class Laminate:
         C_eff = np.zeros((3, 3))
         for i in range(len(self.lamina_stiffnesses)):
             # rotate by angle
-            Q_temp = self.rotate_stiffness(
-                self.lamina_stiffnesses[i], self.angles[i])
+            Q_temp = self.rotate_stiffness(self.lamina_stiffnesses[i], self.angles[i])
             C_eff += self.vol_fracs[i] * Q_temp
 
         return C_eff
 
-    @ staticmethod
+    @staticmethod
     def rotate_stiffness(lamina_stiffness, angle):
         r"""
         Return planarly rotated stiffness matrix. The planar rotation matrix around the z-axis
@@ -618,16 +636,14 @@ class Laminate:
         .. math::
             \begin{equation*}
                 \underline{R}=\begin{pmatrix}
-                \cos\phi & -\sin\phi & 0\\ 
-                \sin\phi &  \cos\phi& 0\\ 
+                \cos\phi & -\sin\phi & 0\\
+                \sin\phi &  \cos\phi& 0\\
                 0 & 0 & 1
                 \end{pmatrix},
             \end{equation*}
 
-        from which the transformation matrix was extracted in accordance to  [Slawinksi2010]_,
-        Eq. 5.2.10. The weighting of the stiffness matrix was taken from [Daniel2006]_, Eq. 4.66. This looks
-        somewhat like a Voigt notation approach, but we were not able to bring this into alignment
-        with the Mandel notation.
+        from which the transformation matrix was extracted in accordance to [Slawinksi2010]_,
+        Eq. 5.2.19. 
 
         Parameters
         ----------
@@ -644,21 +660,21 @@ class Laminate:
         m = cos(angle)
         n = sin(angle)
 
+        b = np.sqrt(2)
         R = np.array(
             [
-                [m**2, n**2, 2 * (m * n)],
-                [n**2, m**2, -2 * (m * n)],
+                [m**2, n**2, b * (m * n)],
+                [n**2, m**2, -b * (m * n)],
                 [
-                    -m * n,
-                    m * n,
+                    -b * m * n,
+                    b * m * n,
                     (m**2 - n**2),
                 ],
             ]
         )
-        R_inv = np.linalg.inv(R)
+        R_inv = R.T
         Q = lamina_stiffness.copy()
-        Q[:, 2] = 2 * Q[:, 2]
+
         rot_stiffness = np.einsum("ij,jk,kl->il", R_inv, Q, R)
-        rot_stiffness[:, 2] /= 2
 
         return rot_stiffness

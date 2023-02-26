@@ -1,4 +1,6 @@
 test_eshelby.py
+test_rotation.py
+examples/modelling.ipynb
 
 .venv/
 .vscode/
