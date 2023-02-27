@@ -119,14 +119,14 @@ class ElasticPlot(Tensor):
 
         return np.array([cos(phi) * sin(theta), sin(phi) * sin(theta), cos(theta)])
 
-    def plot_E_body(self, S, o, p, bound=None, rcount=200, ccount=200):
+    def plot_E_body(self, C, o, p, bound=None, rcount=200, ccount=200):
         """
         Plot stiffness body.
 
         Parameters
         ----------
-        S : ndarray of shape (6, 6)
-            Compliance tensor in Voigt or normalized Voigt
+        C : ndarray of shape (6, 6)
+            Stiffness tensor in Voigt or normalized Voigt
             notation.
         o : int
             Number of discretization steps for first angle.
@@ -144,6 +144,7 @@ class ElasticPlot(Tensor):
             If the input data is larger, it will be downsampled
             (by slicing) to these numbers of points. Defaults to 200.
         """
+        S = np.linalg.inv(C)
 
         n = int(o)
         m = int(p)
@@ -187,14 +188,14 @@ class ElasticPlot(Tensor):
 
         plt.show()
 
-    def polar_plot_E_body(self, S, o, angle, plot=True):
+    def polar_plot_E_body(self, C, o, angle, plot=True):
         """
         Plot slice of stiffness body.
 
         Parameters
         ----------
-        S : ndarray of shape (6, 6)
-            Compliance tensor in Voigt or normalized Voigt
+        C : ndarray of shape (6, 6)
+            Stiffness tensor in Voigt or normalized Voigt
             notation.
         o : int
             Number of discretization steps for first angle.
@@ -212,6 +213,8 @@ class ElasticPlot(Tensor):
         E : ndarray of shape (n+1,)
             Sitffness at corresponding angle.
         """
+
+        S = np.linalg.inv(C)
 
         n = int(o)
         E = np.zeros(n + 1)
