@@ -19,7 +19,6 @@
         <script src="../_static/doctools.js"></script>
         <script src="../_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -355,13 +354,11 @@ each lamina is averaged equally.</p></li>
 <dd><p>Return planarly rotated stiffness matrix. The planar rotation matrix around the z-axis
 has the form</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}\begin{equation*}
-    \underline{R}=\begin{pmatrix}
-    \cos\phi &amp; -\sin\phi &amp; 0\\
-    \sin\phi &amp;  \cos\phi&amp; 0\\
-    0 &amp; 0 &amp; 1
-    \end{pmatrix},
-\end{equation*}\end{split}\]</div>
+\[\begin{split}\underline{R}=\begin{pmatrix}
+\cos\phi &amp; -\sin\phi &amp; 0\\
+\sin\phi &amp;  \cos\phi&amp; 0\\
+0 &amp; 0 &amp; 1
+\end{pmatrix},\end{split}\]</div>
 <p>from which the transformation matrix was extracted in accordance to <a class="reference internal" href="references.html#slawinksi2010" id="id11"><span>[Slawinksi2010]</span></a>,
 Eq. 5.2.19.</p>
 <dl class="field-list simple">

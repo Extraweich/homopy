@@ -18,7 +18,6 @@
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -202,14 +201,14 @@
 
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">cos</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="n">sin</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)])</span></div>
 
-<div class="viewcode-block" id="ElasticPlot.plot_E_body"><a class="viewcode-back" href="../../source/stiffness_plot.html#homopy.stiffness_plot.ElasticPlot.plot_E_body">[docs]</a>    <span class="k">def</span> <span class="nf">plot_E_body</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">o</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rcount</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">ccount</span><span class="o">=</span><span class="mi">200</span><span class="p">):</span>
+<div class="viewcode-block" id="ElasticPlot.plot_E_body"><a class="viewcode-back" href="../../source/stiffness_plot.html#homopy.stiffness_plot.ElasticPlot.plot_E_body">[docs]</a>    <span class="k">def</span> <span class="nf">plot_E_body</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">o</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rcount</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">ccount</span><span class="o">=</span><span class="mi">200</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot stiffness body.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        S : ndarray of shape (6, 6)</span>
-<span class="sd">            Compliance tensor in Voigt or normalized Voigt</span>
+<span class="sd">        C : ndarray of shape (6, 6)</span>
+<span class="sd">            Stiffness tensor in Voigt or normalized Voigt</span>
 <span class="sd">            notation.</span>
 <span class="sd">        o : int</span>
 <span class="sd">            Number of discretization steps for first angle.</span>
@@ -227,6 +226,7 @@
 <span class="sd">            If the input data is larger, it will be downsampled</span>
 <span class="sd">            (by slicing) to these numbers of points. Defaults to 200.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">S</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
 
         <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
         <span class="n">m</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
@@ -270,14 +270,14 @@
 
         <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="ElasticPlot.polar_plot_E_body"><a class="viewcode-back" href="../../source/stiffness_plot.html#homopy.stiffness_plot.ElasticPlot.polar_plot_E_body">[docs]</a>    <span class="k">def</span> <span class="nf">polar_plot_E_body</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">o</span><span class="p">,</span> <span class="n">angle</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="ElasticPlot.polar_plot_E_body"><a class="viewcode-back" href="../../source/stiffness_plot.html#homopy.stiffness_plot.ElasticPlot.polar_plot_E_body">[docs]</a>    <span class="k">def</span> <span class="nf">polar_plot_E_body</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">o</span><span class="p">,</span> <span class="n">angle</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot slice of stiffness body.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        S : ndarray of shape (6, 6)</span>
-<span class="sd">            Compliance tensor in Voigt or normalized Voigt</span>
+<span class="sd">        C : ndarray of shape (6, 6)</span>
+<span class="sd">            Stiffness tensor in Voigt or normalized Voigt</span>
 <span class="sd">            notation.</span>
 <span class="sd">        o : int</span>
 <span class="sd">            Number of discretization steps for first angle.</span>
@@ -295,6 +295,8 @@
 <span class="sd">        E : ndarray of shape (n+1,)</span>
 <span class="sd">            Sitffness at corresponding angle.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">S</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
 
         <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
         <span class="n">E</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>

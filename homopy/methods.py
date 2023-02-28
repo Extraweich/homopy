@@ -634,13 +634,11 @@ class Laminate:
         has the form
 
         .. math::
-            \begin{equation*}
                 \underline{R}=\begin{pmatrix}
                 \cos\phi & -\sin\phi & 0\\
                 \sin\phi &  \cos\phi& 0\\
                 0 & 0 & 1
                 \end{pmatrix},
-            \end{equation*}
 
         from which the transformation matrix was extracted in accordance to [Slawinksi2010]_,
         Eq. 5.2.19. 
