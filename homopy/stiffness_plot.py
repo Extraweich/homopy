@@ -169,6 +169,9 @@ class ElasticPlot(Tensor):
         y = E_y
         z = E_z
 
+        d = np.sqrt(x**2 + y**2 + z**2)
+        d = d / d.max()
+
         fig = plt.figure()
         ax = fig.add_subplot(111, projection="3d")
 
@@ -178,7 +181,13 @@ class ElasticPlot(Tensor):
         ax.set_zlabel("E33")
 
         ax.plot_surface(
-            x, y, z, cmap=cm.viridis, antialiased=True, rcount=rcount, ccount=ccount
+            x,
+            y,
+            z,
+            facecolors=plt.cm.viridis(d),
+            antialiased=True,
+            rcount=rcount,
+            ccount=ccount,
         )
 
         if not bound is None:
