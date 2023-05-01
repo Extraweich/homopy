@@ -35,6 +35,14 @@ The Mori-Tanaka scheme goes back to Mori and Tanaka (cf. [[Mori1973]](#Mori1973)
 
 The documentation can be found in [the docs](https://homopy.readthedocs.io/en/latest/index.html).
 
+### Installation
+
+Install HomoPy by running
+
+```
+pip install homopy
+```
+
 ### Interactive example
 
 An interactive example to intuitively see the effects of fiber distributions on the effective properties of hybrid materials can be found in [Binder](https://mybinder.org/v2/gh/Extraweich/homopy/main?labpath=%2Fexamples%2FHybrid.ipynb).
