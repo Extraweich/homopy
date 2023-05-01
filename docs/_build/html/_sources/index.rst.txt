@@ -20,6 +20,14 @@ Statement of need
 
    /source/statement_of_need
 
+Scope and limitations
+=====================
+
+.. toctree::
+    :maxdepth: 2
+
+    /source/scope_and_limitations
+
 Examples
 ========
 
