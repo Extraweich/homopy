@@ -1,0 +1,17 @@
+# YAML 1.2
+# Metadata for citation of this software according to the CFF format (https://citation-file-format.github.io/)
+cff-version: 1.0.3
+message: If you use this software, please cite it using these metadata.
+# FIXME title as repository name might not be the best name, please make human readable
+title: 'Extraweich/homopy: Homogenization'
+doi: 10.5281/zenodo.7967631
+# FIXME splitting of full names is error prone, please check if given/family name are correct
+authors:
+- given-names: Nicolas
+  family-names: Christ
+  affiliation: Karlsruhe Institute of Technology
+  orcid: https://orcid.org/0000-0002-4713-8096
+version: Homogenization
+date-released: 2023-05-24
+repository-code: https://github.com/Extraweich/homopy
+license: other-open
