@@ -3,7 +3,7 @@
 cff-version: 1.0.3
 message: If you use this software, please cite it using these metadata.
 # FIXME title as repository name might not be the best name, please make human readable
-title: 'Extraweich/homopy: v1.0.11'
+title: 'Extraweich/homopy: v1.1.0'
 doi: 10.5281/zenodo.7967631
 # FIXME splitting of full names is error prone, please check if given/family name are correct
 authors:
@@ -11,7 +11,7 @@ authors:
   family-names: Christ
   affiliation: Karlsruhe Institute of Technology
   orcid: https://orcid.org/0000-0002-4713-8096
-version: 1.0.11
-date-released: 2023-05-24
+version: 1.1.0
+date-released: 2023-07-01
 repository-code: https://github.com/Extraweich/homopy
 license: MIT
