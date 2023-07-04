@@ -7,6 +7,7 @@
 [![Documentation status](https://readthedocs.org/projects/homopy/badge/?version=latest)](https://homopy.readthedocs.io/en/latest/?badge=latest)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/ffc0c7b16d154bc18cccc1e857724d86)](https://www.codacy.com/gh/Extraweich/homopy/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Extraweich/homopy&amp;utm_campaign=Badge_Grade)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![status](https://joss.theoj.org/papers/3ff6841e9a89fc91a0578df9ca677179/status.svg)](https://joss.theoj.org/papers/3ff6841e9a89fc91a0578df9ca677179)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Extraweich/homopy/main?labpath=examples%2FInteractive_hybrid.ipynb)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7967631.svg)](https://doi.org/10.5281/zenodo.7967631)
 
