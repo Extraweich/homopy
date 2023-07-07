@@ -4,14 +4,26 @@ cff-version: 1.0.3
 message: If you use this software, please cite it using these metadata.
 # FIXME title as repository name might not be the best name, please make human readable
 title: 'Extraweich/homopy: v1.1.0'
-doi: 10.5281/zenodo.7967631
+doi: 10.5281/zenodo.8124344
 # FIXME splitting of full names is error prone, please check if given/family name are correct
 authors:
 - given-names: Nicolas
   family-names: Christ
   affiliation: Karlsruhe Institute of Technology
   orcid: https://orcid.org/0000-0002-4713-8096
+- given-names: Benedikt
+  family-names: Scheuring
+  affiliation: Karlsruhe Institute of Technology
+  orcid: https://orcid.org/0000-0003-2971-1431
+- given-names: John
+  family-names: Montesano
+  affiliation: University of Waterloo, Waterloo, ON, Canada
+  orcid: https://orcid.org/0000-0003-2723-052X
+- given-names: Jörg
+  family-names: Hohe
+  affiliation: Fraunhofer Institute for Mechanics of Materials, Freiburg, Germany 
+  orcid: https://orcid.org/0000-0003-3994-4562
 version: 1.1.0
-date-released: 2023-07-01
+date-released: 2023-07-07
 repository-code: https://github.com/Extraweich/homopy
 license: MIT
