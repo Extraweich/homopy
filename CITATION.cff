@@ -1,29 +1,46 @@
-# YAML 1.2
-# Metadata for citation of this software according to the CFF format (https://citation-file-format.github.io/)
-cff-version: 1.0.3
-message: If you use this software, please cite it using these metadata.
-# FIXME title as repository name might not be the best name, please make human readable
-title: 'Extraweich/homopy: v1.1.0'
-doi: 10.5281/zenodo.8124344
-# FIXME splitting of full names is error prone, please check if given/family name are correct
+cff-version: "1.2.0"
 authors:
-- given-names: Nicolas
-  family-names: Christ
-  affiliation: Karlsruhe Institute of Technology
-  orcid: https://orcid.org/0000-0002-4713-8096
-- given-names: Benedikt
-  family-names: Scheuring
-  affiliation: Karlsruhe Institute of Technology
-  orcid: https://orcid.org/0000-0003-2971-1431
-- given-names: John
-  family-names: Montesano
-  affiliation: University of Waterloo, Waterloo, ON, Canada
-  orcid: https://orcid.org/0000-0003-2723-052X
-- given-names: Jörg
-  family-names: Hohe
-  affiliation: Fraunhofer Institute for Mechanics of Materials, Freiburg, Germany 
-  orcid: https://orcid.org/0000-0003-3994-4562
-version: 1.1.0
-date-released: 2023-07-07
-repository-code: https://github.com/Extraweich/homopy
-license: MIT
+- family-names: Christ
+  given-names: Nicolas
+  orcid: "https://orcid.org/0000-0002-4713-8096"
+- family-names: Scheuring
+  given-names: Benedikt M.
+  orcid: "https://orcid.org/0000-0003-2971-1431"
+- family-names: Montesano
+  given-names: John
+  orcid: "https://orcid.org/0000-0003-2723-052X"
+- family-names: Hohe
+  given-names: Jörg
+  orcid: "https://orcid.org/0000-0003-3994-4562"
+doi: 10.5281/zenodo.8124344
+message: If you use this software, please cite our article in the
+  Journal of Open Source Software.
+preferred-citation:
+  authors:
+  - family-names: Christ
+    given-names: Nicolas
+    orcid: "https://orcid.org/0000-0002-4713-8096"
+  - family-names: Scheuring
+    given-names: Benedikt M.
+    orcid: "https://orcid.org/0000-0003-2971-1431"
+  - family-names: Montesano
+    given-names: John
+    orcid: "https://orcid.org/0000-0003-2723-052X"
+  - family-names: Hohe
+    given-names: Jörg
+    orcid: "https://orcid.org/0000-0003-3994-4562"
+  date-published: 2023-07-11
+  doi: 10.21105/joss.05295
+  issn: 2475-9066
+  issue: 87
+  journal: Journal of Open Source Software
+  publisher:
+    name: Open Journals
+  start: 5295
+  title: "HomoPy: A Python package for homogenization procedures in
+    fiber reinforced polymers"
+  type: article
+  url: "https://joss.theoj.org/papers/10.21105/joss.05295"
+  volume: 8
+title: "HomoPy: A Python package for homogenization procedures in fiber
+  reinforced polymers"
