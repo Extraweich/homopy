@@ -1,5 +1,5 @@
 ---
-title: 'HomoPy: A Python package for homogenization procedures in fiber reinforced polymers'
+title: 'A Python package for homogenization procedures in fiber reinforced polymers'
 tags:
 -   Python
 -   Mechanics
