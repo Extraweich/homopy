@@ -64,8 +64,6 @@ class Tensor:
         self.B_voigt[:, :, 5] = (self._diade(self.e1, self.e2) + self._diade(self.e2, self.e1))
 
 
-
-
     def _diade(self, di, dj):
         """
         Return diadic product of two directional vectors. This is used to
@@ -200,8 +198,10 @@ class Tensor:
         ), "Only Mandel or Voigt notation are valid!"
 
         if representation == "voigt":
+            c = 1
             b = 1
         else:
+            c = np.sqrt(2)
             b = np.sqrt(2)
 
         g = tensor
@@ -233,28 +233,28 @@ class Tensor:
                     b * g[2, 2, 0, 1],
                 ],
                 [
-                    b * g[1, 2, 0, 0],
-                    b * g[1, 2, 1, 1],
-                    b * g[1, 2, 2, 2],
-                    2 * g[1, 2, 1, 2],
-                    2 * g[1, 2, 0, 2],
-                    2 * g[1, 2, 0, 1],
+                    c * g[1, 2, 0, 0],
+                    c * g[1, 2, 1, 1],
+                    c * g[1, 2, 2, 2],
+                    b * c * g[1, 2, 1, 2],
+                    b * c * g[1, 2, 0, 2],
+                    b * c * g[1, 2, 0, 1],
                 ],
                 [
-                    b * g[0, 2, 0, 0],
-                    b * g[0, 2, 1, 1],
-                    b * g[0, 2, 2, 2],
-                    2 * g[0, 2, 1, 2],
-                    2 * g[0, 2, 0, 2],
-                    2 * g[0, 2, 0, 1],
+                    c * g[0, 2, 0, 0],
+                    c * g[0, 2, 1, 1],
+                    c * g[0, 2, 2, 2],
+                    b * c * g[0, 2, 1, 2],
+                    b * c * g[0, 2, 0, 2],
+                    b * c * g[0, 2, 0, 1],
                 ],
                 [
-                    b * g[0, 1, 0, 0],
-                    b * g[0, 1, 1, 1],
-                    b * g[0, 1, 2, 2],
-                    2 * g[0, 1, 1, 2],
-                    2 * g[0, 1, 0, 2],
-                    2 * g[0, 1, 0, 1],
+                    c * g[0, 1, 0, 0],
+                    c * g[0, 1, 1, 1],
+                    c * g[0, 1, 2, 2],
+                    b * c * g[0, 1, 1, 2],
+                    b * c * g[0, 1, 0, 2],
+                    b * c * g[0, 1, 0, 1],
                 ],
             ]
         )
