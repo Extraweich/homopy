@@ -23,7 +23,9 @@ class Tensor:
     e3 : ndarray of shape (3,)
         Vector 3 of orthonormalbasis of 1st order tensors.
     B : ndarray of shape (3, 3, 6)
-        Orthonormalbasis of 4th order tensors in normalized Voigt notation.
+        Orthonormalbasis of 4th order tensors in Mandel notation.
+    B_voigt : ndarray of shape (3, 3, 6)
+        Orthogonalbasis of 4th order tensors in Voigt notation.
     """
 
     def __init__(self):
@@ -31,7 +33,7 @@ class Tensor:
         self.e2 = np.array([0, 1, 0])
         self.e3 = np.array([0, 0, 1])
 
-        # Orthonormalbasis 4th order tensor
+        # Orthonormalbasis 4th order tensor (Mandel)
         self.B = np.zeros((3, 3, 6))
         self.B[:, :, 0] = self._diade(self.e1, self.e1)
         self.B[:, :, 1] = self._diade(self.e2, self.e2)
@@ -52,10 +54,22 @@ class Tensor:
             * (self._diade(self.e1, self.e2) + self._diade(self.e2, self.e1))
         )
 
+        # Orthogonalbasis 4th order tensor (Voigt)
+        self.B_voigt = np.zeros((3, 3, 6))
+        self.B_voigt[:, :, 0] = self._diade(self.e1, self.e1)
+        self.B_voigt[:, :, 1] = self._diade(self.e2, self.e2)
+        self.B_voigt[:, :, 2] = self._diade(self.e3, self.e3)
+        self.B_voigt[:, :, 3] = (self._diade(self.e2, self.e3) + self._diade(self.e3, self.e2))
+        self.B_voigt[:, :, 4] = (self._diade(self.e1, self.e3) + self._diade(self.e3, self.e1))
+        self.B_voigt[:, :, 5] = (self._diade(self.e1, self.e2) + self._diade(self.e2, self.e1))
+
+
+
+
     def _diade(self, di, dj):
         """
         Return diadic product of two directional vectors. This is used to
-        calculate the basis tensors in the normalized Voigt notation.
+        calculate the basis tensors in the Mandel notation.
 
         Parameters
         ----------
@@ -75,7 +89,7 @@ class Tensor:
     def _diade4(self, bi, bj):
         """
         Return diadic product of two tensors. This is used to transfer
-        stiffness tensors from normalized Voigt notation to regular tensor
+        stiffness tensors from Mandel notation to regular tensor
         notation.
 
         Parameters
@@ -95,7 +109,7 @@ class Tensor:
     def tensor_product(self, tensor_a, tensor_b):
         """
         Return the mapping of one tensor of 4th order to another in the
-        normalized Voigt notation.
+        Mandel notation.
 
         Parameters
         ----------
@@ -139,7 +153,7 @@ class Tensor:
 
     def matrix2mandel(self, matrix):
         """
-        Return the normalized Voigt notation of a tensor of 2nd order
+        Return the Mandel notation of a tensor of 2nd order
         calculated from the regular tensor notation.
 
         Parameters
@@ -150,7 +164,7 @@ class Tensor:
         Returns
         -------
         ndarray of shape (6,)
-            Tensor in normalized Voigt notation.
+            Tensor in Mandel notation.
         """
         b = np.sqrt(2)
         return np.array(
@@ -164,23 +178,34 @@ class Tensor:
             ]
         )
 
-    def tensor2mandel(self, tensor):
+    def _tensor2matrix(self, tensor, representation):
         """
-        Return the normalized Voigt (Mandel) notation of a tensor of 4th
-        order calculated fromthe regular tensor notation.
+        Return a matrix representation (either Mandel or Voigt) of a tensor
+        of 4th order calculated from the regular tensor notation.
 
         Parameters
         ----------
         tensor : ndarray of shape (3, 3, 3, 3)
             Tensor of 4th order in regular tensor notation.
+        representation : string
+            Reduction type (options: 'voigt', 'mandel')
 
         Returns
         -------
         ndarray of shape (6, 6)
-            Tensor in normalized Voigt notation.
+            Tensor in reduced notation.
         """
-        b = np.sqrt(2)
+        assert (
+            representation == "voigt" or representation == "mandel"
+        ), "Only Mandel or Voigt notation are valid!"
+
+        if representation == "voigt":
+            b = 1
+        else:
+            b = np.sqrt(2)
+
         g = tensor
+
         return np.array(
             [
                 [
@@ -234,15 +259,49 @@ class Tensor:
             ]
         )
 
+    def tensor2mandel(self, tensor):
+        """
+        Return the Mandel notation of a tensor of 4th
+        order calculated from the regular tensor notation.
+
+        Parameters
+        ----------
+        tensor : ndarray of shape (3, 3, 3, 3)
+            Tensor of 4th order in regular tensor notation.
+
+        Returns
+        -------
+        ndarray of shape (6, 6)
+            Tensor in Mandel notation.
+        """
+        return self._tensor2matrix(tensor, representation="mandel")
+
+    def tensor2voigt(self, tensor):
+        """
+        Return the Voigt notation of a tensor of 4th
+        order calculated from the regular tensor notation.
+
+        Parameters
+        ----------
+        tensor : ndarray of shape (3, 3, 3, 3)
+            Tensor of 4th order in regular tensor notation.
+
+        Returns
+        -------
+        ndarray of shape (6, 6)
+            Tensor in Mandel notation.
+        """
+        return self._tensor2matrix(tensor, representation="voigt")
+
     def mandel2tensor(self, mandel):
         """
         Return the regular tensor notation of a tensor calculated from
-        the normalized Voigt (Mandel) notation.
+        the Mandel notation.
 
         Parameters
         ----------
         mandel : ndarray of shape (6, 6)
-            Tensor of 4th order in normalized Voigt notation.
+            Tensor of 4th order in Mandel notation.
 
         Returns
         -------
@@ -254,3 +313,60 @@ class Tensor:
             for j in range(0, 6):
                 tensor += mandel[i, j] * self._diade4(self.B[:, :, i], self.B[:, :, j])
         return tensor
+    
+    def voigt2tensor(self, voigt):
+        """
+        Return the regular tensor notation of a tensor calculated from
+        the Voigt notation.
+
+        Parameters
+        ----------
+        voigt : ndarray of shape (6, 6)
+            Tensor of 4th order in Voigt notation.
+
+        Returns
+        -------
+        tensor : ndarray of shape (3, 3, 3, 3)
+            Tensor in regular tensor notation.
+        """
+        tensor = np.zeros((3, 3, 3, 3))
+        for i in range(0, 6):
+            for j in range(0, 6):
+                tensor += voigt[i, j] * self._diade4(self.B_voigt[:, :, i], self.B_voigt[:, :, j])
+        return tensor
+
+    def mandel2voigt(self, mandel):
+        """
+        Return the Voigt notation of a matrix based on
+        the Mandel notation.
+
+        Parameters
+        ----------
+        mandel : ndarray of shape (6, 6)
+            Tensor of 4th order in Mandel notation.
+
+        Returns
+        -------
+        voigt : ndarray of shape (6, 6)
+            Tensor of 4th order in Voigt notation.
+        """
+        voigt = self.tensor2voigt(self.mandel2tensor(mandel))
+        return voigt
+
+    def voigt2mandel(self, voigt):
+        """
+        Return the Mandel notation of a matrix based on
+        the Voigt notation.
+
+        Parameters
+        ----------
+        voigt : ndarray of shape (6, 6)
+            Tensor of 4th order in Voigt notation.
+
+        Returns
+        -------
+        mandel : ndarray of shape (6, 6)
+            Tensor of 4th order in Mandel notation.
+        """
+        mandel = self.tensor2mandel(self.voigt2tensor(voigt))
+        return mandel
