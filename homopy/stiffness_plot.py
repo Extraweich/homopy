@@ -209,8 +209,7 @@ class ElasticPlot(Tensor):
         o : int
             Number of discretization steps for first angle.
         angle : float
-            Angle to determine the angular orientation of the slice.
-            Does not work yet.
+            Angle around x-direction of the projection slice.
         plot : boolean
             Determines whether the plot will be displayed. If False,
             only the metadata of the plot will be returned.
@@ -229,11 +228,18 @@ class ElasticPlot(Tensor):
         E = np.zeros(n + 1)
         rad = np.zeros(n + 1)
 
-        theta = np.pi / 2 + angle  # changing angle does not work yet
+        c_a = np.cos(angle)
+        s_a = np.sin(angle)
+        rot_mat = np.array([[1,0,0],
+                            [0,c_a,-s_a],
+                            [0,s_a,c_a]])
+
+        theta = np.pi / 2 
         for i in range(0, n + 1, 1):
             phi = i / n * 2 * np.pi
             vec = self._dir_vec(phi, theta)
-            E_temp = self._get_E(vec, S)
+            vec_rot = np.einsum("ij,j->i", rot_mat, vec)
+            E_temp = self._get_E(vec_rot, S)
             E[i] = E_temp
             rad[i] = phi
 
