@@ -46,6 +46,13 @@ class Test_Converter:
 
         assert np.allclose(random_mandel6, recovered_mat, rtol=1e-6)
 
+    def test_random_mandel_to_voigt_and_back(self, t, random_mandel6):
+
+        random_tensor_sym = t.mandel2voigt(random_mandel6)
+        recovered_mat = t.voigt2mandel(random_tensor_sym)
+
+        assert np.allclose(random_mandel6, recovered_mat, rtol=1e-6)
+
     @pytest.mark.parametrize(
         "fixture_name", ["random_hooke_sym", "random_complete_sym"]
     )
