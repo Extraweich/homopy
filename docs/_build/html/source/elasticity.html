@@ -1,25 +1,26 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>homopy.elasticity module &mdash; HomoPy  documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=11a30ca5" />
+
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -32,12 +33,16 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html">
-            <img src="../_static/Homopy_Yellow.svg" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/Homopy_Yellow.svg" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -57,6 +62,10 @@
 <li class="toctree-l2"><a class="reference internal" href="tensor.html">homopy.tensor module</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">homopy.elasticity module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#homopy.elasticity.Elasticity"><code class="docutils literal notranslate"><span class="pre">Elasticity</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#homopy.elasticity.Orthotropy"><code class="docutils literal notranslate"><span class="pre">Orthotropy</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#homopy.elasticity.Orthotropy._get_stiffness"><code class="docutils literal notranslate"><span class="pre">Orthotropy._get_stiffness()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#homopy.elasticity.TransverseIsotropy"><code class="docutils literal notranslate"><span class="pre">TransverseIsotropy</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#homopy.elasticity.TransverseIsotropy._get_stiffness"><code class="docutils literal notranslate"><span class="pre">TransverseIsotropy._get_stiffness()</span></code></a></li>
 </ul>
@@ -93,7 +102,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a></li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="code.html">Modules</a></li>
       <li class="breadcrumb-item active">homopy.elasticity module</li>
       <li class="wy-breadcrumbs-aside">
@@ -105,81 +114,180 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  
-<style>
-/* CSS overrides for sphinx_rtd_theme */
-
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
-
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
-
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
-
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<section id="module-homopy.elasticity">
-<span id="homopy-elasticity-module"></span><h1>homopy.elasticity module<a class="headerlink" href="#module-homopy.elasticity" title="Permalink to this heading"></a></h1>
+  <section id="module-homopy.elasticity">
+<span id="homopy-elasticity-module"></span><h1>homopy.elasticity module<a class="headerlink" href="#module-homopy.elasticity" title="Link to this heading"></a></h1>
 <p>Created on Wed Apr 27 21:09:24 2022</p>
 <p>&#64;author: <a class="reference external" href="mailto:nicolas&#46;christ&#37;&#52;&#48;kit&#46;edu">nicolas<span>&#46;</span>christ<span>&#64;</span>kit<span>&#46;</span>edu</a></p>
 <p>Module that contains the linear elastic stiffness classes of Isotropy and Transverse Isotropy.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="homopy.elasticity.Elasticity">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">homopy.elasticity.</span></span><span class="sig-name descname"><span class="pre">Elasticity</span></span><a class="reference internal" href="../_modules/homopy/elasticity.html#Elasticity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.elasticity.Elasticity" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">homopy.elasticity.</span></span><span class="sig-name descname"><span class="pre">Elasticity</span></span><a class="reference internal" href="../_modules/homopy/elasticity.html#Elasticity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.elasticity.Elasticity" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="tensor.html#homopy.tensor.Tensor" title="homopy.tensor.Tensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></p>
-<p>Elasticity class to express generic elasitc stiffness tensors. The class
-inherits from the Tensor class.</p>
+<p>Elasticity class to express generic elasitc stiffness tensors.
+The class inherits from the Tensor class.</p>
+<p>The generic stiffness matrix has the following form in the
+normalized Voigt (Mandel) notation</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\underline{\underline{C}} = \begin{pmatrix}
+                            C_{1111} &amp; C_{1122} &amp; C_{1133} &amp; \sqrt{2}C_{1123} &amp; \sqrt{2}C_{1131} &amp; \sqrt{2}C_{1112} \\
+                            C_{2211} &amp; C_{2222} &amp; C_{2233} &amp; \sqrt{2}C_{2223} &amp; \sqrt{2}C_{2231} &amp; \sqrt{2}C_{2212} \\
+                            C_{3311} &amp; C_{3322} &amp; C_{3333} &amp; \sqrt{2}C_{3323} &amp; \sqrt{2}C_{3331} &amp; \sqrt{2}C_{3312} \\
+                            \sqrt{2}C_{2311} &amp; \sqrt{2}C_{2322} &amp; \sqrt{2}C_{2333} &amp; 2 C_{2323} &amp; 2 C_{2331} &amp; 2 C_{2312} \\
+                            \sqrt{2}C_{3111} &amp; \sqrt{2}C_{3122} &amp; \sqrt{2}C_{3133} &amp; 2 C_{3123} &amp; 2 C_{3131} &amp; 2 C_{3112} \\
+                            \sqrt{2}C_{1211} &amp; \sqrt{2}C_{1222} &amp; \sqrt{2}C_{1233} &amp; 2 C_{1223} &amp; 2 C_{1231} &amp; 2 C_{1212} \\
+                            \end{pmatrix},\end{split}\]</div>
+<p>which is a symmetric matrix, giving 21 parameters.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Variables</dt>
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>~Elasticity.stiffness3333</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>3</em><em>, </em><em>3</em><em>, </em><em>3</em><em>, </em><em>3</em><em>)</em>) – Stiffness values in the regular tensor notation in Pa.</p></li>
-<li><p><strong>~Elasticity.stiffness66</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>6</em><em>, </em><em>6</em><em>)</em>) – Stiffness values in the normalized Voigt notation in Pa.</p></li>
+<li><p><strong>~Elasticity.stiffness3333</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>3</em><em>, </em><em>3</em><em>, </em><em>3</em><em>, </em><em>3</em><em>)</em>) – Stiffness values in the regular tensor notation.</p></li>
+<li><p><strong>~Elasticity.stiffness66</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>6</em><em>, </em><em>6</em><em>)</em>) – Stiffness values in the normalized Voigt notation.</p></li>
 </ul>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="homopy.elasticity.TransverseIsotropy">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">homopy.elasticity.</span></span><span class="sig-name descname"><span class="pre">TransverseIsotropy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">E1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">E2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G23</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nu12</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/elasticity.html#TransverseIsotropy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.elasticity.TransverseIsotropy" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="homopy.elasticity.Orthotropy">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">homopy.elasticity.</span></span><span class="sig-name descname"><span class="pre">Orthotropy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">E1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">E2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">E3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G13</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G23</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nu12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nu13</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nu23</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/elasticity.html#Orthotropy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.elasticity.Orthotropy" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#homopy.elasticity.Elasticity" title="homopy.elasticity.Elasticity"><code class="xref py py-class docutils literal notranslate"><span class="pre">Elasticity</span></code></a></p>
-<p>Transverse Isotropy class to express transverse-isotropic elasitc stiffness tensors.
-The class inherits from the Elasticity class.</p>
+<p>Orthotropy class to express orthotropic elastic stiffness
+tensors. The class inherits from the Elasticity class.</p>
+<p>The orthotropic stiffness matrix has the following form
+in the normalized Voigt (Mandel) notation</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\underline{\underline{C}} = \begin{pmatrix}
+                                \frac{1-\nu_{23}\nu_{32}}{D}E_{1}&amp;
+                                \frac{\nu_{21}+\nu_{23}\nu_{31}}{D}E_{1}&amp;
+                                \frac{\nu_{31}+\nu_{32}\nu_{21}}{D}E_{1}
+                                \\
+                                \frac{\nu_{12}+\nu_{13}\nu_{32}}{D}E_{2} &amp;
+                                \frac{1-\nu_{13}\nu_{31}}{D}E_{2}&amp;
+                                \frac{\nu_{32}+\nu_{31}\nu_{12}}{D}E_{2}
+                                \\
+                                \frac{\nu_{13}+\nu_{12}\nu_{23}}{D}E_{3} &amp;
+                                \frac{\nu_{23}+\nu_{21}\nu_{13}}{D}E_{3} &amp;
+                                \frac{1-\nu_{12}\nu_{21}}{D}E_{3}
+                                \\
+                                &amp; &amp; &amp;2G_{23}
+                                \\
+                                &amp; &amp; &amp; &amp;2G_{13}
+                                \\
+                                &amp; &amp; &amp; &amp; &amp;2G_{12}
+                            \end{pmatrix},\end{split}\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight">
+\[D=1-\nu_{12}\nu_{21}-\nu_{13}\nu_{31}-\nu_{23}\nu_{32}-2\nu_{12}\nu_{23}\nu_{31}.\]</div>
+<p>The corresponding compliance matrix is</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\underline{\underline{S}} = \begin{pmatrix}
+                                \frac{1}{E_1} &amp; -\frac{\nu_{21}}{E_2} &amp; -\frac{\nu_{31}}{E_3} &amp; &amp; &amp; \\
+                                -\frac{\nu_{12}}{E_1} &amp; \frac{1}{E_2} &amp; -\frac{\nu_{32}}{E_3} &amp; &amp; &amp; \\
+                                -\frac{\nu_{13}}{E_1} &amp; -\frac{\nu_{23}}{E_2} &amp; \frac{1}{E_3} &amp; &amp; &amp; \\
+                                &amp; &amp; &amp; \frac{1}{2G_{23}} &amp; &amp; \\
+                                &amp; &amp; &amp; &amp; \frac{1}{2G_{13}} &amp; \\
+                                &amp; &amp; &amp; &amp; &amp; \frac{1}{2G_{12}}
+                            \end{pmatrix}.\end{split}\]</div>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>E1</strong> (<em>float</em>) – Young’s modulus in longitudinal direction in Pa.</p></li>
-<li><p><strong>E2</strong> (<em>float</em>) – Young’s modulus in transverse direction in Pa.</p></li>
-<li><p><strong>G12</strong> (<em>float</em>) – Shear modulus in the longitudinal-transverse plane in Pa.</p></li>
-<li><p><strong>G23</strong> (<em>float</em>) – Shear modulus in the transverse-transverse plane in Pa.</p></li>
-<li><p><strong>nu12</strong> (<em>float</em>) – Poisson’s ratio in longitudinal direction (dimensionless).</p></li>
+<li><p><strong>E1</strong> (<em>float</em>) – Young’s modulus in first principal direction.</p></li>
+<li><p><strong>E2</strong> (<em>float</em>) – Young’s modulus in second principal direction.</p></li>
+<li><p><strong>E3</strong> (<em>float</em>) – Young’s modulus in third principal direction.</p></li>
+<li><p><strong>G12</strong> (<em>float</em>) – Shear modulus in the first-second plane.</p></li>
+<li><p><strong>G13</strong> (<em>float</em>) – Shear modulus in the first-third plane.</p></li>
+<li><p><strong>G23</strong> (<em>float</em>) – Shear modulus in the second-third plane.</p></li>
+<li><p><strong>nu12</strong> (<em>float</em>) – Poisson’s ratio to express strain in second principal direction caused by load in first principal direction (dimensionless).</p></li>
+<li><p><strong>nu13</strong> (<em>float</em>) – Poisson’s ratio to express strain in third principal direction caused by load in first principal direction (dimensionless).</p></li>
+<li><p><strong>nu23</strong> (<em>float</em>) – Poisson’s ratio to express strain in third principal direction caused by load in second principal direction (dimensionless).</p></li>
 </ul>
 </dd>
-<dt class="field-even">Variables</dt>
+<dt class="field-even">Variables<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>~TransverseIsotropy.E1</strong> (<em>float</em>) – Young’s modulus in longitudinal direction in Pa.</p></li>
-<li><p><strong>~TransverseIsotropy.E2</strong> (<em>float</em>) – Young’s modulus in transverse direction in Pa.</p></li>
-<li><p><strong>~TransverseIsotropy.G12</strong> (<em>float</em>) – Shear modulus in the longitudinal-transverse plane in Pa.</p></li>
-<li><p><strong>~TransverseIsotropy.G23</strong> (<em>float</em>) – Shear modulus in the transverse-transverse plane in Pa.</p></li>
-<li><p><strong>~TransverseIsotropy.nu12</strong> (<em>float</em>) – Poisson’s ratio in longitudinal direction (dimensionless).</p></li>
-<li><p><strong>~TransverseIsotropy.nu23</strong> (<em>float</em>) – Poisson’s ratio in transverse direction (dimensionless).</p></li>
+<li><p><strong>~Orthotropy.E1</strong> (<em>float</em>) – Young’s modulus in first principal direction.</p></li>
+<li><p><strong>~Orthotropy.E2</strong> (<em>float</em>) – Young’s modulus in second principal direction.</p></li>
+<li><p><strong>~Orthotropy.E3</strong> (<em>float</em>) – Young’s modulus in third principal direction.</p></li>
+<li><p><strong>~Orthotropy.G12</strong> (<em>float</em>) – Shear modulus in the first-second plane.</p></li>
+<li><p><strong>~Orthotropy.G13</strong> (<em>float</em>) – Shear modulus in the first-third plane.</p></li>
+<li><p><strong>~Orthotropy.G23</strong> (<em>float</em>) – Shear modulus in the second-third plane.</p></li>
+<li><p><strong>~Orthotropy.nu12</strong> (<em>float</em>) – Poisson’s ratio to express strain in second principal direction caused by load in first principal direction (dimensionless).</p></li>
+<li><p><strong>~Orthotropy.nu21</strong> (<em>float</em>) – Poisson’s ratio to express strain in first principal direction caused by load in second principal direction (dimensionless).</p></li>
+<li><p><strong>~Orthotropy.nu13</strong> (<em>float</em>) – Poisson’s ratio to express strain in third principal direction caused by load in first principal direction (dimensionless).</p></li>
+<li><p><strong>~Orthotropy.nu31</strong> (<em>float</em>) – Poisson’s ratio to express strain in third principal direction caused by load in first principal direction (dimensionless).</p></li>
+<li><p><strong>~Orthotropy.nu23</strong> (<em>float</em>) – Poisson’s ratio to express strain in third principal direction caused by load in second principal direction (dimensionless).</p></li>
+<li><p><strong>~Orthotropy.nu32</strong> (<em>float</em>) – Poisson’s ratio to express strain in third principal direction caused by load in second principal direction (dimensionless).</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="homopy.elasticity.Orthotropy._get_stiffness">
+<span class="sig-name descname"><span class="pre">_get_stiffness</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/elasticity.html#Orthotropy._get_stiffness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.elasticity.Orthotropy._get_stiffness" title="Link to this definition"></a></dt>
+<dd><p>Calculate the stiffness parameters for both notations.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="homopy.elasticity.TransverseIsotropy">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">homopy.elasticity.</span></span><span class="sig-name descname"><span class="pre">TransverseIsotropy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">E1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">E2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G23</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nu12</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/elasticity.html#TransverseIsotropy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.elasticity.TransverseIsotropy" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#homopy.elasticity.Elasticity" title="homopy.elasticity.Elasticity"><code class="xref py py-class docutils literal notranslate"><span class="pre">Elasticity</span></code></a></p>
+<p>Transverse Isotropy class to express transverse-isotropic
+elasitc stiffness tensors. The class inherits from the
+Elasticity class. The convention in HomoPy is that the first
+principal direction is orthogonal to the isotropic plane.</p>
+<p>The transverse-isotropic stiffness matrix has the following
+form in the normalized Voigt (Mandel) notation</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\underline{\underline{C}} = \begin{pmatrix}
+                            C_{1111} &amp; 2\nu_{12}(\lambda+G_{23}) &amp; 2\nu_{12}(\lambda+G_{23}) &amp; 0 &amp; 0 &amp; 0 \\
+                            &amp; \lambda+2G_{23} &amp; \lambda &amp; 0 &amp; 0 &amp; 0 \\
+                            &amp; &amp; \lambda+2G_{23} &amp; 0 &amp; 0 &amp; 0 \\
+                            &amp; &amp; &amp; 2G_{23} &amp; 0 &amp; 0 \\
+                            &amp; \mathrm{sym} &amp; &amp; &amp; 2G_{12} &amp; 0 \\
+                            &amp; &amp; &amp; &amp; &amp; 2G_{12} \\
+                            \end{pmatrix},\end{split}\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{array}{lcl}
+    \lambda&amp;=&amp;\dfrac{\nu_{12} \nu_{21} + \nu_{23}}
+    {( 1-\nu_{23} - 2 \nu_{12}\nu_{21} ) (1+\nu_{23})} E_2
+    \\
+    C_{1111} &amp;=&amp; \dfrac{1 - \nu_{23}}{1 - \nu_{23} - 2 \nu_{12} \nu_{21}} E_1
+\end{array}\end{split}\]</div>
+<p>The corresponding compliance matrix is</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\underline{\underline{S}} = \begin{pmatrix}
+                            \frac{1}{E_1} &amp; -\frac{\nu_{12}}{E_1} &amp; -\frac{\nu_{12}}{E_1} &amp; 0 &amp; 0 &amp; 0 \\
+                            &amp; \frac{1}{E_2} &amp; -\frac{\nu_{23}}{E_2} &amp; 0 &amp; 0 &amp; 0 \\
+                            &amp; &amp; \frac{1}{E_2} &amp; 0 &amp; 0 &amp; 0 \\
+                            &amp; &amp; &amp; \frac{1}{2G_{23}} &amp; 0 &amp; 0 \\
+                            &amp; \mathrm{sym} &amp; &amp; &amp; \frac{1}{2G_{12}} &amp; 0 \\
+                            &amp; &amp; &amp; &amp; &amp; \frac{1}{2G_{12}} \\
+                            \end{pmatrix}.\end{split}\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>E1</strong> (<em>float</em>) – Young’s modulus in longitudinal direction.</p></li>
+<li><p><strong>E2</strong> (<em>float</em>) – Young’s modulus in transverse direction.</p></li>
+<li><p><strong>G12</strong> (<em>float</em>) – Shear modulus in the longitudinal-transverse plane.</p></li>
+<li><p><strong>G23</strong> (<em>float</em>) – Shear modulus in the transverse-transverse plane.</p></li>
+<li><p><strong>nu12</strong> (<em>float</em>) – Poisson’s ratio to express strain in transverse direction caused by load in longitudinal direction (dimensionless).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Variables<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>~TransverseIsotropy.E1</strong> (<em>float</em>) – Young’s modulus in longitudinal direction.</p></li>
+<li><p><strong>~TransverseIsotropy.E2</strong> (<em>float</em>) – Young’s modulus in transverse direction.</p></li>
+<li><p><strong>~TransverseIsotropy.G12</strong> (<em>float</em>) – Shear modulus in the longitudinal-transverse plane.</p></li>
+<li><p><strong>~TransverseIsotropy.G23</strong> (<em>float</em>) – Shear modulus in the transverse-transverse plane.</p></li>
+<li><p><strong>~TransverseIsotropy.nu12</strong> (<em>float</em>) – Poisson’s ratio to express strain in isotropic plane caused by load in longitudinal direction (dimensionless).</p></li>
+<li><p><strong>~TransverseIsotropy.nu23</strong> (<em>float</em>) – Poisson’s ratio to express strain in isotropic plane caused by load in transverse direction (dimensionless).</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="homopy.elasticity.TransverseIsotropy._get_stiffness">
-<span class="sig-name descname"><span class="pre">_get_stiffness</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/elasticity.html#TransverseIsotropy._get_stiffness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.elasticity.TransverseIsotropy._get_stiffness" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">_get_stiffness</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/elasticity.html#TransverseIsotropy._get_stiffness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.elasticity.TransverseIsotropy._get_stiffness" title="Link to this definition"></a></dt>
 <dd><p>Calculate the stiffness parameters for both notations.</p>
 </dd></dl>
 
@@ -187,44 +295,44 @@ The class inherits from the Elasticity class.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="homopy.elasticity.Isotropy">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">homopy.elasticity.</span></span><span class="sig-name descname"><span class="pre">Isotropy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">E</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nu</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/elasticity.html#Isotropy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.elasticity.Isotropy" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">homopy.elasticity.</span></span><span class="sig-name descname"><span class="pre">Isotropy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">E</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nu</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/elasticity.html#Isotropy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.elasticity.Isotropy" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#homopy.elasticity.TransverseIsotropy" title="homopy.elasticity.TransverseIsotropy"><code class="xref py py-class docutils literal notranslate"><span class="pre">TransverseIsotropy</span></code></a></p>
 <p>Isotropy class to express isotropic elasitc stiffness tensors.
 The class inherits from the Transverse Isotropy class.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>E</strong> (<em>float</em>) – Young’s modulus in Pa.</p></li>
+<li><p><strong>E</strong> (<em>float</em>) – Young’s modulus.</p></li>
 <li><p><strong>nu</strong> (<em>float</em>) – Poisson’s ratio (dimensionless).</p></li>
 </ul>
 </dd>
-<dt class="field-even">Variables</dt>
+<dt class="field-even">Variables<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>~Isotropy.E</strong> (<em>float</em>) – Young’s modulus in Pa.</p></li>
+<li><p><strong>~Isotropy.E</strong> (<em>float</em>) – Young’s modulus.</p></li>
 <li><p><strong>~Isotropy.nu</strong> (<em>float</em>) – Poisson’s ratio (dimensionless).</p></li>
-<li><p><strong>~Isotropy.lam</strong> (<em>float</em>) – First Lamé constant in Pa.</p></li>
-<li><p><strong>~Isotropy.mu</strong> (<em>float</em>) – Second Lamé constant in Pa.</p></li>
+<li><p><strong>~Isotropy.lam</strong> (<em>float</em>) – First Lamé constant.</p></li>
+<li><p><strong>~Isotropy.mu</strong> (<em>float</em>) – Second Lamé constant.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="homopy.elasticity.Isotropy._get_lambda">
-<span class="sig-name descname"><span class="pre">_get_lambda</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/elasticity.html#Isotropy._get_lambda"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.elasticity.Isotropy._get_lambda" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">_get_lambda</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/elasticity.html#Isotropy._get_lambda"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.elasticity.Isotropy._get_lambda" title="Link to this definition"></a></dt>
 <dd><p>Return the first Lamé constant from other material parameters.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><em>float</em> – First Lamé constant in Pa.</p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>float</em> – First Lamé constant.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="homopy.elasticity.Isotropy._get_mu">
-<span class="sig-name descname"><span class="pre">_get_mu</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/elasticity.html#Isotropy._get_mu"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.elasticity.Isotropy._get_mu" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">_get_mu</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/homopy/elasticity.html#Isotropy._get_mu"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#homopy.elasticity.Isotropy._get_mu" title="Link to this definition"></a></dt>
 <dd><p>Return the second Lamé constant from other material parameters.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><em>float</em> – Second Lamé constant in Pa.</p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>float</em> – Second Lamé constant.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -244,7 +352,7 @@ The class inherits from the Transverse Isotropy class.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023, Nicolas Christ.</p>
+    <p>&#169; Copyright 2025, Nicolas Christ.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

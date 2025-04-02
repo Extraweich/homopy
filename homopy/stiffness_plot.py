@@ -197,7 +197,9 @@ class ElasticPlot(Tensor):
 
         plt.show()
 
-    def polar_plot_E_body(self, C, o, angle, plot=True):
+    def polar_plot_E_body(
+        self, C, o, normal=np.array([0, 0, 1]), bound=None, plot=True
+    ):
         """
         Plot slice of stiffness body.
 
@@ -207,9 +209,9 @@ class ElasticPlot(Tensor):
             Stiffness tensor in Voigt or normalized Voigt
             notation.
         o : int
-            Number of discretization steps for first angle.
-        angle : float
-            Angle around x-direction of the projection slice.
+            Number of discretization steps for angle within cutting plane.
+        normal : ndarray of shape (3,), default=np.array([0,0,1])
+            Normal direction defining cutting plane.
         plot : boolean
             Determines whether the plot will be displayed. If False,
             only the metadata of the plot will be returned.
@@ -228,17 +230,27 @@ class ElasticPlot(Tensor):
         E = np.zeros(n + 1)
         rad = np.zeros(n + 1)
 
-        c_a = np.cos(angle)
-        s_a = np.sin(angle)
-        rot_mat = np.array([[1,0,0],
-                            [0,c_a,-s_a],
-                            [0,s_a,c_a]])
+        normal = normal / np.linalg.norm(normal)
 
-        theta = np.pi / 2 
+        z_vec = np.array([0, 0, 1])
+        vec_v = np.cross(z_vec, normal)
+        cosine = z_vec.dot(normal)
+        v_mat = np.array(
+            [
+                [0, -vec_v[2], vec_v[1]],
+                [vec_v[2], 0, -vec_v[0]],
+                [-vec_v[1], vec_v[0], 0],
+            ]
+        )
+        R = (
+            np.eye(3) + v_mat + np.dot(v_mat, v_mat) * 1 / (1 + cosine)
+        )  # https://math.stackexchange.com/questions/180418/calculate-rotation-matrix-to-align-vector-a-to-vector-b-in-3d
+
+        theta = np.pi / 2
         for i in range(0, n + 1, 1):
             phi = i / n * 2 * np.pi
             vec = self._dir_vec(phi, theta)
-            vec_rot = np.einsum("ij,j->i", rot_mat, vec)
+            vec_rot = R @ vec
             E_temp = self._get_E(vec_rot, S)
             E[i] = E_temp
             rad[i] = phi

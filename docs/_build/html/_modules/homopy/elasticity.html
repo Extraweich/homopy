@@ -1,24 +1,23 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>homopy.elasticity &mdash; HomoPy  documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=11a30ca5" />
+
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -29,12 +28,16 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html">
-            <img src="../../_static/Homopy_Yellow.svg" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/Homopy_Yellow.svg" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -72,7 +75,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a></li>
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
       <li class="breadcrumb-item active">homopy.elasticity</li>
       <li class="wy-breadcrumbs-aside">
@@ -93,66 +96,288 @@
 <span class="sd">Module that contains the linear elastic stiffness classes of Isotropy and Transverse Isotropy.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">.tensor</span> <span class="kn">import</span> <span class="n">Tensor</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.tensor</span><span class="w"> </span><span class="kn">import</span> <span class="n">Tensor</span>
 
 
-<div class="viewcode-block" id="Elasticity"><a class="viewcode-back" href="../../source/elasticity.html#homopy.elasticity.Elasticity">[docs]</a><span class="k">class</span> <span class="nc">Elasticity</span><span class="p">(</span><span class="n">Tensor</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Elasticity class to express generic elasitc stiffness tensors. The class</span>
-<span class="sd">    inherits from the Tensor class.</span>
+<div class="viewcode-block" id="Elasticity">
+<a class="viewcode-back" href="../../source/elasticity.html#homopy.elasticity.Elasticity">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Elasticity</span><span class="p">(</span><span class="n">Tensor</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Elasticity class to express generic elasitc stiffness tensors. </span>
+<span class="sd">    The class inherits from the Tensor class. </span>
+
+<span class="sd">    The generic stiffness matrix has the following form in the </span>
+<span class="sd">    normalized Voigt (Mandel) notation</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">            \underline{\underline{C}} = \begin{pmatrix}</span>
+<span class="sd">                                        C_{1111} &amp; C_{1122} &amp; C_{1133} &amp; \sqrt{2}C_{1123} &amp; \sqrt{2}C_{1131} &amp; \sqrt{2}C_{1112} \\</span>
+<span class="sd">                                        C_{2211} &amp; C_{2222} &amp; C_{2233} &amp; \sqrt{2}C_{2223} &amp; \sqrt{2}C_{2231} &amp; \sqrt{2}C_{2212} \\</span>
+<span class="sd">                                        C_{3311} &amp; C_{3322} &amp; C_{3333} &amp; \sqrt{2}C_{3323} &amp; \sqrt{2}C_{3331} &amp; \sqrt{2}C_{3312} \\</span>
+<span class="sd">                                        \sqrt{2}C_{2311} &amp; \sqrt{2}C_{2322} &amp; \sqrt{2}C_{2333} &amp; 2 C_{2323} &amp; 2 C_{2331} &amp; 2 C_{2312} \\</span>
+<span class="sd">                                        \sqrt{2}C_{3111} &amp; \sqrt{2}C_{3122} &amp; \sqrt{2}C_{3133} &amp; 2 C_{3123} &amp; 2 C_{3131} &amp; 2 C_{3112} \\</span>
+<span class="sd">                                        \sqrt{2}C_{1211} &amp; \sqrt{2}C_{1222} &amp; \sqrt{2}C_{1233} &amp; 2 C_{1223} &amp; 2 C_{1231} &amp; 2 C_{1212} \\</span>
+<span class="sd">                                        \end{pmatrix},</span>
+
+<span class="sd">    which is a symmetric matrix, giving 21 parameters.</span>
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
 <span class="sd">    stiffness3333 : ndarray of shape (3, 3, 3, 3)</span>
-<span class="sd">        Stiffness values in the regular tensor notation in Pa.</span>
+<span class="sd">        Stiffness values in the regular tensor notation.</span>
 <span class="sd">    stiffness66 : ndarray of shape (6, 6)</span>
-<span class="sd">        Stiffness values in the normalized Voigt notation in Pa.</span>
+<span class="sd">        Stiffness values in the normalized Voigt notation.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stiffness3333</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stiffness66</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span></div>
 
 
-<div class="viewcode-block" id="TransverseIsotropy"><a class="viewcode-back" href="../../source/elasticity.html#homopy.elasticity.TransverseIsotropy">[docs]</a><span class="k">class</span> <span class="nc">TransverseIsotropy</span><span class="p">(</span><span class="n">Elasticity</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Transverse Isotropy class to express transverse-isotropic elasitc stiffness tensors.</span>
-<span class="sd">    The class inherits from the Elasticity class.</span>
+
+<div class="viewcode-block" id="Orthotropy">
+<a class="viewcode-back" href="../../source/elasticity.html#homopy.elasticity.Orthotropy">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Orthotropy</span><span class="p">(</span><span class="n">Elasticity</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Orthotropy class to express orthotropic elastic stiffness </span>
+<span class="sd">    tensors. The class inherits from the Elasticity class.</span>
+
+<span class="sd">    The orthotropic stiffness matrix has the following form </span>
+<span class="sd">    in the normalized Voigt (Mandel) notation</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">            \underline{\underline{C}} = \begin{pmatrix}</span>
+<span class="sd">                                            \frac{1-\nu_{23}\nu_{32}}{D}E_{1}&amp;</span>
+<span class="sd">                                            \frac{\nu_{21}+\nu_{23}\nu_{31}}{D}E_{1}&amp;</span>
+<span class="sd">                                            \frac{\nu_{31}+\nu_{32}\nu_{21}}{D}E_{1}</span>
+<span class="sd">                                            \\</span>
+<span class="sd">                                            \frac{\nu_{12}+\nu_{13}\nu_{32}}{D}E_{2} &amp;</span>
+<span class="sd">                                            \frac{1-\nu_{13}\nu_{31}}{D}E_{2}&amp;</span>
+<span class="sd">                                            \frac{\nu_{32}+\nu_{31}\nu_{12}}{D}E_{2}</span>
+<span class="sd">                                            \\</span>
+<span class="sd">                                            \frac{\nu_{13}+\nu_{12}\nu_{23}}{D}E_{3} &amp;</span>
+<span class="sd">                                            \frac{\nu_{23}+\nu_{21}\nu_{13}}{D}E_{3} &amp;</span>
+<span class="sd">                                            \frac{1-\nu_{12}\nu_{21}}{D}E_{3}</span>
+<span class="sd">                                            \\</span>
+<span class="sd">                                            &amp; &amp; &amp;2G_{23}</span>
+<span class="sd">                                            \\</span>
+<span class="sd">                                            &amp; &amp; &amp; &amp;2G_{13}</span>
+<span class="sd">                                            \\</span>
+<span class="sd">                                            &amp; &amp; &amp; &amp; &amp;2G_{12}</span>
+<span class="sd">                                        \end{pmatrix},</span>
+
+<span class="sd">    where</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">        D=1-\nu_{12}\nu_{21}-\nu_{13}\nu_{31}-\nu_{23}\nu_{32}-2\nu_{12}\nu_{23}\nu_{31}.</span>
+
+<span class="sd">    The corresponding compliance matrix is</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">            \underline{\underline{S}} = \begin{pmatrix}</span>
+<span class="sd">                                            \frac{1}{E_1} &amp; -\frac{\nu_{21}}{E_2} &amp; -\frac{\nu_{31}}{E_3} &amp; &amp; &amp; \\</span>
+<span class="sd">                                            -\frac{\nu_{12}}{E_1} &amp; \frac{1}{E_2} &amp; -\frac{\nu_{32}}{E_3} &amp; &amp; &amp; \\</span>
+<span class="sd">                                            -\frac{\nu_{13}}{E_1} &amp; -\frac{\nu_{23}}{E_2} &amp; \frac{1}{E_3} &amp; &amp; &amp; \\</span>
+<span class="sd">                                            &amp; &amp; &amp; \frac{1}{2G_{23}} &amp; &amp; \\</span>
+<span class="sd">                                            &amp; &amp; &amp; &amp; \frac{1}{2G_{13}} &amp; \\</span>
+<span class="sd">                                            &amp; &amp; &amp; &amp; &amp; \frac{1}{2G_{12}}</span>
+<span class="sd">                                        \end{pmatrix}.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    E1 : float</span>
-<span class="sd">        Young&#39;s modulus in longitudinal direction in Pa.</span>
+<span class="sd">        Young&#39;s modulus in first principal direction.</span>
 <span class="sd">    E2 : float</span>
-<span class="sd">        Young&#39;s modulus in transverse direction in Pa.</span>
+<span class="sd">        Young&#39;s modulus in second principal direction.</span>
+<span class="sd">    E3 : float</span>
+<span class="sd">        Young&#39;s modulus in third principal direction.</span>
 <span class="sd">    G12 : float</span>
-<span class="sd">        Shear modulus in the longitudinal-transverse plane in Pa.</span>
+<span class="sd">        Shear modulus in the first-second plane.</span>
+<span class="sd">    G13 : float</span>
+<span class="sd">        Shear modulus in the first-third plane.</span>
 <span class="sd">    G23 : float</span>
-<span class="sd">        Shear modulus in the transverse-transverse plane in Pa.</span>
+<span class="sd">        Shear modulus in the second-third plane.</span>
 <span class="sd">    nu12 : float</span>
-<span class="sd">        Poisson&#39;s ratio in longitudinal direction (dimensionless).</span>
+<span class="sd">        Poisson&#39;s ratio to express strain in second principal direction caused by load in first principal direction (dimensionless).</span>
+<span class="sd">    nu13 : float</span>
+<span class="sd">        Poisson&#39;s ratio to express strain in third principal direction caused by load in first principal direction (dimensionless).</span>
+<span class="sd">    nu23 : float</span>
+<span class="sd">        Poisson&#39;s ratio to express strain in third principal direction caused by load in second principal direction (dimensionless).</span>
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
 <span class="sd">    E1 : float</span>
-<span class="sd">        Young&#39;s modulus in longitudinal direction in Pa.</span>
+<span class="sd">        Young&#39;s modulus in first principal direction.</span>
 <span class="sd">    E2 : float</span>
-<span class="sd">        Young&#39;s modulus in transverse direction in Pa.</span>
+<span class="sd">        Young&#39;s modulus in second principal direction.</span>
+<span class="sd">    E3 : float</span>
+<span class="sd">        Young&#39;s modulus in third principal direction.</span>
 <span class="sd">    G12 : float</span>
-<span class="sd">        Shear modulus in the longitudinal-transverse plane in Pa.</span>
+<span class="sd">        Shear modulus in the first-second plane.</span>
+<span class="sd">    G13 : float</span>
+<span class="sd">        Shear modulus in the first-third plane.</span>
 <span class="sd">    G23 : float</span>
-<span class="sd">        Shear modulus in the transverse-transverse plane in Pa.</span>
+<span class="sd">        Shear modulus in the second-third plane.</span>
 <span class="sd">    nu12 : float</span>
-<span class="sd">        Poisson&#39;s ratio in longitudinal direction (dimensionless).</span>
+<span class="sd">        Poisson&#39;s ratio to express strain in second principal direction caused by load in first principal direction (dimensionless).</span>
+<span class="sd">    nu21 : float</span>
+<span class="sd">        Poisson&#39;s ratio to express strain in first principal direction caused by load in second principal direction (dimensionless).</span>
+<span class="sd">    nu13 : float</span>
+<span class="sd">        Poisson&#39;s ratio to express strain in third principal direction caused by load in first principal direction (dimensionless).</span>
+<span class="sd">    nu31 : float</span>
+<span class="sd">        Poisson&#39;s ratio to express strain in third principal direction caused by load in first principal direction (dimensionless).</span>
 <span class="sd">    nu23 : float</span>
-<span class="sd">        Poisson&#39;s ratio in transverse direction (dimensionless).</span>
+<span class="sd">        Poisson&#39;s ratio to express strain in third principal direction caused by load in second principal direction (dimensionless).</span>
+<span class="sd">    nu32 : float</span>
+<span class="sd">        Poisson&#39;s ratio to express strain in third principal direction caused by load in second principal direction (dimensionless).</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">E1</span><span class="p">,</span> <span class="n">E2</span><span class="p">,</span> <span class="n">G12</span><span class="p">,</span> <span class="n">G23</span><span class="p">,</span> <span class="n">nu12</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">E1</span><span class="p">,</span> <span class="n">E2</span><span class="p">,</span> <span class="n">E3</span><span class="p">,</span> <span class="n">G12</span><span class="p">,</span> <span class="n">G13</span><span class="p">,</span> <span class="n">G23</span><span class="p">,</span> <span class="n">nu12</span><span class="p">,</span> <span class="n">nu13</span><span class="p">,</span> <span class="n">nu23</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">E1</span> <span class="o">=</span> <span class="n">E1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">E2</span> <span class="o">=</span> <span class="n">E2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">E3</span> <span class="o">=</span> <span class="n">E3</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">G12</span> <span class="o">=</span> <span class="n">G12</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">G13</span> <span class="o">=</span> <span class="n">G13</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">G23</span> <span class="o">=</span> <span class="n">G23</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nu12</span> <span class="o">=</span> <span class="n">nu12</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nu21</span> <span class="o">=</span> <span class="n">nu12</span> <span class="o">*</span> <span class="n">E2</span> <span class="o">/</span> <span class="n">E1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nu13</span> <span class="o">=</span> <span class="n">nu13</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nu31</span> <span class="o">=</span> <span class="n">nu13</span> <span class="o">*</span> <span class="n">E3</span> <span class="o">/</span> <span class="n">E1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nu23</span> <span class="o">=</span> <span class="n">nu23</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nu32</span> <span class="o">=</span> <span class="n">nu23</span> <span class="o">*</span> <span class="n">E3</span> <span class="o">/</span> <span class="n">E2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_get_stiffness</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Orthotropy._get_stiffness">
+<a class="viewcode-back" href="../../source/elasticity.html#homopy.elasticity.Orthotropy._get_stiffness">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_stiffness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate the stiffness parameters for both notations.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">D</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="mi">1</span>
+            <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu12</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu21</span>
+            <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu13</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu31</span>
+            <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu23</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu32</span>
+            <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu12</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu23</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu31</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">stiffness66</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="p">[</span>
+                    <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu23</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu32</span><span class="p">)</span> <span class="o">/</span> <span class="n">D</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">E1</span><span class="p">,</span>
+                    <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nu21</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu23</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu31</span><span class="p">)</span> <span class="o">/</span> <span class="n">D</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">E1</span><span class="p">,</span>
+                    <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nu31</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu32</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu21</span><span class="p">)</span> <span class="o">/</span> <span class="n">D</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">E1</span><span class="p">,</span>
+                    <span class="mi">0</span><span class="p">,</span>
+                    <span class="mi">0</span><span class="p">,</span>
+                    <span class="mi">0</span><span class="p">,</span>
+                <span class="p">],</span>
+                <span class="p">[</span>
+                    <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nu12</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu13</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu32</span><span class="p">)</span> <span class="o">/</span> <span class="n">D</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">E2</span><span class="p">,</span>
+                    <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu13</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu31</span><span class="p">)</span> <span class="o">/</span> <span class="n">D</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">E2</span><span class="p">,</span>
+                    <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nu32</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu31</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu12</span><span class="p">)</span> <span class="o">/</span> <span class="n">D</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">E2</span><span class="p">,</span>
+                    <span class="mi">0</span><span class="p">,</span>
+                    <span class="mi">0</span><span class="p">,</span>
+                    <span class="mi">0</span><span class="p">,</span>
+                <span class="p">],</span>
+                <span class="p">[</span>
+                    <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nu13</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu12</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu23</span><span class="p">)</span> <span class="o">/</span> <span class="n">D</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">E3</span><span class="p">,</span>
+                    <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nu23</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu21</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu13</span><span class="p">)</span> <span class="o">/</span> <span class="n">D</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">E3</span><span class="p">,</span>
+                    <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu12</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu21</span><span class="p">)</span> <span class="o">/</span> <span class="n">D</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">E3</span><span class="p">,</span>
+                    <span class="mi">0</span><span class="p">,</span>
+                    <span class="mi">0</span><span class="p">,</span>
+                    <span class="mi">0</span><span class="p">,</span>
+                <span class="p">],</span>
+                <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">G23</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">G12</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">G12</span><span class="p">],</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stiffness3333</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mandel2tensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stiffness66</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="TransverseIsotropy">
+<a class="viewcode-back" href="../../source/elasticity.html#homopy.elasticity.TransverseIsotropy">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">TransverseIsotropy</span><span class="p">(</span><span class="n">Elasticity</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Transverse Isotropy class to express transverse-isotropic </span>
+<span class="sd">    elasitc stiffness tensors. The class inherits from the </span>
+<span class="sd">    Elasticity class. The convention in HomoPy is that the first</span>
+<span class="sd">    principal direction is orthogonal to the isotropic plane. </span>
+
+<span class="sd">    The transverse-isotropic stiffness matrix has the following </span>
+<span class="sd">    form in the normalized Voigt (Mandel) notation</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">            \underline{\underline{C}} = \begin{pmatrix}</span>
+<span class="sd">                                        C_{1111} &amp; 2\nu_{12}(\lambda+G_{23}) &amp; 2\nu_{12}(\lambda+G_{23}) &amp; 0 &amp; 0 &amp; 0 \\</span>
+<span class="sd">                                        &amp; \lambda+2G_{23} &amp; \lambda &amp; 0 &amp; 0 &amp; 0 \\</span>
+<span class="sd">                                        &amp; &amp; \lambda+2G_{23} &amp; 0 &amp; 0 &amp; 0 \\</span>
+<span class="sd">                                        &amp; &amp; &amp; 2G_{23} &amp; 0 &amp; 0 \\</span>
+<span class="sd">                                        &amp; \mathrm{sym} &amp; &amp; &amp; 2G_{12} &amp; 0 \\</span>
+<span class="sd">                                        &amp; &amp; &amp; &amp; &amp; 2G_{12} \\</span>
+<span class="sd">                                        \end{pmatrix},</span>
+
+<span class="sd">    where</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">            \begin{array}{lcl}</span>
+<span class="sd">                \lambda&amp;=&amp;\dfrac{\nu_{12} \nu_{21} + \nu_{23}}</span>
+<span class="sd">                {( 1-\nu_{23} - 2 \nu_{12}\nu_{21} ) (1+\nu_{23})} E_2</span>
+<span class="sd">                \\</span>
+<span class="sd">                C_{1111} &amp;=&amp; \dfrac{1 - \nu_{23}}{1 - \nu_{23} - 2 \nu_{12} \nu_{21}} E_1</span>
+<span class="sd">            \end{array}</span>
+<span class="sd">    </span>
+<span class="sd">    </span>
+<span class="sd">    The corresponding compliance matrix is</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">            \underline{\underline{S}} = \begin{pmatrix}</span>
+<span class="sd">                                        \frac{1}{E_1} &amp; -\frac{\nu_{12}}{E_1} &amp; -\frac{\nu_{12}}{E_1} &amp; 0 &amp; 0 &amp; 0 \\</span>
+<span class="sd">                                        &amp; \frac{1}{E_2} &amp; -\frac{\nu_{23}}{E_2} &amp; 0 &amp; 0 &amp; 0 \\</span>
+<span class="sd">                                        &amp; &amp; \frac{1}{E_2} &amp; 0 &amp; 0 &amp; 0 \\</span>
+<span class="sd">                                        &amp; &amp; &amp; \frac{1}{2G_{23}} &amp; 0 &amp; 0 \\</span>
+<span class="sd">                                        &amp; \mathrm{sym} &amp; &amp; &amp; \frac{1}{2G_{12}} &amp; 0 \\</span>
+<span class="sd">                                        &amp; &amp; &amp; &amp; &amp; \frac{1}{2G_{12}} \\</span>
+<span class="sd">                                        \end{pmatrix}.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    E1 : float</span>
+<span class="sd">        Young&#39;s modulus in longitudinal direction.</span>
+<span class="sd">    E2 : float</span>
+<span class="sd">        Young&#39;s modulus in transverse direction.</span>
+<span class="sd">    G12 : float</span>
+<span class="sd">        Shear modulus in the longitudinal-transverse plane.</span>
+<span class="sd">    G23 : float</span>
+<span class="sd">        Shear modulus in the transverse-transverse plane.</span>
+<span class="sd">    nu12 : float</span>
+<span class="sd">        Poisson&#39;s ratio to express strain in transverse direction caused by load in longitudinal direction (dimensionless).</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    E1 : float</span>
+<span class="sd">        Young&#39;s modulus in longitudinal direction.</span>
+<span class="sd">    E2 : float</span>
+<span class="sd">        Young&#39;s modulus in transverse direction.</span>
+<span class="sd">    G12 : float</span>
+<span class="sd">        Shear modulus in the longitudinal-transverse plane.</span>
+<span class="sd">    G23 : float</span>
+<span class="sd">        Shear modulus in the transverse-transverse plane.</span>
+<span class="sd">    nu12 : float</span>
+<span class="sd">        Poisson&#39;s ratio to express strain in isotropic plane caused by load in longitudinal direction (dimensionless).</span>
+<span class="sd">    nu23 : float</span>
+<span class="sd">        Poisson&#39;s ratio to express strain in isotropic plane caused by load in transverse direction (dimensionless).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">E1</span><span class="p">,</span> <span class="n">E2</span><span class="p">,</span> <span class="n">G12</span><span class="p">,</span> <span class="n">G23</span><span class="p">,</span> <span class="n">nu12</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">E1</span> <span class="o">=</span> <span class="n">E1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">E2</span> <span class="o">=</span> <span class="n">E2</span>
@@ -163,8 +388,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">nu23</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">E2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">G23</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_get_stiffness</span><span class="p">()</span>
 
-<div class="viewcode-block" id="TransverseIsotropy._get_stiffness"><a class="viewcode-back" href="../../source/elasticity.html#homopy.elasticity.TransverseIsotropy._get_stiffness">[docs]</a>    <span class="k">def</span> <span class="nf">_get_stiffness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TransverseIsotropy._get_stiffness">
+<a class="viewcode-back" href="../../source/elasticity.html#homopy.elasticity.TransverseIsotropy._get_stiffness">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_stiffness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate the stiffness parameters for both notations.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">C1111</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu23</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu23</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu12</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu21</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">E1</span>
@@ -191,61 +418,72 @@
                 <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">G12</span><span class="p">],</span>
             <span class="p">]</span>
         <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">stiffness3333</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mandel2tensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stiffness66</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stiffness3333</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mandel2tensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stiffness66</span><span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="Isotropy"><a class="viewcode-back" href="../../source/elasticity.html#homopy.elasticity.Isotropy">[docs]</a><span class="k">class</span> <span class="nc">Isotropy</span><span class="p">(</span><span class="n">TransverseIsotropy</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Isotropy">
+<a class="viewcode-back" href="../../source/elasticity.html#homopy.elasticity.Isotropy">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Isotropy</span><span class="p">(</span><span class="n">TransverseIsotropy</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Isotropy class to express isotropic elasitc stiffness tensors.</span>
 <span class="sd">    The class inherits from the Transverse Isotropy class.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    E : float</span>
-<span class="sd">        Young&#39;s modulus in Pa.</span>
+<span class="sd">        Young&#39;s modulus.</span>
 <span class="sd">    nu : float</span>
 <span class="sd">        Poisson&#39;s ratio (dimensionless).</span>
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
 <span class="sd">    E : float</span>
-<span class="sd">        Young&#39;s modulus in Pa.</span>
+<span class="sd">        Young&#39;s modulus.</span>
 <span class="sd">    nu : float</span>
 <span class="sd">        Poisson&#39;s ratio (dimensionless).</span>
 <span class="sd">    lam : float</span>
-<span class="sd">        First Lamé constant in Pa.</span>
+<span class="sd">        First Lamé constant.</span>
 <span class="sd">    mu : float</span>
-<span class="sd">        Second Lamé constant in Pa.</span>
+<span class="sd">        Second Lamé constant.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">nu</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">nu</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">E</span> <span class="o">=</span> <span class="n">E</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">nu</span> <span class="o">=</span> <span class="n">nu</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lam</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_lambda</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_mu</span><span class="p">()</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">E</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">E</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mu</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mu</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Isotropy._get_lambda"><a class="viewcode-back" href="../../source/elasticity.html#homopy.elasticity.Isotropy._get_lambda">[docs]</a>    <span class="k">def</span> <span class="nf">_get_lambda</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Isotropy._get_lambda">
+<a class="viewcode-back" href="../../source/elasticity.html#homopy.elasticity.Isotropy._get_lambda">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_lambda</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the first Lamé constant from other material parameters.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        float</span>
-<span class="sd">            First Lamé constant in Pa.</span>
+<span class="sd">            First Lamé constant.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">E</span></div>
 
-<div class="viewcode-block" id="Isotropy._get_mu"><a class="viewcode-back" href="../../source/elasticity.html#homopy.elasticity.Isotropy._get_mu">[docs]</a>    <span class="k">def</span> <span class="nf">_get_mu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Isotropy._get_mu">
+<a class="viewcode-back" href="../../source/elasticity.html#homopy.elasticity.Isotropy._get_mu">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_mu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the second Lamé constant from other material parameters.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        float</span>
-<span class="sd">            Second Lamé constant in Pa.</span>
+<span class="sd">            Second Lamé constant.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">E</span></div></div>
+        <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">E</span></div>
+</div>
+
 </pre></div>
 
            </div>
@@ -255,7 +493,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023, Nicolas Christ.</p>
+    <p>&#169; Copyright 2025, Nicolas Christ.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

@@ -1,24 +1,23 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>homopy.stiffness_plot &mdash; HomoPy  documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=11a30ca5" />
+
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -29,12 +28,16 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html">
-            <img src="../../_static/Homopy_Yellow.svg" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/Homopy_Yellow.svg" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -72,7 +75,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a></li>
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
       <li class="breadcrumb-item active">homopy.stiffness_plot</li>
       <li class="wy-breadcrumbs-aside">
@@ -93,15 +96,17 @@
 <span class="sd">3D and Polar plot of Young&#39;s modulus body based on [Boehlke2001]_.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">.tensor</span> <span class="kn">import</span> <span class="n">Tensor</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.tensor</span><span class="w"> </span><span class="kn">import</span> <span class="n">Tensor</span>
 
 <span class="n">sin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span>
 <span class="n">cos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span>
 
 
-<div class="viewcode-block" id="ElasticPlot"><a class="viewcode-back" href="../../source/stiffness_plot.html#homopy.stiffness_plot.ElasticPlot">[docs]</a><span class="k">class</span> <span class="nc">ElasticPlot</span><span class="p">(</span><span class="n">Tensor</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ElasticPlot">
+<a class="viewcode-back" href="../../source/stiffness_plot.html#homopy.stiffness_plot.ElasticPlot">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ElasticPlot</span><span class="p">(</span><span class="n">Tensor</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Plot class to visualize tensorial results.</span>
 
 <span class="sd">    Parameters</span>
@@ -117,12 +122,14 @@
 <span class="sd">        or Normalized Voigt / Mandel (USEVOIGT=False).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">USEVOIGT</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">USEVOIGT</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">USEVOIGT</span> <span class="o">=</span> <span class="n">USEVOIGT</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
-<div class="viewcode-block" id="ElasticPlot.matrix_reduction"><a class="viewcode-back" href="../../source/stiffness_plot.html#homopy.stiffness_plot.ElasticPlot.matrix_reduction">[docs]</a>    <span class="k">def</span> <span class="nf">matrix_reduction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">matrix</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ElasticPlot.matrix_reduction">
+<a class="viewcode-back" href="../../source/stiffness_plot.html#homopy.stiffness_plot.ElasticPlot.matrix_reduction">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">matrix_reduction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">matrix</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the reduced notation (Voigt or normalized Voigt) depending</span>
 <span class="sd">        on which one is ought to be used.</span>
 
@@ -142,9 +149,12 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">matrix2mandel</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ElasticPlot._get_reciprocal_E"><a class="viewcode-back" href="../../source/stiffness_plot.html#homopy.stiffness_plot.ElasticPlot._get_reciprocal_E">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_get_reciprocal_E</span><span class="p">(</span><span class="n">didi</span><span class="p">,</span> <span class="n">S</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ElasticPlot._get_reciprocal_E">
+<a class="viewcode-back" href="../../source/stiffness_plot.html#homopy.stiffness_plot.ElasticPlot._get_reciprocal_E">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_reciprocal_E</span><span class="p">(</span><span class="n">didi</span><span class="p">,</span> <span class="n">S</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the reciprocal of Young&#39;s modulus (compliance) in</span>
 <span class="sd">        the direction of di.</span>
 
@@ -164,8 +174,11 @@
 
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;i,ij,j-&gt;&quot;</span><span class="p">,</span> <span class="n">didi</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">didi</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ElasticPlot._get_E"><a class="viewcode-back" href="../../source/stiffness_plot.html#homopy.stiffness_plot.ElasticPlot._get_E">[docs]</a>    <span class="k">def</span> <span class="nf">_get_E</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">di</span><span class="p">,</span> <span class="n">S</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ElasticPlot._get_E">
+<a class="viewcode-back" href="../../source/stiffness_plot.html#homopy.stiffness_plot.ElasticPlot._get_E">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_E</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">di</span><span class="p">,</span> <span class="n">S</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return Young&#39;s modulus in the direction of di.</span>
 
 <span class="sd">        Parameters</span>
@@ -185,9 +198,12 @@
         <span class="n">didi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">matrix_reduction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_diade</span><span class="p">(</span><span class="n">di</span><span class="p">,</span> <span class="n">di</span><span class="p">))</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_reciprocal_E</span><span class="p">(</span><span class="n">didi</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ElasticPlot._dir_vec"><a class="viewcode-back" href="../../source/stiffness_plot.html#homopy.stiffness_plot.ElasticPlot._dir_vec">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_dir_vec</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ElasticPlot._dir_vec">
+<a class="viewcode-back" href="../../source/stiffness_plot.html#homopy.stiffness_plot.ElasticPlot._dir_vec">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_dir_vec</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return directional vector based on angular parametrization.</span>
 
 <span class="sd">        Parameters</span>
@@ -205,8 +221,11 @@
 
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">cos</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="n">sin</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)])</span></div>
 
-<div class="viewcode-block" id="ElasticPlot.plot_E_body"><a class="viewcode-back" href="../../source/stiffness_plot.html#homopy.stiffness_plot.ElasticPlot.plot_E_body">[docs]</a>    <span class="k">def</span> <span class="nf">plot_E_body</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">o</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rcount</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">ccount</span><span class="o">=</span><span class="mi">200</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ElasticPlot.plot_E_body">
+<a class="viewcode-back" href="../../source/stiffness_plot.html#homopy.stiffness_plot.ElasticPlot.plot_E_body">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot_E_body</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">o</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rcount</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">ccount</span><span class="o">=</span><span class="mi">200</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot stiffness body.</span>
 
 <span class="sd">        Parameters</span>
@@ -248,8 +267,8 @@
                 <span class="n">E_z</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">E</span> <span class="o">*</span> <span class="n">vec</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
 
         <span class="c1"># from mpl_toolkits.mplot3d import Axes3D</span>
-        <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-        <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">cm</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">cm</span>
 
         <span class="n">x</span> <span class="o">=</span> <span class="n">E_x</span>
         <span class="n">y</span> <span class="o">=</span> <span class="n">E_y</span>
@@ -283,8 +302,13 @@
 
         <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="ElasticPlot.polar_plot_E_body"><a class="viewcode-back" href="../../source/stiffness_plot.html#homopy.stiffness_plot.ElasticPlot.polar_plot_E_body">[docs]</a>    <span class="k">def</span> <span class="nf">polar_plot_E_body</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">o</span><span class="p">,</span> <span class="n">angle</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ElasticPlot.polar_plot_E_body">
+<a class="viewcode-back" href="../../source/stiffness_plot.html#homopy.stiffness_plot.ElasticPlot.polar_plot_E_body">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">polar_plot_E_body</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">o</span><span class="p">,</span> <span class="n">normal</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span> <span class="n">bound</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot slice of stiffness body.</span>
 
 <span class="sd">        Parameters</span>
@@ -293,10 +317,9 @@
 <span class="sd">            Stiffness tensor in Voigt or normalized Voigt</span>
 <span class="sd">            notation.</span>
 <span class="sd">        o : int</span>
-<span class="sd">            Number of discretization steps for first angle.</span>
-<span class="sd">        angle : float</span>
-<span class="sd">            Angle to determine the angular orientation of the slice.</span>
-<span class="sd">            Does not work yet.</span>
+<span class="sd">            Number of discretization steps for angle within cutting plane.</span>
+<span class="sd">        normal : ndarray of shape (3,), default=np.array([0,0,1])</span>
+<span class="sd">            Normal direction defining cutting plane.</span>
 <span class="sd">        plot : boolean</span>
 <span class="sd">            Determines whether the plot will be displayed. If False,</span>
 <span class="sd">            only the metadata of the plot will be returned.</span>
@@ -315,16 +338,33 @@
         <span class="n">E</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">rad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
 
-        <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">angle</span>  <span class="c1"># changing angle does not work yet</span>
+        <span class="n">normal</span> <span class="o">=</span> <span class="n">normal</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">normal</span><span class="p">)</span>
+
+        <span class="n">z_vec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="n">vec_v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">z_vec</span><span class="p">,</span> <span class="n">normal</span><span class="p">)</span>
+        <span class="n">cosine</span> <span class="o">=</span> <span class="n">z_vec</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">normal</span><span class="p">)</span>
+        <span class="n">v_mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">vec_v</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">vec_v</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span>
+                <span class="p">[</span><span class="n">vec_v</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">vec_v</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span>
+                <span class="p">[</span><span class="o">-</span><span class="n">vec_v</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">vec_v</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span><span class="p">],</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+        <span class="n">R</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="n">v_mat</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">v_mat</span><span class="p">,</span> <span class="n">v_mat</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">cosine</span><span class="p">)</span>
+        <span class="p">)</span>  <span class="c1"># https://math.stackexchange.com/questions/180418/calculate-rotation-matrix-to-align-vector-a-to-vector-b-in-3d</span>
+
+        <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
             <span class="n">phi</span> <span class="o">=</span> <span class="n">i</span> <span class="o">/</span> <span class="n">n</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
             <span class="n">vec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dir_vec</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">)</span>
-            <span class="n">E_temp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_E</span><span class="p">(</span><span class="n">vec</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span>
+            <span class="n">vec_rot</span> <span class="o">=</span> <span class="n">R</span> <span class="o">@</span> <span class="n">vec</span>
+            <span class="n">E_temp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_E</span><span class="p">(</span><span class="n">vec_rot</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span>
             <span class="n">E</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">E_temp</span>
             <span class="n">rad</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">phi</span>
 
         <span class="k">if</span> <span class="n">plot</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+            <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
             <span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">subplot_kw</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;projection&quot;</span><span class="p">:</span> <span class="s2">&quot;polar&quot;</span><span class="p">})</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">rad</span><span class="p">,</span> <span class="n">E</span><span class="p">)</span>
@@ -338,9 +378,12 @@
 
         <span class="k">return</span> <span class="n">rad</span><span class="p">,</span> <span class="n">E</span></div>
 
-<div class="viewcode-block" id="ElasticPlot.polar_plot"><a class="viewcode-back" href="../../source/stiffness_plot.html#homopy.stiffness_plot.ElasticPlot.polar_plot">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">polar_plot</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ElasticPlot.polar_plot">
+<a class="viewcode-back" href="../../source/stiffness_plot.html#homopy.stiffness_plot.ElasticPlot.polar_plot">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">polar_plot</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Polar plot of multiple Stiffness bodies in one plot. For this</span>
 <span class="sd">        use the data generated from polar_plot_E_body or polar_plot_laminate</span>
 <span class="sd">        with plot=False.</span>
@@ -352,7 +395,7 @@
 <span class="sd">            an optional string for the label in the plot.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
         <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">subplot_kw</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;projection&quot;</span><span class="p">:</span> <span class="s2">&quot;polar&quot;</span><span class="p">})</span>
         <span class="k">for</span> <span class="n">datum</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
@@ -368,8 +411,11 @@
         <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="ElasticPlot.polar_plot_laminate"><a class="viewcode-back" href="../../source/stiffness_plot.html#homopy.stiffness_plot.ElasticPlot.polar_plot_laminate">[docs]</a>    <span class="k">def</span> <span class="nf">polar_plot_laminate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">laminate_stiffness</span><span class="p">,</span> <span class="n">o</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ElasticPlot.polar_plot_laminate">
+<a class="viewcode-back" href="../../source/stiffness_plot.html#homopy.stiffness_plot.ElasticPlot.polar_plot_laminate">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">polar_plot_laminate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">laminate_stiffness</span><span class="p">,</span> <span class="n">o</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Polar plot stiffness body of laminate. This method should be used</span>
 <span class="sd">        for laminate results for the Halpin-Tsai homogenization.</span>
 
@@ -407,7 +453,7 @@
             <span class="n">rad</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">phi</span>
 
         <span class="k">if</span> <span class="n">plot</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+            <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
             <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">subplot_kw</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;projection&quot;</span><span class="p">:</span> <span class="s2">&quot;polar&quot;</span><span class="p">})</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">rad</span><span class="p">,</span> <span class="n">E</span><span class="p">)</span>
@@ -420,8 +466,11 @@
 
         <span class="k">return</span> <span class="n">rad</span><span class="p">,</span> <span class="n">E</span></div>
 
-<div class="viewcode-block" id="ElasticPlot.get_E_laminate"><a class="viewcode-back" href="../../source/stiffness_plot.html#homopy.stiffness_plot.ElasticPlot.get_E_laminate">[docs]</a>    <span class="k">def</span> <span class="nf">get_E_laminate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">phi</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ElasticPlot.get_E_laminate">
+<a class="viewcode-back" href="../../source/stiffness_plot.html#homopy.stiffness_plot.ElasticPlot.get_E_laminate">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_E_laminate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">phi</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return Young&#39;s modulus of laminate as a function of angle omega.</span>
 
 <span class="sd">        Parameters</span>
@@ -449,7 +498,9 @@
 
         <span class="n">E</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;i,ij,j-&gt;&quot;</span><span class="p">,</span> <span class="n">didi_reduced</span><span class="p">,</span> <span class="n">C_inv</span><span class="p">,</span> <span class="n">didi_reduced</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">E</span></div></div>
+        <span class="k">return</span> <span class="n">E</span></div>
+</div>
+
 </pre></div>
 
            </div>
@@ -459,7 +510,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023, Nicolas Christ.</p>
+    <p>&#169; Copyright 2025, Nicolas Christ.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
