@@ -119,9 +119,110 @@ class ElasticPlot(Tensor):
 
         return np.array([cos(phi) * sin(theta), sin(phi) * sin(theta), cos(theta)])
 
-    def plot_E_body(self, C, o, p, bound=None, rcount=200, ccount=200):
+    def plot_E_body(self, C, o, p, bound=None, rcount=200, ccount=200, plot=True):
         """
         Plot stiffness body.
+
+        Parameters
+        ----------
+        C : ndarray of shape (6, 6)
+            Stiffness tensor in Voigt or normalized Voigt
+            notation.
+        o : int
+            Number of discretization steps for first angle.
+        p : int
+            Number of discretization steps for second angle.
+        bound : array of shape (3,), default=None
+            Boundaries for the 3 axis for the visualization.
+            If None, boundaries are set automatically.
+        rcount : int
+            Maximum number of samples used in first angle direction.
+            If the input data is larger, it will be downsampled
+            (by slicing) to these numbers of points. Defaults to 200.
+        ccount : int
+            Maximum number of samples used in second angle direction.
+            If the input data is larger, it will be downsampled
+            (by slicing) to these numbers of points. Defaults to 200.
+        plot : boolean
+            Determines whether the plot will be displayed. If False,
+            only the metadata of the plot will be returned.
+        """
+        S = np.linalg.inv(C)
+
+        n = int(o)
+        m = int(p)
+        E_x = np.zeros((n + 1, m + 1))
+        E_y = np.zeros((n + 1, m + 1))
+        E_z = np.zeros((n + 1, m + 1))
+        dir_vecs = []
+        Es = []
+        for i in range(0, n + 1, 1):
+            for j in range(0, m + 1, 1):
+                phi = i / n * 2 * np.pi
+                theta = j / m * np.pi
+                vec = self._dir_vec(phi, theta)
+                E = self._get_E(vec, S)
+                E_x[i, j] = E * vec[0]
+                E_y[i, j] = E * vec[1]
+                E_z[i, j] = E * vec[2]
+
+                Es.append(E)
+                dir_vecs.append(vec)
+
+        if plot:
+            # from mpl_toolkits.mplot3d import Axes3D
+            import matplotlib.pyplot as plt
+            from matplotlib import cm
+
+            x = E_x
+            y = E_y
+            z = E_z
+
+            d = np.sqrt(x**2 + y**2 + z**2)
+            d = d / d.max()
+
+            fig = plt.figure()
+            ax = fig.add_subplot(111, projection="3d")
+
+            # Plot the surface
+            ax.set_xlabel("E11")
+            ax.set_ylabel("E22")
+            ax.set_zlabel("E33")
+
+            ax.plot_surface(
+                x,
+                y,
+                z,
+                facecolors=plt.cm.viridis(d),
+                antialiased=True,
+                rcount=rcount,
+                ccount=ccount,
+            )
+
+            if not bound is None:
+                ax.set_xlim(-bound[0], bound[0])
+                ax.set_ylim(-bound[1], bound[1])
+                ax.set_zlim(-bound[2], bound[2])
+
+            plt.show()
+
+            return np.array(dir_vecs), np.array(Es), fig, ax
+
+        return np.array(dir_vecs), np.array(Es)
+
+    def plot_E_body_cut(
+        self,
+        C,
+        o,
+        p,
+        normal=np.array([0, 0, 1]),
+        bound=None,
+        rcount=200,
+        ccount=200,
+        remove="positive",
+    ):
+        """
+        Plot stiffness body with a cutting plane.
 
         Parameters
         ----------
@@ -151,6 +252,7 @@ class ElasticPlot(Tensor):
         E_x = np.zeros((n + 1, m + 1))
         E_y = np.zeros((n + 1, m + 1))
         E_z = np.zeros((n + 1, m + 1))
+        dir_vecs = []
         for i in range(0, n + 1, 1):
             for j in range(0, m + 1, 1):
                 phi = i / n * 2 * np.pi
@@ -161,7 +263,8 @@ class ElasticPlot(Tensor):
                 E_y[i, j] = E * vec[1]
                 E_z[i, j] = E * vec[2]
 
-        # from mpl_toolkits.mplot3d import Axes3D
+                dir_vecs.append(vec)
+
         import matplotlib.pyplot as plt
         from matplotlib import cm
 
@@ -171,6 +274,13 @@ class ElasticPlot(Tensor):
 
         d = np.sqrt(x**2 + y**2 + z**2)
         d = d / d.max()
+
+        normal = normal / np.linalg.norm(normal)
+        scalar_product = np.array(dir_vecs @ normal).reshape(n + 1, m + 1)
+        if remove == "positive":
+            z[np.where(scalar_product > 0)] = np.nan
+        elif remove == "negative":
+            z[np.where(scalar_product < 0)] = np.nan
 
         fig = plt.figure()
         ax = fig.add_subplot(111, projection="3d")
@@ -189,6 +299,38 @@ class ElasticPlot(Tensor):
             rcount=rcount,
             ccount=ccount,
         )
+
+        # add circumference
+        z_vec = np.array([0, 0, 1])
+        vec_v = np.cross(z_vec, normal)
+        cosine = z_vec.dot(normal)
+        v_mat = np.array(
+            [
+                [0, -vec_v[2], vec_v[1]],
+                [vec_v[2], 0, -vec_v[0]],
+                [-vec_v[1], vec_v[0], 0],
+            ]
+        )
+        R = (
+            np.eye(3) + v_mat + np.dot(v_mat, v_mat) * 1 / (1 + cosine)
+        )  # https://math.stackexchange.com/questions/180418/calculate-rotation-matrix-to-align-vector-a-to-vector-b-in-3d
+
+        x = []
+        y = []
+        z = []
+        theta = np.pi / 2
+        for i in range(0, n + 1, 1):
+            phi = i / n * 2 * np.pi
+            vec = self._dir_vec(phi, theta)
+            vec_rot = R @ vec
+            E_temp = self._get_E(vec_rot, S)
+            vec_rot *= E_temp
+
+            x.append(vec_rot[0])
+            y.append(vec_rot[1])
+            z.append(vec_rot[2])
+
+        ax.plot(x, y, z, color="white")
 
         if not bound is None:
             ax.set_xlim(-bound[0], bound[0])
@@ -222,6 +364,8 @@ class ElasticPlot(Tensor):
             Angular positions for polar plot.
         E : ndarray of shape (n+1,)
             Sitffness at corresponding angle.
+        fig : figure object
+        ax : axis object
         """
 
         S = np.linalg.inv(C)
@@ -258,7 +402,7 @@ class ElasticPlot(Tensor):
         if plot == True:
             import matplotlib.pyplot as plt
 
-            _, ax = plt.subplots(subplot_kw={"projection": "polar"})
+            fig, ax = plt.subplots(subplot_kw={"projection": "polar"})
             ax.plot(rad, E)
             # ax.set_rmax(2)
             # ax.set_rticks([0.5*1e10, 1*1e10, 1.5*1e10, 2*1e10])  # Less radial ticks
@@ -267,6 +411,8 @@ class ElasticPlot(Tensor):
 
             ax.set_title("Young's modulus over angle", va="bottom")
             plt.show()
+
+            return rad, E, fig, ax
 
         return rad, E
 
@@ -299,6 +445,8 @@ class ElasticPlot(Tensor):
         ax.set_title("Young's modulus over angle", va="bottom")
         ax.legend()
         plt.show()
+
+        return fig, ax
 
     def polar_plot_laminate(self, laminate_stiffness, o, limit=None, plot=True):
         """
@@ -349,6 +497,8 @@ class ElasticPlot(Tensor):
 
             ax.set_title("Young's modulus over angle", va="bottom")
             plt.show()
+
+            return rad, E, fig, ax
 
         return rad, E
 
