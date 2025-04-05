@@ -1,23 +1,23 @@
-
-
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="../../">
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>homopy.methods &mdash; HomoPy  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=11a30ca5" />
-
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
-      <script src="../../_static/jquery.js?v=5d32c60e"></script>
-      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
-      <script src="../../_static/doctools.js?v=9a2dae69"></script>
-      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-      <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -111,9 +111,7 @@
 <span class="n">tanh</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tanh</span>
 
 
-<div class="viewcode-block" id="MoriTanaka">
-<a class="viewcode-back" href="../../source/methods.html#homopy.methods.MoriTanaka">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">MoriTanaka</span><span class="p">(</span><span class="n">Tensor</span><span class="p">):</span>
+<div class="viewcode-block" id="MoriTanaka"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.MoriTanaka">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">MoriTanaka</span><span class="p">(</span><span class="n">Tensor</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Mori Tanaka class to calculate the homogenized stiffness for fiber reinforced</span>
 <span class="sd">    polymers with possibly different types of inclusions. The class inherits from</span>
@@ -238,9 +236,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">effective_stiffness66</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_effective_stiffness</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">effective_stiffness3333</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mandel2tensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">effective_stiffness66</span><span class="p">)</span>
 
-<div class="viewcode-block" id="MoriTanaka._get_eshelby">
-<a class="viewcode-back" href="../../source/methods.html#homopy.methods.MoriTanaka._get_eshelby">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">_get_eshelby</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a_ratio</span><span class="p">,</span> <span class="n">return_dim</span><span class="o">=</span><span class="s2">&quot;66&quot;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s2">&quot;ellipsoid&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="MoriTanaka._get_eshelby"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.MoriTanaka._get_eshelby">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">_get_eshelby</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a_ratio</span><span class="p">,</span> <span class="n">return_dim</span><span class="o">=</span><span class="s2">&quot;66&quot;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s2">&quot;ellipsoid&quot;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the Eshelby tensor according to the fiber type.</span>
 
@@ -358,10 +354,7 @@
         <span class="k">elif</span> <span class="n">return_dim</span> <span class="o">==</span> <span class="s2">&quot;3333&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">S</span></div>
 
-
-<div class="viewcode-block" id="MoriTanaka.get_effective_stiffness">
-<a class="viewcode-back" href="../../source/methods.html#homopy.methods.MoriTanaka.get_effective_stiffness">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">get_effective_stiffness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MoriTanaka.get_effective_stiffness"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.MoriTanaka.get_effective_stiffness">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_effective_stiffness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the effective stiffness of the composite material, based on Eq. 14a in [Benveniste1987]_.</span>
 
@@ -409,10 +402,7 @@
 
         <span class="k">return</span> <span class="n">C_eff</span></div>
 
-
-<div class="viewcode-block" id="MoriTanaka.get_average_stiffness">
-<a class="viewcode-back" href="../../source/methods.html#homopy.methods.MoriTanaka.get_average_stiffness">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">get_average_stiffness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">N4</span><span class="p">,</span> <span class="n">return_dim</span><span class="o">=</span><span class="s2">&quot;66&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="MoriTanaka.get_average_stiffness"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.MoriTanaka.get_average_stiffness">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_average_stiffness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">N4</span><span class="p">,</span> <span class="n">return_dim</span><span class="o">=</span><span class="s2">&quot;66&quot;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the averaged effective stiffness based on orientation tensors. Overwrites the</span>
 <span class="sd">        object variables self.effective_stiffness66 and self.effective_stiffness3333.</span>
@@ -453,10 +443,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">effective_stiffness66</span></div>
 
-
-<div class="viewcode-block" id="MoriTanaka.get_orientation_average">
-<a class="viewcode-back" href="../../source/methods.html#homopy.methods.MoriTanaka.get_orientation_average">[docs]</a>
-    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MoriTanaka.get_orientation_average"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.MoriTanaka.get_orientation_average">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_orientation_average</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="n">N2</span><span class="p">,</span> <span class="n">N4</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the orientation average of a tensor after [Advani1987]_, Eq. 29.</span>
@@ -516,10 +503,7 @@
 
         <span class="k">return</span> <span class="n">ave_tensor</span></div>
 
-
-<div class="viewcode-block" id="MoriTanaka.is_symmetric">
-<a class="viewcode-back" href="../../source/methods.html#homopy.methods.MoriTanaka.is_symmetric">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">is_symmetric</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MoriTanaka.is_symmetric"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.MoriTanaka.is_symmetric">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">is_symmetric</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Print the symmetry status of the effective stiffness.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -557,14 +541,10 @@
                     <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">effective_stiffness3333</span><span class="p">)</span>
                 <span class="p">)</span>
             <span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span></div>
-</div>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span></div></div>
 
 
-
-<div class="viewcode-block" id="HalpinTsai">
-<a class="viewcode-back" href="../../source/methods.html#homopy.methods.HalpinTsai">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">HalpinTsai</span><span class="p">:</span>
+<div class="viewcode-block" id="HalpinTsai"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.HalpinTsai">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">HalpinTsai</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Halpin Tsai class to calculate the homogenized stiffness for fiber reinforced</span>
 <span class="sd">    polymers as laminas. This is then used as input for the Laminate class.</span>
@@ -633,9 +613,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_get_effective_parameters</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">effective_stiffness33</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_effective_stiffness</span><span class="p">()</span>
 
-<div class="viewcode-block" id="HalpinTsai._get_effective_parameters">
-<a class="viewcode-back" href="../../source/methods.html#homopy.methods.HalpinTsai._get_effective_parameters">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">_get_effective_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="HalpinTsai._get_effective_parameters"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.HalpinTsai._get_effective_parameters">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">_get_effective_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculates the effective parameters of a single lamina for given constituent parameters.</span>
 
@@ -665,10 +643,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">nu12</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu_f</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">vol_f</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu_m</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">vol_f</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">nu21</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu12</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">E22</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">E11</span></div>
 
-
-<div class="viewcode-block" id="HalpinTsai.get_effective_stiffness">
-<a class="viewcode-back" href="../../source/methods.html#homopy.methods.HalpinTsai.get_effective_stiffness">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">get_effective_stiffness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="HalpinTsai.get_effective_stiffness"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.HalpinTsai.get_effective_stiffness">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_effective_stiffness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the planar stiffness based on the effective parameters of a single lamina.</span>
 
@@ -686,14 +661,10 @@
         <span class="n">Q26</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">Q66</span> <span class="o">=</span> <span class="n">fac</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">G12</span>
         <span class="n">C</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">Q11</span><span class="p">,</span> <span class="n">Q12</span><span class="p">,</span> <span class="n">Q16</span><span class="p">],</span> <span class="p">[</span><span class="n">Q12</span><span class="p">,</span> <span class="n">Q22</span><span class="p">,</span> <span class="n">Q26</span><span class="p">],</span> <span class="p">[</span><span class="n">Q16</span><span class="p">,</span> <span class="n">Q26</span><span class="p">,</span> <span class="n">Q66</span><span class="p">]])</span>
-        <span class="k">return</span> <span class="n">C</span></div>
-</div>
+        <span class="k">return</span> <span class="n">C</span></div></div>
 
 
-
-<div class="viewcode-block" id="Laminate">
-<a class="viewcode-back" href="../../source/methods.html#homopy.methods.Laminate">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">Laminate</span><span class="p">:</span>
+<div class="viewcode-block" id="Laminate"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.Laminate">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">Laminate</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class to average over n laminas from Halpin-Tsai homogenization.</span>
 
@@ -728,9 +699,7 @@
             <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">effective_stiffness33</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_effective_stiffness</span><span class="p">()</span>
 
-<div class="viewcode-block" id="Laminate.get_effective_stiffness">
-<a class="viewcode-back" href="../../source/methods.html#homopy.methods.Laminate.get_effective_stiffness">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">get_effective_stiffness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Laminate.get_effective_stiffness"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.Laminate.get_effective_stiffness">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_effective_stiffness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return effective stiffness of laminate.</span>
 
@@ -747,10 +716,7 @@
 
         <span class="k">return</span> <span class="n">C_eff</span></div>
 
-
-<div class="viewcode-block" id="Laminate.rotate_stiffness">
-<a class="viewcode-back" href="../../source/methods.html#homopy.methods.Laminate.rotate_stiffness">[docs]</a>
-    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="Laminate.rotate_stiffness"><a class="viewcode-back" href="../../source/methods.html#homopy.methods.Laminate.rotate_stiffness">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">rotate_stiffness</span><span class="p">(</span><span class="n">lamina_stiffness</span><span class="p">,</span> <span class="n">angle</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return planarly rotated stiffness matrix. The planar rotation matrix around the z-axis</span>
@@ -798,9 +764,7 @@
 
         <span class="n">rot_stiffness</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ij,jk,kl-&gt;il&quot;</span><span class="p">,</span> <span class="n">R_inv</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">R</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">rot_stiffness</span></div>
-</div>
-
+        <span class="k">return</span> <span class="n">rot_stiffness</span></div></div>
 </pre></div>
 
            </div>

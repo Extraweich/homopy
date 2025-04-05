@@ -1,23 +1,23 @@
-
-
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="../../">
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>homopy.elasticity &mdash; HomoPy  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=11a30ca5" />
-
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
-      <script src="../../_static/jquery.js?v=5d32c60e"></script>
-      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
-      <script src="../../_static/doctools.js?v=9a2dae69"></script>
-      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-      <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -100,9 +100,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">.tensor</span><span class="w"> </span><span class="kn">import</span> <span class="n">Tensor</span>
 
 
-<div class="viewcode-block" id="Elasticity">
-<a class="viewcode-back" href="../../source/elasticity.html#homopy.elasticity.Elasticity">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">Elasticity</span><span class="p">(</span><span class="n">Tensor</span><span class="p">):</span>
+<div class="viewcode-block" id="Elasticity"><a class="viewcode-back" href="../../source/elasticity.html#homopy.elasticity.Elasticity">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">Elasticity</span><span class="p">(</span><span class="n">Tensor</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Elasticity class to express generic elasitc stiffness tensors. </span>
 <span class="sd">    The class inherits from the Tensor class. </span>
@@ -137,10 +135,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">stiffness66</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span></div>
 
 
-
-<div class="viewcode-block" id="Orthotropy">
-<a class="viewcode-back" href="../../source/elasticity.html#homopy.elasticity.Orthotropy">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">Orthotropy</span><span class="p">(</span><span class="n">Elasticity</span><span class="p">):</span>
+<div class="viewcode-block" id="Orthotropy"><a class="viewcode-back" href="../../source/elasticity.html#homopy.elasticity.Orthotropy">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">Orthotropy</span><span class="p">(</span><span class="n">Elasticity</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Orthotropy class to express orthotropic elastic stiffness </span>
 <span class="sd">    tensors. The class inherits from the Elasticity class.</span>
@@ -252,9 +247,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">nu32</span> <span class="o">=</span> <span class="n">nu23</span> <span class="o">*</span> <span class="n">E3</span> <span class="o">/</span> <span class="n">E2</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_get_stiffness</span><span class="p">()</span>
 
-<div class="viewcode-block" id="Orthotropy._get_stiffness">
-<a class="viewcode-back" href="../../source/elasticity.html#homopy.elasticity.Orthotropy._get_stiffness">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">_get_stiffness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Orthotropy._get_stiffness"><a class="viewcode-back" href="../../source/elasticity.html#homopy.elasticity.Orthotropy._get_stiffness">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">_get_stiffness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate the stiffness parameters for both notations.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -297,14 +290,10 @@
                 <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">G12</span><span class="p">],</span>
             <span class="p">]</span>
         <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">stiffness3333</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mandel2tensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stiffness66</span><span class="p">)</span></div>
-</div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stiffness3333</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mandel2tensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stiffness66</span><span class="p">)</span></div></div>
 
 
-
-<div class="viewcode-block" id="TransverseIsotropy">
-<a class="viewcode-back" href="../../source/elasticity.html#homopy.elasticity.TransverseIsotropy">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">TransverseIsotropy</span><span class="p">(</span><span class="n">Elasticity</span><span class="p">):</span>
+<div class="viewcode-block" id="TransverseIsotropy"><a class="viewcode-back" href="../../source/elasticity.html#homopy.elasticity.TransverseIsotropy">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">TransverseIsotropy</span><span class="p">(</span><span class="n">Elasticity</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Transverse Isotropy class to express transverse-isotropic </span>
 <span class="sd">    elasitc stiffness tensors. The class inherits from the </span>
@@ -388,9 +377,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">nu23</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">E2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">G23</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_get_stiffness</span><span class="p">()</span>
 
-<div class="viewcode-block" id="TransverseIsotropy._get_stiffness">
-<a class="viewcode-back" href="../../source/elasticity.html#homopy.elasticity.TransverseIsotropy._get_stiffness">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">_get_stiffness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TransverseIsotropy._get_stiffness"><a class="viewcode-back" href="../../source/elasticity.html#homopy.elasticity.TransverseIsotropy._get_stiffness">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">_get_stiffness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate the stiffness parameters for both notations.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -418,14 +405,10 @@
                 <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">G12</span><span class="p">],</span>
             <span class="p">]</span>
         <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">stiffness3333</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mandel2tensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stiffness66</span><span class="p">)</span></div>
-</div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stiffness3333</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mandel2tensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stiffness66</span><span class="p">)</span></div></div>
 
 
-
-<div class="viewcode-block" id="Isotropy">
-<a class="viewcode-back" href="../../source/elasticity.html#homopy.elasticity.Isotropy">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">Isotropy</span><span class="p">(</span><span class="n">TransverseIsotropy</span><span class="p">):</span>
+<div class="viewcode-block" id="Isotropy"><a class="viewcode-back" href="../../source/elasticity.html#homopy.elasticity.Isotropy">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">Isotropy</span><span class="p">(</span><span class="n">TransverseIsotropy</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Isotropy class to express isotropic elasitc stiffness tensors.</span>
 <span class="sd">    The class inherits from the Transverse Isotropy class.</span>
@@ -456,9 +439,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">mu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_mu</span><span class="p">()</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">E</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">E</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mu</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mu</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Isotropy._get_lambda">
-<a class="viewcode-back" href="../../source/elasticity.html#homopy.elasticity.Isotropy._get_lambda">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">_get_lambda</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Isotropy._get_lambda"><a class="viewcode-back" href="../../source/elasticity.html#homopy.elasticity.Isotropy._get_lambda">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">_get_lambda</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the first Lamé constant from other material parameters.</span>
 
@@ -469,10 +450,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">E</span></div>
 
-
-<div class="viewcode-block" id="Isotropy._get_mu">
-<a class="viewcode-back" href="../../source/elasticity.html#homopy.elasticity.Isotropy._get_mu">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">_get_mu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Isotropy._get_mu"><a class="viewcode-back" href="../../source/elasticity.html#homopy.elasticity.Isotropy._get_mu">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">_get_mu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the second Lamé constant from other material parameters.</span>
 
@@ -481,9 +459,7 @@
 <span class="sd">        float</span>
 <span class="sd">            Second Lamé constant.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">E</span></div>
-</div>
-
+        <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">E</span></div></div>
 </pre></div>
 
            </div>

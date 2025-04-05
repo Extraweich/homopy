@@ -3,4 +3,5 @@ sphinx-rtd-theme==1.2.2
 nbsphinx
 sphinxcontrib-napoleon
 sphinxcontrib-svg2pdfconverter[Cairosvg]
+ipywidgets
 homopy
